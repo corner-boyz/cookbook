@@ -13,10 +13,14 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest"
+    "test": "jest",
+    "heroku-postbuild": "webpack --config ./webpack.config.js --progress"
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "engines": {
+    "node": "9.9.0"
   },
   "dependencies": {
     "expo": "^27.0.1",
