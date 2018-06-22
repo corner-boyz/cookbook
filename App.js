@@ -1,18 +1,49 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Ingredients from './client-components/ingredients.js'
+import Recipes from './client-components/recipes.js'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  Image,
+} from 'react-native';
 
-export default class App extends React.Component {
+import {
+  createStackNavigator
+} from 'react-navigation'
+
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+    console.log('Mounted')
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text>Welcome to your CookBook, what would you like to do?</Text>
+        <Button
+          title="Go to your pantry"
+          onPress={() => this.props.navigation.navigate('Ingredients')}
+        />
+        <Button
+          title="Go to your recipes"
+          onPress={() => this.props.navigation.navigate('Recipes')}
+        />
       </View>
     );
-  }
+  };
 }
-
+//============================================================= Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -21,3 +52,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+//============================================================= Navigator
+const RootStack = createStackNavigator(
+  {
+    Home: Home,
+    Ingredients: Ingredients,
+    Recipes: Recipes
+
+  },
+  {
+    initialRouteName: 'Home',
+  }
+)
+//=============================================================
+// export default App;
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
+// open application 'Nox'
+// exp start
+// npm start
