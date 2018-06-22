@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 
 import {
-  createStackNavigator
+  createStackNavigator,
+  createBottomTabNavigator
 } from 'react-navigation'
 
 class Home extends React.Component {
@@ -22,19 +23,20 @@ class Home extends React.Component {
 
     }
   }
+  // static navigationOptions = ({ navigation }) => {
+  //   return {
+  //     headerTitle: "CookBook",
+  //     headerRight: <Image
+  //       source={require('./hat.png')}
+  //       style={{ width: 35, height: 30 }}
+  //     />
+  //   }
+  // }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
-        <Button
-          title="Go to your pantry"
-          onPress={() => this.props.navigation.navigate('Ingredients', {})}
-        />
-        <Button
-          title="Go to your recipes"
-          onPress={() => this.props.navigation.navigate('Recipes', {})}
-        />
       </View>
     );
   };
@@ -43,28 +45,34 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFC300',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
 //============================================================= Navigator
-const RootStack = createStackNavigator(
+const RootStack = createBottomTabNavigator(
   {
-    Home: Home,
-    Ingredients: Ingredients,
-    Recipes: Recipes
+    Home: {
+      screen: Home,
+    },
+    Ingredients: {
+      screen: Ingredients,
+    },
+    Recipes: {
+      screen: Recipes,
+    }
 
   },
   {
     initialRouteName: 'Home',
-    navigationOptions: {
-      backgroundColor: '#f4511e'
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    // navigationOptions: {
+    //   backgroundColor: '#f4511e'
+    // },
+    // headerTintColor: '#fff',
+    // headerTitleStyle: {
+    //   fontWeight: 'bold',
+    // },
   }
 )
 //=============================================================
