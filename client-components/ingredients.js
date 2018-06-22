@@ -8,16 +8,32 @@ import {
   Image,
 } from 'react-native';
 
-const Ingredients = (props) => (
-  <View style={styles.container}>
-    <Text>These are all your Ingredients</Text>
-  </View>
-)
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+class Ingredients extends React.Component {
+  static navigationOptions = {
+    tabBarColor: 'green',
+    tabBarIcon: () => {
+
+      // You can return any component that you like here! We usually use an
+      // icon component from react-native-vector-icons
+      return <Ionicons name='ios-basket' size={25} color='white' />;
+    },
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Here are your Ingredients</Text>
+      </View>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFC300',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
