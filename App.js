@@ -18,6 +18,7 @@ import {
 } from 'react-navigation';
 
 import IP from './client-components/IP.js';
+import axios from 'axios';
 
 import {
   createMaterialBottomTabNavigator
@@ -30,8 +31,7 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      ingredients: ['Salsa', 'Artichoke', 'Flour'],
-      API: '',
+      ingredients: [],
       text: ''
     }
 
@@ -47,17 +47,12 @@ class Home extends React.Component {
   //   }
   // }
   getIngredients() {
-    this.setState({
-      API: IP,
-    });
-
-    fetch(`http://${IP}/api/ingredients`)
-    .then(response => response.text().json())
+    axios.get(`http://${IP}/api/ingredients`)
     .then(results => {
-      console.log(results);
-      // this.setState({
-      //   API: results.data,
-      // });
+      //console.log(results.data);
+      this.setState({
+        ingredients: results.data,
+      });
     }).catch(error => {
       console.log('Error in retrieving ingredients:', error);
     });
