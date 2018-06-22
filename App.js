@@ -1,6 +1,8 @@
 import React from 'react';
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
+import Debugger from './client-components/debugging';
+
 import {
   StyleSheet,
   Text,
@@ -17,6 +19,12 @@ import {
 
 import IP from './client-components/IP.js';
 
+import {
+  createMaterialBottomTabNavigator
+} from 'react-navigation-material-bottom-tabs';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +32,7 @@ class Home extends React.Component {
     this.state = {
       ingredients: ['Salsa', 'Artichoke', 'Flour'],
       API: '',
+      text: ''
     }
 
     this.getIngredients = this.getIngredients.bind(this);
@@ -54,6 +63,16 @@ class Home extends React.Component {
     });
   }
 
+  static navigationOptions = {
+    tabBarColor: 'red',
+    tabBarIcon: () => {
+
+      // You can return any component that you like here! We usually use an
+      // icon component from react-native-vector-icons
+      return <Ionicons name='ios-home' size={25} color='white' />;
+    },
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -76,13 +95,13 @@ class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFC300',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
 //============================================================= Navigator
-const RootStack = createBottomTabNavigator(
+const RootStack = createMaterialBottomTabNavigator(
   {
     Home: {
       screen: Home,
@@ -92,18 +111,19 @@ const RootStack = createBottomTabNavigator(
     },
     Recipes: {
       screen: Recipes,
-    }
+    },
+    // Debugger: {
+    //   screen: Debugger,
+    // }
 
   },
   {
     initialRouteName: 'Home',
-    // navigationOptions: {
-    //   backgroundColor: '#f4511e'
-    // },
-    // headerTintColor: '#fff',
-    // headerTitleStyle: {
-    //   fontWeight: 'bold',
-    // },
+    shifting: true,
+    // barStyle: { backgroundColor: 'red' },
+    navigationOptions: {
+
+    }
   }
 )
 //=============================================================
