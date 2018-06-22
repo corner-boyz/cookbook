@@ -81,7 +81,6 @@ class Home extends React.Component {
         {this.state.ingredients.map((ingredient, index) => {
           return <Text key={index}>{ingredient}</Text>
         })}
-        <Text>{this.state.API}</Text>
       </View>
     );
   };
