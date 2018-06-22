@@ -23,21 +23,17 @@ class Home extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log('Mounted')
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
         <Button
           title="Go to your pantry"
-          onPress={() => this.props.navigation.navigate('Ingredients')}
+          onPress={() => this.props.navigation.navigate('Ingredients', {})}
         />
         <Button
           title="Go to your recipes"
-          onPress={() => this.props.navigation.navigate('Recipes')}
+          onPress={() => this.props.navigation.navigate('Recipes', {})}
         />
       </View>
     );
@@ -62,6 +58,13 @@ const RootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
+    navigationOptions: {
+      backgroundColor: '#f4511e'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   }
 )
 //=============================================================
