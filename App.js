@@ -3,16 +3,19 @@ import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
 
+import axios from 'axios';
+import IP from './IP.js';
+
 import {
   createMaterialBottomTabNavigator
 } from 'react-navigation-material-bottom-tabs';
 
-const RootStack = createMaterialBottomTabNavigator(
+const Root = createMaterialBottomTabNavigator(
   {
     Home: {
       screen: Home,
     },
-    Ingredients: {
+    Pantry: {
       screen: Ingredients,
     },
     Recipes: {
@@ -25,10 +28,40 @@ const RootStack = createMaterialBottomTabNavigator(
   }
 )
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ingredients: [],
+      text: ''
+    }
+    this.getIngredients = this.getIngredients.bind(this);
+  }
+
+  componentDidMount() {
+    this.getIngredients();
+  };
+
+  getIngredients() {
+    axios.get(`http://${IP}/api/ingredients`)
+      .then(results => {
+        this.setState({
+          ingredients: results.data,
+        });
+      }).catch(error => {
+        console.log('Error in retrieving ingredients:', error);
+      });
+  }
+
   render() {
-    return <RootStack />;
+    return <Root screenProps={{
+      ingredients: this.state.ingredients,
+      text: '',
+    }} />;
   }
 }
+
 // open application 'Nox'
-// exp start
 // npm start
+
+//npm run server

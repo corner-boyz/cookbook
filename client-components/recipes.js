@@ -11,14 +11,14 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 class Recipes extends React.Component {
   static navigationOptions = {
-    tabBarColor: 'purple',
+    tabBarColor: 'blue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
