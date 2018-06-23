@@ -14,9 +14,6 @@ class Ingredients extends React.Component {
   static navigationOptions = {
     tabBarColor: 'green',
     tabBarIcon: () => {
-
-      // You can return any component that you like here! We usually use an
-      // icon component from react-native-vector-icons
       return <Ionicons name='ios-basket' size={25} color='white' />;
     },
   }

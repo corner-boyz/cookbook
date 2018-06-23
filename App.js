@@ -2,7 +2,7 @@ import React from 'react';
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
 import Debugger from './client-components/debugging';
-import IP from './client-components/IP.js';
+import IP from './IP.js';
 import axios from 'axios';
 
 import {
@@ -36,33 +36,21 @@ class Home extends React.Component {
 
     this.getIngredients = this.getIngredients.bind(this);
   }
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     headerTitle: "CookBook",
-  //     headerRight: <Image
-  //       source={require('./hat.png')}
-  //       style={{ width: 35, height: 30 }}
-  //     />
-  //   }
-  // }
   getIngredients() {
     axios.get(`http://${IP}/api/ingredients`)
-    .then(results => {
-      //console.log(results.data);
-      this.setState({
-        ingredients: results.data,
+      .then(results => {
+        //console.log(results.data);
+        this.setState({
+          ingredients: results.data,
+        });
+      }).catch(error => {
+        console.log('Error in retrieving ingredients:', error);
       });
-    }).catch(error => {
-      console.log('Error in retrieving ingredients:', error);
-    });
   }
 
   static navigationOptions = {
     tabBarColor: 'red',
     tabBarIcon: () => {
-
-      // You can return any component that you like here! We usually use an
-      // icon component from react-native-vector-icons
       return <Ionicons name='ios-home' size={25} color='white' />;
     },
   }
@@ -114,10 +102,6 @@ const RootStack = createMaterialBottomTabNavigator(
   {
     initialRouteName: 'Home',
     shifting: true,
-    // barStyle: { backgroundColor: 'red' },
-    navigationOptions: {
-
-    }
   }
 )
 //=============================================================
