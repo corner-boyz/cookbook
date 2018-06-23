@@ -1,6 +1,8 @@
 {
   "name": "cook-book",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Pantry tracker and recipe maker",
+  "author": "Calvin Chui, Joseph Oh, Carter Robinson",
   "private": true,
   "devDependencies": {
     "react-native-scripts": "1.14.0",
