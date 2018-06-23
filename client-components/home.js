@@ -1,6 +1,4 @@
 import React from 'react';
-import IP from '../IP.js';
-import axios from 'axios';
 
 import {
   StyleSheet,
@@ -19,18 +17,9 @@ class Home extends React.Component {
       text: ''
     }
 
-    this.getIngredients = this.getIngredients.bind(this);
   }
-  getIngredients() {
-    axios.get(`http://${IP}/api/ingredients`)
-      .then(results => {
-        //console.log(results.data);
-        this.setState({
-          ingredients: results.data,
-        });
-      }).catch(error => {
-        console.log('Error in retrieving ingredients:', error);
-      });
+
+  componentDidMount() {
   }
 
   static navigationOptions = {
@@ -44,16 +33,6 @@ class Home extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
-        {/* <Text>IP: {IP}</Text> */}
-        {/* <Button
-          onPress={this.getIngredients}
-          title="Test Server"
-          color="#841584"
-          accessibilityLabel="Test Server"
-        /> */}
-        {this.state.ingredients.map((ingredient, index) => {
-          return <Text key={index}>{ingredient}</Text>
-        })}
       </View>
     );
   };
