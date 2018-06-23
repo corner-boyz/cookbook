@@ -53,18 +53,17 @@ class Ingredients extends React.Component {
           renderItem={
             ({ item }) =>
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                <Text style={{ width: 200 }}>{item.name}</Text>
+                <Text style={{ width: 200 }}>{item.ingredient}</Text>
                 <Text >{item.quantity}</Text>
               </View>
           }
-          keyExtractor={(item, index) => item.name}
+          keyExtractor={(item, index) => item.ingredient}
         />
 
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Add an Ingredient'
           onChangeText={(text) => this.props.screenProps.text = text}
-        // value={this.props.screenProps.text}
         />
         <Button
           title="submit"
