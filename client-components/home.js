@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+//====================================================
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -18,17 +18,18 @@ class Home extends React.Component {
     }
 
   }
-
-  componentDidMount() {
-  }
-
+  //====================================================
   static navigationOptions = {
     tabBarColor: 'red',
     tabBarIcon: () => {
       return <Ionicons name='ios-home' size={25} color='white' />;
     },
   }
+//====================================================
+  componentDidMount() {
+  }
 
+//====================================================
   render() {
     return (
       <View style={styles.container}>

@@ -6,10 +6,8 @@ import Recipes from './client-components/recipes.js';
 import axios from 'axios';
 import IP from './IP.js';
 
-import {
-  createMaterialBottomTabNavigator
-} from 'react-navigation-material-bottom-tabs';
-
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+//==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {
     Home: {
@@ -27,6 +25,7 @@ const Root = createMaterialBottomTabNavigator(
     shifting: true,
   }
 )
+//==================================================== this is the top level parent component, it contains the states that are passed around
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +36,7 @@ export default class App extends React.Component {
     }
     this.getIngredients = this.getIngredients.bind(this);
   }
-
+//====================================================
   componentDidMount() {
     this.getIngredients();
   };
@@ -52,7 +51,7 @@ export default class App extends React.Component {
         console.log('Error in retrieving ingredients:', error);
       });
   }
-
+//==================================================== screenProps is the global state property!
   render() {
     return <Root screenProps={{
       ingredients: this.state.ingredients,

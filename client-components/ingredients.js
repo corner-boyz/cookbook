@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+//==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
     super(props);
@@ -19,13 +19,14 @@ class Ingredients extends React.Component {
     }
 
   }
+//==================================================== NavBar component
   static navigationOptions = {
     tabBarColor: 'green',
     tabBarIcon: () => {
       return <Ionicons name='ios-basket' size={25} color='white' />;
     },
   }
-
+//====================================================
   componentDidMount() {
 
   }
@@ -41,7 +42,7 @@ class Ingredients extends React.Component {
       index: this.state.index + 1
     })
   }
-
+//====================================================
   render() {
     return (
       <View style={styles.container}>
@@ -75,7 +76,7 @@ class Ingredients extends React.Component {
     )
   }
 }
-
+//==================================================== 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
