@@ -71,7 +71,7 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Welcome to your CookBook, what would you like to do?</Text>
+        <Text>Welcome to your CookBook, what would you like to do? IP: {IP}</Text>
         <Button
           onPress={this.getIngredients}
           title="Test Server"
