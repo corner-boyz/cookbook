@@ -2,6 +2,8 @@ import React from 'react';
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
 import Debugger from './client-components/debugging';
+import IP from './client-components/IP.js';
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -16,9 +18,6 @@ import {
   createStackNavigator,
   createBottomTabNavigator
 } from 'react-navigation';
-
-import IP from './client-components/IP.js';
-import axios from 'axios';
 
 import {
   createMaterialBottomTabNavigator
@@ -71,7 +70,8 @@ class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Welcome to your CookBook, what would you like to do? IP: {IP}</Text>
+        <Text>Welcome to your CookBook, what would you like to do?</Text>
+        <Text>IP: {IP}</Text>
         <Button
           onPress={this.getIngredients}
           title="Test Server"

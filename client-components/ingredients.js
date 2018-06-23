@@ -21,6 +21,10 @@ class Ingredients extends React.Component {
     },
   }
 
+  componentDidMount() {
+    console.log('ingredients mounted')
+  }
+
   render() {
     return (
       <View style={styles.container}>
