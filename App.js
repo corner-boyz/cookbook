@@ -17,7 +17,7 @@ import {
   createBottomTabNavigator
 } from 'react-navigation';
 
-import IP from './client-components/IP.js';
+import IP from './IP.js';
 import axios from 'axios';
 
 import {
