@@ -19,7 +19,7 @@ class Ingredients extends React.Component {
   }
 
   componentDidMount() {
-    console.log('ingredients mounted')
+    console.log(this.props.navigation.state)
   }
 
   render() {

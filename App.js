@@ -1,88 +1,12 @@
 import React from 'react';
+import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
-import Debugger from './client-components/debugging';
-import IP from './IP.js';
-import axios from 'axios';
-
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  Image,
-} from 'react-native';
-
-import {
-  createStackNavigator,
-  createBottomTabNavigator
-} from 'react-navigation';
 
 import {
   createMaterialBottomTabNavigator
 } from 'react-navigation-material-bottom-tabs';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      ingredients: [],
-      text: ''
-    }
-
-    this.getIngredients = this.getIngredients.bind(this);
-  }
-  getIngredients() {
-    axios.get(`http://${IP}/api/ingredients`)
-      .then(results => {
-        //console.log(results.data);
-        this.setState({
-          ingredients: results.data,
-        });
-      }).catch(error => {
-        console.log('Error in retrieving ingredients:', error);
-      });
-  }
-
-  static navigationOptions = {
-    tabBarColor: 'red',
-    tabBarIcon: () => {
-      return <Ionicons name='ios-home' size={25} color='white' />;
-    },
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Welcome to your CookBook, what would you like to do?</Text>
-        <Text>IP: {IP}</Text>
-        <Button
-          onPress={this.getIngredients}
-          title="Test Server"
-          color="#841584"
-          accessibilityLabel="Test Server"
-        />
-        {this.state.ingredients.map((ingredient, index) => {
-          return <Text key={index}>{ingredient}</Text>
-        })}
-      </View>
-    );
-  };
-}
-//============================================================= Styling
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-//============================================================= Navigator
 const RootStack = createMaterialBottomTabNavigator(
   {
     Home: {
@@ -94,18 +18,12 @@ const RootStack = createMaterialBottomTabNavigator(
     Recipes: {
       screen: Recipes,
     },
-    // Debugger: {
-    //   screen: Debugger,
-    // }
-
   },
   {
     initialRouteName: 'Home',
     shifting: true,
   }
 )
-//=============================================================
-// export default App;
 export default class App extends React.Component {
   render() {
     return <RootStack />;

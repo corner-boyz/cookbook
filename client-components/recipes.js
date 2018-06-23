@@ -18,7 +18,7 @@ class Recipes extends React.Component {
   }
 
   componentDidMount() {
-    console.log('recipes mounted')
+    
   }
 
   render() {
