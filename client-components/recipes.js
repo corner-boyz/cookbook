@@ -15,11 +15,11 @@ class Recipes extends React.Component {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
   }
-//====================================================
+  //====================================================
   componentDidMount() {
 
   }
-//====================================================
+  //====================================================
   render() {
     return (
       <View style={styles.container}>

@@ -36,7 +36,7 @@ export default class App extends React.Component {
     }
     this.getIngredients = this.getIngredients.bind(this);
   }
-//====================================================
+  //====================================================
   componentDidMount() {
     this.getIngredients();
   };
@@ -47,16 +47,19 @@ export default class App extends React.Component {
         this.setState({
           ingredients: results.data,
         });
+        console.log(this.state.ingredients)
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
   }
-//==================================================== screenProps is the global state property!
+  //==================================================== screenProps is the global state property!
   render() {
-    return <Root screenProps={{
-      ingredients: this.state.ingredients,
-      text: '',
-    }} />;
+    return <Root
+      screenProps={{
+        ingredients: this.state.ingredients,
+        text: '',
+      }}
+    />;
   }
 }
 
