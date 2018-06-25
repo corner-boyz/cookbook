@@ -34,6 +34,7 @@
     "react-native-cli": "^2.0.1",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.4.1",
-    "react-navigation-material-bottom-tabs": "^0.3.0"
+    "react-navigation-material-bottom-tabs": "^0.3.0",
+    "recipe-ingredient-parser": "^1.5.3"
   }
 }
