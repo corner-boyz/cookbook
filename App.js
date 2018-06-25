@@ -2,6 +2,8 @@ import React from 'react';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
+import Signup from './client-components/signup.js';
+import Login from './client-components/login.js';
 
 import axios from 'axios';
 import IP from './IP.js';
@@ -32,7 +34,8 @@ export default class App extends React.Component {
 
     this.state = {
       ingredients: [],
-      text: ''
+      text: '',
+      isLoggedIn: false,
     }
     this.getIngredients = this.getIngredients.bind(this);
   }
@@ -53,10 +56,13 @@ export default class App extends React.Component {
   }
 //==================================================== screenProps is the global state property!
   render() {
-    return <Root screenProps={{
+    let mainView = this.state.isLoggedIn ? 
+    <Root screenProps={{
       ingredients: this.state.ingredients,
       text: '',
-    }} />;
+    }} />
+    : <Login/>;
+    return mainView;
   }
 }
 
