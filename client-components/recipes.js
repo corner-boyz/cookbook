@@ -36,7 +36,6 @@ class Recipes extends React.Component {
       this.setState({
         recipes: results.data
       });
-      setTimeout(() => console.log('RECIPES', this.state.recipes[0].title), 1000)
     });
   }
 

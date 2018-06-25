@@ -36,7 +36,7 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: false,
+      isLoggedIn: true,
     }
     this.getIngredients = this.getIngredients.bind(this);
   }
