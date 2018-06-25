@@ -36,11 +36,15 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: true,
+      isLoggedIn: false,
+      signUp: false,
     }
     this.getIngredients = this.getIngredients.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
+    this.switchToSignUp = this.switchToSignUp.bind(this);
   }
-//====================================================
+  //====================================================
   componentDidMount() {
     this.getIngredients();
   };
@@ -51,19 +55,66 @@ export default class App extends React.Component {
         this.setState({
           ingredients: results.data,
         });
+        console.log(this.state.ingredients)
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
   }
-//==================================================== screenProps is the global state property!
+
+  logIn() {
+    this.setState({
+      isLoggedIn: true
+    })
+  }
+
+  logOut() {
+    this.setState({
+      isLoggedIn: false
+    })
+  }
+
+  switchToSignUp() {
+    this.setState({
+      signUp: true
+    })
+  }
+  //==================================================== screenProps is the global state property!
   render() {
-    let mainView = this.state.isLoggedIn ? 
-    <Root screenProps={{
-      ingredients: this.state.ingredients,
-      text: '',
-    }} />
-    : <Login/>;
-    return mainView;
+    {
+      if(this.state.signUp === true){
+        return <Signup />
+      }
+      if(this.state.isLoggedIn === false){
+        return <Login
+            screenProps={{
+              logIn: this.logIn,
+              switchToSignUp: this.switchToSignUp,
+            }} />
+      }
+      if(this.state.isLoggedIn === true){
+        return <Root
+            screenProps={{
+              ingredients: this.state.ingredients,
+              text: '',
+            }} />
+      }
+      
+    }
+
+
+    // let mainView = this.state.isLoggedIn ?
+    //   <Root
+    //     screenProps={{
+    //       ingredients: this.state.ingredients,
+    //       text: '',
+    //     }} />
+    //   : <Login
+    //     screenProps={{
+    //       logIn: this.logIn,
+    //       signUp: this.switchToSignUp,
+    //     }}
+    //   />;
+    // return mainView;
   }
 }
 
