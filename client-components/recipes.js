@@ -1,4 +1,7 @@
 import React from 'react';
+import axios from 'axios';
+import IP from '../IP';
+
 import {
   StyleSheet,
   Text,
@@ -8,6 +11,13 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
 class Recipes extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      recipes: [{title: 'hello'}]
+    }
+  }
 
   static navigationOptions = {
     tabBarColor: 'blue',
@@ -17,13 +27,24 @@ class Recipes extends React.Component {
   }
 //====================================================
   componentDidMount() {
-
+    this.findRecipes();
   }
+
+//====================================================
+  findRecipes() {
+    axios.post(`http://${IP}/api/recipes`).then((results) => {
+      this.setState({
+        recipes: results.data
+      });
+      setTimeout(() => console.log('RECIPES', this.state.recipes[0].title), 1000)
+    });
+  }
+
 //====================================================
   render() {
     return (
       <View style={styles.container}>
-        <Text>Here are some recipes for you</Text>
+        <Text>{this.state.recipes[0].title}</Text>
       </View>
     )
   }
