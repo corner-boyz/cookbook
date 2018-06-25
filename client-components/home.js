@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -7,28 +8,37 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
-class Recipes extends React.Component {
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      ingredients: [],
+      text: ''
+    }
+
+  }
+  //====================================================
   static navigationOptions = {
-    tabBarColor: 'blue',
+    tabBarColor: 'red',
     tabBarIcon: () => {
-      return <Ionicons name='ios-list' size={25} color='white' />;
+      return <Ionicons name='ios-home' size={25} color='white' />;
     },
   }
 //====================================================
   componentDidMount() {
-
   }
+
 //====================================================
   render() {
     return (
       <View style={styles.container}>
-        <Text>Here are some recipes for you</Text>
+        <Text>Welcome to your CookBook, what would you like to do?</Text>
       </View>
-    )
-  }
+    );
+  };
 }
-//====================================================
+//============================================================= Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,5 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Recipes;
-
+export default Home;
