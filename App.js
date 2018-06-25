@@ -2,6 +2,8 @@ import React from 'react';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import Recipes from './client-components/recipes.js';
+import Signup from './client-components/signup.js';
+import Login from './client-components/login.js';
 
 import axios from 'axios';
 import IP from './IP.js';
@@ -32,9 +34,14 @@ export default class App extends React.Component {
 
     this.state = {
       ingredients: [],
-      text: ''
+      text: '',
+      isLoggedIn: false,
+      signUp: false,
     }
     this.getIngredients = this.getIngredients.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this);
+    this.switchToSignUp = this.switchToSignUp.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -52,14 +59,61 @@ export default class App extends React.Component {
         console.log('Error in retrieving ingredients:', error);
       });
   }
+
+  logIn() {
+    this.setState({
+      isLoggedIn: true
+    })
+  }
+
+  logOut() {
+    this.setState({
+      isLoggedIn: false
+    })
+  }
+
+  switchToSignUp() {
+    this.setState({
+      signUp: true
+    })
+  }
   //==================================================== screenProps is the global state property!
   render() {
-    return <Root
-      screenProps={{
-        ingredients: this.state.ingredients,
-        text: '',
-      }}
-    />;
+    {
+      if(this.state.signUp === true){
+        return <Signup />
+      }
+      if(this.state.isLoggedIn === false){
+        return <Login
+            screenProps={{
+              logIn: this.logIn,
+              switchToSignUp: this.switchToSignUp,
+            }} />
+      }
+      if(this.state.isLoggedIn === true){
+        return <Root
+            screenProps={{
+              ingredients: this.state.ingredients,
+              text: '',
+            }} />
+      }
+      
+    }
+
+
+    // let mainView = this.state.isLoggedIn ?
+    //   <Root
+    //     screenProps={{
+    //       ingredients: this.state.ingredients,
+    //       text: '',
+    //     }} />
+    //   : <Login
+    //     screenProps={{
+    //       logIn: this.logIn,
+    //       signUp: this.switchToSignUp,
+    //     }}
+    //   />;
+    // return mainView;
   }
 }
 

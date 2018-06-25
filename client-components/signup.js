@@ -25,12 +25,12 @@ class Signup extends React.Component {
 
   }
 //==================================================== NavBar component
-  static navigationOptions = {
-    tabBarColor: 'green',
-    tabBarIcon: () => {
-      return <Ionicons name='ios-basket' size={25} color='white' />;
-    },
-  }
+  // static navigationOptions = {
+  //   tabBarColor: 'green',
+  //   tabBarIcon: () => {
+  //     return <Ionicons name='ios-basket' size={25} color='white' />;
+  //   },
+  // }
 //====================================================
   componentDidMount() {
 
