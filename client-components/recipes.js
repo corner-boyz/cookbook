@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+
+import RecipeEntry from './recipeEntry'
 import IP from '../IP';
 
 import {
   StyleSheet,
   Text,
   View,
+  FlatList
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,10 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class Recipes extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      recipes: [{title: 'hello'}]
-    }
+    this.state = {};
   }
 
   static navigationOptions = {
@@ -44,7 +44,18 @@ class Recipes extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.recipes[0].title}</Text>
+        <Text>Recipes</Text>
+        <FlatList style={styles.list}
+          data={this.state.recipes}
+          renderItem={
+            ({ item }) => (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text> {item.title} </Text>
+                <RecipeEntry key={item.id} recipe={item} />
+              </View>
+            )
+          }
+        />
       </View>
     )
   }
@@ -54,9 +65,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
+  list: {
+    flex: 1,
+    backgroundColor: 'white'
+    // justifyContent: 'center',
+  }
 });
 
 export default Recipes;

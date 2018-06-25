@@ -21,7 +21,8 @@ const Root = createMaterialBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    //Changed to Recipes for faster testing
+    initialRouteName: 'Recipes',
     shifting: true,
   }
 )
