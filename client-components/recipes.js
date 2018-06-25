@@ -50,7 +50,6 @@ class Recipes extends React.Component {
           renderItem={
             ({ item }) => (
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                <Text> {item.title} </Text>
                 <RecipeEntry key={item.id} recipe={item} />
               </View>
             )

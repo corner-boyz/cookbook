@@ -2,22 +2,25 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 
 const RecipeEntry = (props) => {
-  setTimeout(() => {console.dir(props.recipe)}, 1000);
   return (
-    <View>
+    <TouchableOpacity onPress={touchRecipe}>
       <Text>
         {props.recipe.title}
       </Text>
-      <Image 
+      <Image onPress={touchRecipe}
         style={styles.stretch}
         source={{uri: props.recipe.image}} />
-    </View>
+    </TouchableOpacity>
   );
+}
+
+const touchRecipe = () => {
+  console.log('CLICKED');
 }
 
 const styles = StyleSheet.create({
