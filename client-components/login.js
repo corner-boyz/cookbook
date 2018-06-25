@@ -13,26 +13,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
     }
-
   }
-//==================================================== NavBar component
-  static navigationOptions = {
-    tabBarColor: 'green',
-    tabBarIcon: () => {
-      return <Ionicons name='ios-basket' size={25} color='white' />;
-    },
-  }
-//====================================================
+  // //==================================================== NavBar component
+  //   static navigationOptions = {
+  //     tabBarColor: 'green',
+  //     tabBarIcon: () => {
+  //       return <Ionicons name='ios-basket' size={25} color='white' />;
+  //     },
+  //   }
+  //====================================================
   componentDidMount() {
 
   }
-
-  submitLogin() {
-  }
-//====================================================
+  //====================================================
   render() {
     return (
       <View style={styles.container}>
@@ -56,15 +51,16 @@ class Login extends React.Component {
           title='Log In'
           onPress={() => {
             this.submitLogin();
+            this.props.screenProps.logIn();
           }}
         />
         <Text style={styles.signUpText}>
-            Don't have an account?
+          Don't have an account?
         </Text>
         <Button
           title="Sign Up"
           onPress={() => {
-            this.submitSignup();
+            this.props.screenProps.switchToSignUp();
           }}
           color='#ff0000'
           style={styles.signUpButton}
@@ -87,8 +83,8 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   signUpText: {
-   paddingTop: 20,
-   paddingBottom: 10, 
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   signUpButton: {
     backgroundColor: '#ff0000',

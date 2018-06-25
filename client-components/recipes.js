@@ -25,7 +25,7 @@ class Recipes extends React.Component {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
   }
-//====================================================
+  //====================================================
   componentDidMount() {
     this.findRecipes();
   }
@@ -39,8 +39,7 @@ class Recipes extends React.Component {
       setTimeout(() => console.log('RECIPES', this.state.recipes[0].title), 1000)
     });
   }
-
-//====================================================
+  //====================================================
   render() {
     return (
       <View style={styles.container}>
