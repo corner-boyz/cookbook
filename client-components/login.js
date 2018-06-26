@@ -8,7 +8,8 @@ import {
   FlatList,
 } from 'react-native';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 
 class Login extends React.Component {
   constructor(props) {
@@ -16,13 +17,6 @@ class Login extends React.Component {
     this.state = {
     }
   }
-  // //==================================================== NavBar component
-  //   static navigationOptions = {
-  //     tabBarColor: 'green',
-  //     tabBarIcon: () => {
-  //       return <Ionicons name='ios-basket' size={25} color='white' />;
-  //     },
-  //   }
   //====================================================
   componentDidMount() {
 

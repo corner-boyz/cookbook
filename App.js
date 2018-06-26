@@ -23,7 +23,6 @@ const Root = createMaterialBottomTabNavigator(
     },
   },
   {
-    //Changed to Recipes for faster testing
     initialRouteName: 'Home',
     shifting: true,
   }
@@ -101,21 +100,6 @@ export default class App extends React.Component {
       }
 
     }
-
-
-    // let mainView = this.state.isLoggedIn ?
-    //   <Root
-    //     screenProps={{
-    //       ingredients: this.state.ingredients,
-    //       text: '',
-    //     }} />
-    //   : <Login
-    //     screenProps={{
-    //       logIn: this.logIn,
-    //       signUp: this.switchToSignUp,
-    //     }}
-    //   />;
-    // return mainView;
   }
 }
 

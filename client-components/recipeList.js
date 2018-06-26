@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
 import IP from '../IP';
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class RecipeList extends React.Component {
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
+
   }
   //====================================================
   componentDidMount() {
@@ -48,7 +49,7 @@ class RecipeList extends React.Component {
     this.setState({
       selectedRecipe: recipe
     });
-    setTimeout(() => console.log(this.state.selectedRecipe), 1000)
+    // setTimeout(() => console.log(this.state.selectedRecipe), 1000)
   }
 
   recipeBack() {
@@ -61,12 +62,14 @@ class RecipeList extends React.Component {
     if (!this.state.selectedRecipe) {
       return (
         <View style={styles.container}>
-          <Text>Recipes</Text>
+          <Text>Here are some Recipes</Text>
           <FlatList style={styles.list}
             data={this.state.recipes}
             renderItem={
               ({ item }) => (
-                <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View
+                // style={{ flex: 1, flexDirection: 'row' }}
+                >
                   <RecipeListEntry
                     recipe={item}
                     selectRecipe={this.selectRecipe}
@@ -80,7 +83,7 @@ class RecipeList extends React.Component {
       )
     } else {
       return (
-        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack}/>
+        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack} />
       )
     }
   }
@@ -89,9 +92,10 @@ class RecipeList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    backgroundColor: 'powderblue',
+    alignItems: 'center',
+    paddingTop: 20,
+    // justifyContent: 'center',
   },
   list: {
     flex: 1,
