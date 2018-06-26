@@ -8,18 +8,42 @@ import {
   FlatList,
 } from 'react-native';
 
-
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import IP from '../IP';
 //==================================================== 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
+      wrongEmailOrPass: '', 
     }
+    this.submitLogin = this.submitLogin.bind(this);
   }
   //====================================================
   componentDidMount() {
-
+  }
+  //====================================================
+  submitLogin() {
+    if (this.state.email.length) {
+      axios.post(`http://${IP}/api/login`, {
+        email: this.state.email,
+        password: this.state.password,
+      }).then(results => {
+        if (results.data === 'Wrong email or password') {
+          this.setState({
+            wrongEmailOrPass: true,
+          });
+        } else {
+          let { email, name } = results.data;
+          // Do something with this data
+          this.props.screenProps.logIn();
+        }
+      }).catch(error => {
+        console.log('Error in validating user login:', error);
+      });
+    }
   }
   //====================================================
   render() {
@@ -30,22 +54,26 @@ class Login extends React.Component {
           style={{ height: 40, width: 250 }}
           placeholder='Email'
           onChangeText={text => this.setState({
-            email: text
+            email: text,
+            wrongEmailOrPass: false,
           })}
-        />
+          />
+        {this.state.wrongEmailOrPass
+          ? <Text style={styles.warningText}>Wrong email or password.</Text>
+          : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
-            password: text
+            password: text,
+            wrongEmailOrPass: false,
           })}
         />
         <Button
           title='Log In'
           onPress={() => {
-            // this.submitLogin();
-            this.props.screenProps.logIn();
+            this.submitLogin();
           }}
         />
         <Text style={styles.signUpText}>
@@ -82,6 +110,9 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     backgroundColor: '#ff0000',
+  },
+  warningText: {
+    color: '#ff0000'
   }
 });
 
