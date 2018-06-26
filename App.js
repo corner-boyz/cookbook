@@ -23,6 +23,7 @@ const Root = createMaterialBottomTabNavigator(
     },
   },
   {
+    //Changed to Recipes for faster testing
     initialRouteName: 'Home',
     shifting: true,
   }
