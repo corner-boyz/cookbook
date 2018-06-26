@@ -8,8 +8,6 @@ import {
   FlatList,
 } from 'react-native';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import axios from 'axios';
 import IP from '../IP';
 //==================================================== 
@@ -23,13 +21,6 @@ class Login extends React.Component {
     }
     this.submitLogin = this.submitLogin.bind(this);
   }
-  // //==================================================== NavBar component
-  //   static navigationOptions = {
-  //     tabBarColor: 'green',
-  //     tabBarIcon: () => {
-  //       return <Ionicons name='ios-basket' size={25} color='white' />;
-  //     },
-  //   }
   //====================================================
   componentDidMount() {
   }
