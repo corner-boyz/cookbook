@@ -24,7 +24,7 @@ const Root = createMaterialBottomTabNavigator(
   },
   {
     //Changed to Recipes for faster testing
-    initialRouteName: 'Recipes',
+    initialRouteName: 'Home',
     shifting: true,
   }
 )
@@ -36,7 +36,7 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: true,
+      isLoggedIn: false,
       signUp: false,
     }
     this.getIngredients = this.getIngredients.bind(this);
