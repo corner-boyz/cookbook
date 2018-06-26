@@ -9,6 +9,10 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import axios from 'axios';
+import IP from '../IP';
+
 //==================================================== 
 class Signup extends React.Component {
   constructor(props) {
@@ -21,27 +25,39 @@ class Signup extends React.Component {
         confirmedPassword: '',
         noEmail: false,
         notMatching: false,
+        tooShort: false,
     }
 
-  }
+}
 //==================================================== NavBar component
   static navigationOptions = {
     tabBarColor: 'green',
     tabBarIcon: () => {
-      return <Ionicons name='ios-basket' size={25} color='white' />;
+        return <Ionicons name='ios-basket' size={25} color='white' />;
     },
   }
 //====================================================
   componentDidMount() {
-
   }
 
   submitSignup() {
     this.setState({
         noEmail: this.state.email.indexOf('@') === -1,
-        notMatching: this.state.password !== this.state.confirmedPassword
+        notMatching: this.state.password !== this.state.confirmedPassword,
+        tooShort: this.state.password.length < 6,
     });
-
+    if (!this.state.noEmail && !this.state.notMatching && !this.state.tooShort) {
+        axios.post(`http://${IP}/api/signup`, {
+            email: this.state.email,
+            password: this.state.password,
+            name: this.state.name,
+          })
+          .then(() => {
+            //Redirect to home page
+          }).catch(error => {
+            console.log('Error in creating new user:', error);
+          });
+    }
   }
 //====================================================
   render() {
@@ -65,8 +81,8 @@ class Signup extends React.Component {
             email: text
           })}
         />
-        {this.state.notMatching ? 
-        <Text style={styles.warningText}>Passwords do not match.</Text>
+        {this.state.tooShort ? 
+        <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
         : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
@@ -76,6 +92,9 @@ class Signup extends React.Component {
             password: text
           })}
         />
+        {this.state.notMatching ? 
+        <Text style={styles.warningText}>Passwords do not match.</Text>
+        : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Confirm Password'
