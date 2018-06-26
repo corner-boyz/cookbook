@@ -33,7 +33,7 @@ class Recipes extends React.Component {
     this.findRecipes();
   }
 
-//====================================================
+  //====================================================
   findRecipes() {
     axios.post(`http://${IP}/api/recipes`).then((results) => {
       this.setState({
@@ -44,7 +44,7 @@ class Recipes extends React.Component {
 
   selectRecipe(recipe) {
     this.setState({
-      selectedRecipe: recipe 
+      selectedRecipe: recipe
     });
     setTimeout(() => console.log(this.state.selectedRecipe), 1000)
   }
@@ -59,10 +59,14 @@ class Recipes extends React.Component {
             renderItem={
               ({ item }) => (
                 <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <RecipeEntry key={item.id} recipe={item} selectRecipe={this.selectRecipe}/>
+                  <RecipeEntry
+                    recipe={item}
+                    selectRecipe={this.selectRecipe}
+                  />
                 </View>
               )
             }
+            keyExtractor={(item, index) => item.title}
           />
         </View>
       )
