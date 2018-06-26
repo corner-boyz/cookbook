@@ -16,7 +16,7 @@ class RecipeListEntry extends React.Component {
     this.state = {};
   }
   retrieveRecipe = (recipeId) => {
-    axios.post(`http://${IP}/api/recipe`).then((results) => {
+    axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
       // this.setState({
       //   recipe: results.data
       // });
