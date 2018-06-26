@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import RecipeListEntry from './recipeListEntry'
+import Recipe from './recipe'
 import IP from '../IP';
 
 import {
@@ -53,7 +54,7 @@ class RecipeList extends React.Component {
   recipeBack() {
     this.setState({
       selectedRecipe: undefined
-    })
+    });
   }
   //====================================================
   render() {
@@ -79,9 +80,7 @@ class RecipeList extends React.Component {
       )
     } else {
       return (
-        <View style={styles.container}>
-          <Text>{this.state.selectedRecipe.title}</Text>
-        </View>
+        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack}/>
       )
     }
   }
