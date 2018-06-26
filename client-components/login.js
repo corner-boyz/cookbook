@@ -50,7 +50,7 @@ class Login extends React.Component {
         <Button
           title='Log In'
           onPress={() => {
-            this.submitLogin();
+            // this.submitLogin();
             this.props.screenProps.logIn();
           }}
         />

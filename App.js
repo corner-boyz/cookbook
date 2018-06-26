@@ -54,7 +54,7 @@ export default class App extends React.Component {
         this.setState({
           ingredients: results.data,
         });
-        console.log(this.state.ingredients)
+        // console.log(this.state.ingredients)
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
@@ -80,24 +80,24 @@ export default class App extends React.Component {
   //==================================================== screenProps is the global state property!
   render() {
     {
-      if(this.state.signUp === true){
+      if (this.state.signUp === true) {
         return <Signup />
       }
-      if(this.state.isLoggedIn === false){
+      if (this.state.isLoggedIn === false) {
         return <Login
-            screenProps={{
-              logIn: this.logIn,
-              switchToSignUp: this.switchToSignUp,
-            }} />
+          screenProps={{
+            logIn: this.logIn,
+            switchToSignUp: this.switchToSignUp,
+          }} />
       }
-      if(this.state.isLoggedIn === true){
+      if (this.state.isLoggedIn === true) {
         return <Root
-            screenProps={{
-              ingredients: this.state.ingredients,
-              text: '',
-            }} />
+          screenProps={{
+            ingredients: this.state.ingredients,
+            text: '',
+          }} />
       }
-      
+
     }
 
 

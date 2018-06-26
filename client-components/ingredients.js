@@ -30,11 +30,14 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.actions.goBack();
+    }, 2000)
 
   }
 
   submitIngredient() {
-    console.log('Submitting new Ingredient...')
+    // console.log('Submitting new Ingredient...')
     let newIngredient = {
       name: this.props.screenProps.text,
       quantity: 99
@@ -52,23 +55,23 @@ class Ingredients extends React.Component {
         {/* <List
           // style={styles.list}
         > */}
-          <FlatList
-            style={styles.list}
-            data={this.props.screenProps.ingredients}
-            extraData={this.state.index}
-            renderItem={
-              ({ item }) =>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <Text
-                    style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                  >{item.ingredient}</Text>
-                  <Text
-                    style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                  >{item.quantity}{item.unit}</Text>
-                </View>
-            }
-            keyExtractor={(item, index) => item.ingredient}
-          />
+        <FlatList
+          style={styles.list}
+          data={this.props.screenProps.ingredients}
+          extraData={this.state.index}
+          renderItem={
+            ({ item }) =>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text
+                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
+                >{item.ingredient}</Text>
+                <Text
+                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
+                >{item.quantity}{item.unit}</Text>
+              </View>
+          }
+          keyExtractor={(item, index) => item.ingredient}
+        />
         {/* </List> */}
         <TextInput
           style={{ height: 40, width: 250 }}
