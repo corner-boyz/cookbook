@@ -20,6 +20,7 @@ class RecipeList extends React.Component {
       selectedRecipe: undefined
     };
     this.selectRecipe = this.selectRecipe.bind(this);
+    this.recipeBack = this.recipeBack.bind(this);
   }
 
   static navigationOptions = {
@@ -47,6 +48,12 @@ class RecipeList extends React.Component {
       selectedRecipe: recipe
     });
     setTimeout(() => console.log(this.state.selectedRecipe), 1000)
+  }
+
+  recipeBack() {
+    this.setState({
+      selectedRecipe: undefined
+    })
   }
   //====================================================
   render() {

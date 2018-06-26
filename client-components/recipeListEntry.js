@@ -24,14 +24,14 @@ class RecipeListEntry extends React.Component {
       // setTimeout(() => console.log('RECIPE', this.state.recipe.title), 1000)
     });
   }
-  
+
   render() {
     return (
       <TouchableOpacity onPress={() => this.retrieveRecipe(this.props.recipe.id)}>
         <Text>{this.props.recipe.title}</Text>
         <Image
           style={styles.stretch}
-          source={{uri: this.props.recipe.image}} />
+          source={{ uri: this.props.recipe.image }} />
       </TouchableOpacity>
     );
   }
