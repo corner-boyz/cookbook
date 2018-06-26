@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 
-class RecipeEntry extends React.Component {
+class RecipeListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RecipeEntry;
+export default RecipeListEntry;
