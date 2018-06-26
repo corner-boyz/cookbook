@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 20,
   },
   list: {
     width: 350,

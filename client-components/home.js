@@ -27,7 +27,7 @@ class Home extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    console.log(this.props.navigation)
+    // console.log(this.props.navigation)
     setTimeout(() => {
       this.props.navigation.actions.goBack();
     }, 2000)
