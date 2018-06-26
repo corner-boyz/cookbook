@@ -20,7 +20,7 @@ const Root = createMaterialBottomTabNavigator(
     },
     Recipes: {
       screen: RecipeList,
-    },
+    }
   },
   {
     //Changed to Recipes for faster testing
