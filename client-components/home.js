@@ -25,11 +25,15 @@ class Home extends React.Component {
       return <Ionicons name='ios-home' size={25} color='white' />;
     },
   }
-//====================================================
+  //====================================================
   componentDidMount() {
+    console.log(this.props.navigation)
+    setTimeout(() => {
+      this.props.navigation.actions.goBack();
+    }, 2000)
   }
 
-//====================================================
+  //====================================================
   render() {
     return (
       <View style={styles.container}>
