@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import RecipeListEntry from './recipeListEntry'
+import Recipe from './recipe'
 import IP from '../IP';
 
 import {
@@ -20,6 +21,7 @@ class RecipeList extends React.Component {
       selectedRecipe: undefined
     };
     this.selectRecipe = this.selectRecipe.bind(this);
+    this.recipeBack = this.recipeBack.bind(this);
   }
 
   static navigationOptions = {
@@ -48,6 +50,12 @@ class RecipeList extends React.Component {
     });
     setTimeout(() => console.log(this.state.selectedRecipe), 1000)
   }
+
+  recipeBack() {
+    this.setState({
+      selectedRecipe: undefined
+    });
+  }
   //====================================================
   render() {
     if (!this.state.selectedRecipe) {
@@ -72,9 +80,7 @@ class RecipeList extends React.Component {
       )
     } else {
       return (
-        <View style={styles.container}>
-          <Text>{this.state.selectedRecipe.title}</Text>
-        </View>
+        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack}/>
       )
     }
   }

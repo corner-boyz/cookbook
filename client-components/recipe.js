@@ -2,19 +2,34 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
+  View,
   Image,
+  BackHandler
 } from 'react-native';
 
-const Recipe = (props) => {
-  return (
-    <TouchableOpacity onPress={() => touchRecipe(props.recipe.id)}>
-      <Text>{props.recipe.title}</Text>
-      <Image onPress={touchRecipe}
-        style={styles.stretch}
-        source={{uri: props.recipe.image}} />
-    </TouchableOpacity>
-  );
+class Recipe extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    setTimeout(()=>console.log(this.props.recipeBack), 2000);
+    BackHandler.addEventListener('hardwareBackPress', this.props.recipeBack);
+  }
+ 
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.props.recipeBack);
+  }
+
+  render() {
+    return (
+      <View>
+        <Text>{this.props.selectedRecipe.title}</Text>
+        <Text>{this.props.selectedRecipe.id}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
