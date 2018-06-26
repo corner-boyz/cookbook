@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
-import Recipes from './client-components/recipes.js';
+import RecipeList from './client-components/recipeList';
 import Signup from './client-components/signup.js';
 import Login from './client-components/login.js';
 
@@ -19,7 +19,7 @@ const Root = createMaterialBottomTabNavigator(
       screen: Ingredients,
     },
     Recipes: {
-      screen: Recipes,
+      screen: RecipeList,
     },
   },
   {

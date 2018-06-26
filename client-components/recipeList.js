@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import RecipeEntry from './recipeEntry'
+import RecipeListEntry from './recipeListEntry'
 import IP from '../IP';
 
 import {
@@ -13,7 +13,7 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
-class Recipes extends React.Component {
+class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,7 @@ class Recipes extends React.Component {
 
   //====================================================
   findRecipes() {
-    axios.post(`http://${IP}/api/recipes`).then((results) => {
+    axios.post(`http://${IP}/api/recipelist`).then((results) => {
       this.setState({
         recipes: results.data
       });
@@ -59,7 +59,7 @@ class Recipes extends React.Component {
             renderItem={
               ({ item }) => (
                 <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <RecipeEntry
+                  <RecipeListEntry
                     recipe={item}
                     selectRecipe={this.selectRecipe}
                   />
@@ -94,5 +94,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Recipes;
+export default RecipeList;
 
