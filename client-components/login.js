@@ -20,7 +20,6 @@ class Login extends React.Component {
       email: '',
       password: '',
       wrongEmailOrPass: '', 
-      match: '',
     }
     this.submitLogin = this.submitLogin.bind(this);
   }
@@ -36,7 +35,6 @@ class Login extends React.Component {
   }
   //====================================================
   submitLogin() {
-    let app = this;
     axios.post(`http://${IP}/api/login`, {
       email: this.state.email,
       password: this.state.password,
@@ -86,7 +84,7 @@ class Login extends React.Component {
           }}
         />
         <Text style={styles.signUpText}>
-          Don't have an account? {this.state.match}
+          Don't have an account?
         </Text>
         <Button
           title="Sign Up"

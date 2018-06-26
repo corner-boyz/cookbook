@@ -50,7 +50,8 @@ export default class App extends React.Component {
   };
 
   getIngredients() {
-    axios.get(`http://${IP}/api/ingredients`)
+    // Hardcoded pizza@pizza.com until username is stored
+    axios.get(`http://${IP}/api/ingredients/pizza@pizza.com`)
       .then(results => {
         this.setState({
           ingredients: results.data,
