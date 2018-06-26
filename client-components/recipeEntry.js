@@ -17,10 +17,11 @@ class RecipeEntry extends React.Component {
   }
   retrieveRecipe = (recipeId) => {
     axios.post(`http://${IP}/api/recipe`).then((results) => {
-      this.setState({
-        recipe: results.data
-      });
-      setTimeout(() => console.log('RECIPE', this.state.recipe.title), 1000)
+      // this.setState({
+      //   recipe: results.data
+      // });
+      this.props.selectRecipe(results.data);
+      // setTimeout(() => console.log('RECIPE', this.state.recipe.title), 1000)
     });
   }
   

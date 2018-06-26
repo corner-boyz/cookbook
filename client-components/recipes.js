@@ -16,7 +16,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 class Recipes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedRecipe: undefined
+    };
+    this.selectRecipe = this.selectRecipe.bind(this);
   }
 
   static navigationOptions = {
@@ -38,23 +41,38 @@ class Recipes extends React.Component {
       });
     });
   }
+
+  selectRecipe(recipe) {
+    this.setState({
+      selectedRecipe: recipe 
+    });
+    setTimeout(() => console.log(this.state.selectedRecipe), 1000)
+  }
   //====================================================
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Recipes</Text>
-        <FlatList style={styles.list}
-          data={this.state.recipes}
-          renderItem={
-            ({ item }) => (
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <RecipeEntry key={item.id} recipe={item} />
-              </View>
-            )
-          }
-        />
-      </View>
-    )
+    if (!this.state.selectedRecipe) {
+      return (
+        <View style={styles.container}>
+          <Text>Recipes</Text>
+          <FlatList style={styles.list}
+            data={this.state.recipes}
+            renderItem={
+              ({ item }) => (
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <RecipeEntry key={item.id} recipe={item} selectRecipe={this.selectRecipe}/>
+                </View>
+              )
+            }
+          />
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>{this.state.selectedRecipe.title}</Text>
+        </View>
+      )
+    }
   }
 }
 //====================================================
