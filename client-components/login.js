@@ -35,22 +35,24 @@ class Login extends React.Component {
   }
   //====================================================
   submitLogin() {
-    axios.post(`http://${IP}/api/login`, {
-      email: this.state.email,
-      password: this.state.password,
-    }).then(results => {
-      if (results.data === 'Wrong email or password') {
-        this.setState({
-          wrongEmailOrPass: true,
-        });
-      } else {
-        let { email, name } = results.data;
-        // Do something with this data
-        this.props.screenProps.logIn();
-      }
-    }).catch(error => {
-      console.log('Error in validating user login:', error);
-    });
+    if (this.state.email.length) {
+      axios.post(`http://${IP}/api/login`, {
+        email: this.state.email,
+        password: this.state.password,
+      }).then(results => {
+        if (results.data === 'Wrong email or password') {
+          this.setState({
+            wrongEmailOrPass: true,
+          });
+        } else {
+          let { email, name } = results.data;
+          // Do something with this data
+          this.props.screenProps.logIn();
+        }
+      }).catch(error => {
+        console.log('Error in validating user login:', error);
+      });
+    }
   }
   //====================================================
   render() {
