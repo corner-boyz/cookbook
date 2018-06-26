@@ -61,7 +61,7 @@ export default class App extends React.Component {
       ingredients: this.state.ingredients,
       text: '',
     }} />
-    : <Login/>;
+    : <Signup/>;
     return mainView;
   }
 }
