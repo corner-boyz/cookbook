@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  FlatList,
-} from 'react-native';
-
+import {StyleSheet, Text, View, TextInput, Button, FlatList} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import axios from 'axios';
+
 import IP from '../IP';
 
 //==================================================== 

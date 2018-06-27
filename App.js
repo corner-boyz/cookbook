@@ -1,14 +1,14 @@
 import React from 'react';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import axios from 'axios';
+
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
 import Signup from './client-components/signup.js';
 import Login from './client-components/login.js';
 
-import axios from 'axios';
 import IP from './IP.js';
-
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {

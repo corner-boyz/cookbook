@@ -1,11 +1,5 @@
 import React from 'react';
-
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
+import {StyleSheet, Text, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
 class Home extends React.Component {
