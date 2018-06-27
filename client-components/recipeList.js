@@ -38,7 +38,7 @@ class RecipeList extends React.Component {
 
   //====================================================
   findRecipes() {
-    axios.post(`http://${IP}/api/recipelist`).then((results) => {
+    axios.post(`http://${IP}/api/recipelist`, this.props.screenProps.ingredients).then((results) => {
       this.setState({
         recipes: results.data
       });
@@ -49,7 +49,6 @@ class RecipeList extends React.Component {
     this.setState({
       selectedRecipe: recipe
     });
-    // setTimeout(() => console.log(this.state.selectedRecipe), 1000)
   }
 
   recipeBack() {
@@ -77,7 +76,7 @@ class RecipeList extends React.Component {
                 </View>
               )
             }
-            keyExtractor={(item, index) => item.title}
+            keyExtractor={(item, index) => item.id.toString()}
           />
         </View>
       )
