@@ -35,9 +35,11 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: false,
+      // isLoggedIn: false,
+      isLoggedIn: true, //uncomment for debugging
       signUp: false,
-      email: '',
+      // email: '',
+      email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -47,11 +49,12 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
+    this.getIngredients(); //uncomment for debugging
   };
 
   getIngredients() {
-    console.log('Testing: ', this.state.email);
-    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
+    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
+    axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
       .then(results => {
         this.setState({
           ingredients: results.data,
@@ -108,6 +111,7 @@ export default class App extends React.Component {
           screenProps={{
             ingredients: this.state.ingredients,
             text: '',
+            email: this.state.email,
           }} />
       }
 
