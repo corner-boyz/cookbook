@@ -19,47 +19,39 @@ class Signup extends React.Component {
     super(props);
 
     this.state = {
-        name: '',
-        email: '',
-        password: '',
-        confirmedPassword: '',
-        noEmail: false,
-        notMatching: false,
-        tooShort: false,
+      name: '',
+      email: '',
+      password: '',
+      confirmedPassword: '',
+      noEmail: false,
+      notMatching: false,
+      tooShort: false,
     }
 
-}
-//==================================================== NavBar component
-  // static navigationOptions = {
-  //   tabBarColor: 'green',
-  //   tabBarIcon: () => {
-  //     return <Ionicons name='ios-basket' size={25} color='white' />;
-  //   },
-  // }
-//====================================================
+  }
   componentDidMount() {
   }
 
   submitSignup() {
     this.setState({
-        noEmail: this.state.email.indexOf('@') === -1,
-        notMatching: this.state.password !== this.state.confirmedPassword,
-        tooShort: this.state.password.length < 6,
+      noEmail: this.state.email.indexOf('@') === -1,
+      notMatching: this.state.password !== this.state.confirmedPassword,
+      tooShort: this.state.password.length < 6,
     });
     if (!this.state.noEmail && !this.state.notMatching && !this.state.tooShort) {
-        axios.post(`http://${IP}/api/signup`, {
-            email: this.state.email,
-            password: this.state.password,
-            name: this.state.name,
-          })
-          .then(() => {
-            //Redirect to home page
-          }).catch(error => {
-            console.log('Error in creating new user:', error);
-          });
+      axios.post(`http://${IP}/api/signup`, {
+        email: this.state.email,
+        password: this.state.password,
+        name: this.state.name,
+      })
+        .then(() => {
+          //Redirect to home page
+        }).catch(error => {
+          console.log('Error in creating new user:', error);
+        });
     }
   }
-//====================================================
+  //====================================================
   render() {
     return (
       <View style={styles.container}>
@@ -68,12 +60,12 @@ class Signup extends React.Component {
           style={{ height: 40, width: 250 }}
           placeholder='Name'
           onChangeText={text => this.setState({
-              name: text
+            name: text
           })}
         />
-        {this.state.noEmail ? 
-        <Text style={styles.warningText}>Please enter a valid email address.</Text>
-        : (null)}
+        {this.state.noEmail ?
+          <Text style={styles.warningText}>Please enter a valid email address.</Text>
+          : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Email'
@@ -81,9 +73,9 @@ class Signup extends React.Component {
             email: text
           })}
         />
-        {this.state.tooShort ? 
-        <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
-        : (null)}
+        {this.state.tooShort ?
+          <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
+          : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Password'
@@ -92,9 +84,9 @@ class Signup extends React.Component {
             password: text
           })}
         />
-        {this.state.notMatching ? 
-        <Text style={styles.warningText}>Passwords do not match.</Text>
-        : (null)}
+        {this.state.notMatching ?
+          <Text style={styles.warningText}>Passwords do not match.</Text>
+          : (null)}
         <TextInput
           style={{ height: 40, width: 250 }}
           placeholder='Confirm Password'
@@ -108,6 +100,16 @@ class Signup extends React.Component {
           onPress={() => {
             this.submitSignup();
           }}
+        />
+        <Text
+          style={styles.signUpText}
+        >Already have an account?</Text>
+        <Button
+          title="Go Back"
+          onPress={() => {
+            this.props.screenProps.switchToLogin();
+          }}
+          color="red"
         />
       </View>
     )
@@ -127,7 +129,11 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   warningText: {
-      color: '#ff0000'
+    color: '#ff0000'
+  },
+  signUpText: {
+    paddingTop: 20,
+    paddingBottom: 10,
   }
 });
 

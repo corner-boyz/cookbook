@@ -42,6 +42,7 @@ export default class App extends React.Component {
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.switchToSignUp = this.switchToSignUp.bind(this);
+    this.switchToLogin = this.switchToLogin.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -78,11 +79,21 @@ export default class App extends React.Component {
       signUp: true
     })
   }
+  switchToLogin() {
+    // console.log('firing');
+    this.setState({
+      signUp: false
+    })
+  }
   //==================================================== screenProps is the global state property!
   render() {
     {
       if (this.state.signUp === true) {
-        return <Signup />
+        return <Signup
+          screenProps={{
+            switchToLogin: this.switchToLogin
+          }}
+        />
       }
       if (this.state.isLoggedIn === false) {
         return <Login
