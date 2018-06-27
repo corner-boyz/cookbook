@@ -1,41 +1,67 @@
 import React from 'react';
+import axios from 'axios';
+
+import IP from '../IP';
+
 import {
   StyleSheet,
   Text,
   View,
   BackHandler,
   Button,
+  Image,
+  FlatList
 } from 'react-native';
 
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      recipeDetails: {diets: [], analyzedInstructions: [{steps: [{}, {}]}]}
+    };
   }
-
+  //====================================================
   componentDidMount() {
-    // setTimeout(()=>console.log(this.props.recipeBack), 2000);
-    BackHandler.addEventListener('hardwareBackPress', this.props.recipeBack);
+    this.findRecipes();
   }
-
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.props.recipeBack);
+  //====================================================
+  findRecipes() {
+    axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
+      this.setState({
+        recipeDetails: results.data
+      });
+      setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
+    });
   }
-
+  //====================================================
   render() {
     return (
-      <View style={styles.text}>
-        <Text>Here's a Recipe:</Text>
-        <Text>{this.props.selectedRecipe.title}</Text>
-        <Text>{this.props.selectedRecipe.id}</Text>
-        <Button
-          title="Back to Recipes"
-          onPress={() => {
-            console.log('firing..');
-            this.props.recipeBack()
-          }}
-        />
-      </View>
+
+        <View style={styles.container}>
+          <Button
+            title="Back to Recipes"
+            onPress={() => {
+              this.props.recipeBack()
+            }}
+          />
+          <Text>{this.state.recipeDetails.title}</Text>
+          <Text>{this.state.recipeDetails.id}</Text>
+          <Image
+            style={styles.stretch}
+            source={{uri: this.state.recipeDetails.image}}
+          />
+          <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+          <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+          <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
+          <Text>Diet</Text>
+          {this.state.recipeDetails.diets.map((diet) => (
+            <Text>{diet}</Text>
+          ))}
+          <Text>Steps</Text>
+          {this.state.recipeDetails.analyzedInstructions[0].steps.map((diet) => (
+            <Text>{diet.number}. {diet.step}</Text>
+          ))}
+        </View>
     );
   }
 }
@@ -50,6 +76,18 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'powderblue',
+    alignItems: 'center',
+    paddingTop: 20,
+    // justifyContent: 'center',
+  },
+  list: {
+    flex: 1,
+    backgroundColor: 'white'
+    // justifyContent: 'center',
   }
 });
 
