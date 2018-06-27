@@ -112,6 +112,7 @@ export default class App extends React.Component {
             ingredients: this.state.ingredients,
             text: '',
             email: this.state.email,
+            getIngredients: this.getIngredients
           }} />
       }
 
