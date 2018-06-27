@@ -16,9 +16,7 @@ import {
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      recipeDetails: {diets: [], analyzedInstructions: [{steps: [{}, {}]}]}
-    };
+    this.state = {};
   }
   //====================================================
   componentDidMount() {
@@ -30,13 +28,13 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
-      setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
+      // setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
     });
   }
   //====================================================
   render() {
-    return (
-
+    if (this.state.recipeDetails) {
+      return(
         <View style={styles.container}>
           <Button
             title="Back to Recipes"
@@ -45,25 +43,44 @@ class Recipe extends React.Component {
             }}
           />
           <Text>{this.state.recipeDetails.title}</Text>
-          <Text>{this.state.recipeDetails.id}</Text>
           <Image
             style={styles.stretch}
             source={{uri: this.state.recipeDetails.image}}
           />
+          {this.state.recipeDetails.preparationMinutes ?
           <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+          : undefined}
+          {this.state.recipeDetails.preparationMinutes ?
           <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+          : undefined}
+          {this.state.recipeDetails.preparationMinutes ?
           <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
-          <Text>Diet</Text>
-          {this.state.recipeDetails.diets.map((diet) => (
-            <Text>{diet}</Text>
-          ))}
-          <Text>Steps</Text>
-          {this.state.recipeDetails.analyzedInstructions[0].steps.map((diet) => (
-            <Text>{diet.number}. {diet.step}</Text>
-          ))}
+          : undefined}
+          {this.state.recipeDetails.diets.length ? 
+            <View>
+              <Text>Diet</Text>
+                {this.state.recipeDetails.diets.map((diet, i) => (
+                  <Text key={i}>{diet}</Text>
+                ))}
+            </View> : undefined}
+
+          {this.state.recipeDetails.analyzedInstructions.length ? 
+            <View>
+              <Text>Instructions</Text>
+              {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                <Text key={i}>{step.number}. {step.step}</Text>
+              ))}
+            </View> : undefined}
         </View>
-    );
-  }
+      ); 
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
+  } 
 }
 
 const styles = StyleSheet.create({
