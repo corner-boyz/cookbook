@@ -46,6 +46,7 @@ class Signup extends React.Component {
       })
         .then(() => {
           //Redirect to home page
+          this.props.screenProps.switchToLogin();
         }).catch(error => {
           console.log('Error in creating new user:', error);
         });

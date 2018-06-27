@@ -37,6 +37,7 @@ export default class App extends React.Component {
       text: '',
       isLoggedIn: false,
       signUp: false,
+      email: '',
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -46,26 +47,26 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    this.getIngredients();
   };
 
   getIngredients() {
-    // Hardcoded pizza@pizza.com until username is stored
-    axios.get(`http://${IP}/api/ingredients/pizza@pizza.com`)
+    console.log('Testing: ', this.state.email);
+    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
       .then(results => {
         this.setState({
           ingredients: results.data,
         });
-        // console.log(this.state.ingredients)
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
   }
 
-  logIn() {
+  logIn(email) {
     this.setState({
-      isLoggedIn: true
+      isLoggedIn: true,
+      email: email
     })
+    this.getIngredients();
   }
 
   logOut() {
@@ -80,7 +81,6 @@ export default class App extends React.Component {
     })
   }
   switchToLogin() {
-    // console.log('firing');
     this.setState({
       signUp: false
     })
@@ -99,7 +99,8 @@ export default class App extends React.Component {
         return <Login
           screenProps={{
             logIn: this.logIn,
-            switchToSignUp: this.switchToSignUp
+            switchToSignUp: this.switchToSignUp,
+            email: this.state.email
           }} />
       }
       if (this.state.isLoggedIn === true) {
