@@ -60,31 +60,39 @@ class RecipeList extends React.Component {
   //====================================================
   render() {
     if (!this.state.selectedRecipe) {
-      return (
-        <View style={styles.container}>
-          <Text>Here are some Recipes</Text>
-          <FlatList style={styles.list}
-            data={this.state.recipes}
-            renderItem={
-              ({ item }) => (
-                <View
-                // style={{ flex: 1, flexDirection: 'row' }}
-                >
-                  <RecipeListEntry
-                    recipe={item}
-                    selectRecipe={this.selectRecipe}
-                  />
-                </View>
-              )
-            }
-            keyExtractor={(item, index) => item.id.toString()}
-          />
-        </View>
-      )
+      if (this.state.recipes) {
+        return ( 
+          <View style={styles.container}>
+            <Text>Here are some Recipes</Text>
+            <FlatList style={styles.list}
+              data={this.state.recipes}
+              renderItem={
+                ({ item }) => (
+                  <View
+                  // style={{ flex: 1, flexDirection: 'row' }}
+                  >
+                    <RecipeListEntry
+                      recipe={item}
+                      selectRecipe={this.selectRecipe}
+                    />
+                  </View>
+                )
+              }
+              keyExtractor={(item, index) => item.id.toString()}
+            />
+          </View>
+        );
+      } else {
+        return (
+          <View style={styles.container}>
+            <Text>Loading...</Text>
+          </View>
+        );
+      }
     } else {
       return (
         <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack} />
-      )
+      );
     }
   }
 }
