@@ -1,17 +1,8 @@
 import React from 'react';
+import {StyleSheet, Text, View, BackHandler, Button, Image, FlatList} from 'react-native';
 import axios from 'axios';
 
 import IP from '../IP';
-
-import {
-  StyleSheet,
-  Text,
-  View,
-  BackHandler,
-  Button,
-  Image,
-  FlatList
-} from 'react-native';
 
 class Recipe extends React.Component {
   constructor(props) {
