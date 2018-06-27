@@ -9,7 +9,9 @@ import {
   Picker,
 } from 'react-native';
 
+import IP from '../IP.js'
 import { List, ListItem } from 'react-native-elements';
+import axios from 'axios'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -181,16 +183,29 @@ class Ingredients extends React.Component {
   submitIngredient() {
     // console.log('Submitting new Ingredient...')
     let newIngredient = {
-      ingredient: this.state.name,
-      quantity: this.state.quantity,
-      unit: this.state.selectedUnit,
       email: this.props.screenProps.email,
+      shouldReplace: false,
+      ingredients: [
+        {
+          ingredient: this.state.name,
+          quantity: this.state.quantity,
+          unit: this.state.selectedUnit
+        }
+      ]
     };
     console.log(newIngredient);
-    this.props.screenProps.ingredients.push(newIngredient)
-    this.setState({
-      index: this.state.index + 1
-    })
+
+    axios.post(`http://${IP}/api/ingredients`, newIngredient)
+      .then((response) => {
+        console.log(response.data);
+        this.props.screenProps.getIngredients();
+        this.setState({
+          index: this.state.index + 1
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   //====================================================
   render() {
