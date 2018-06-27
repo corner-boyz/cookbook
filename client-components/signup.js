@@ -71,7 +71,8 @@ class Signup extends React.Component {
           style={{ height: 40, width: 250 }}
           placeholder='Email'
           onChangeText={text => this.setState({
-            email: text
+            email: text,
+            noEmail: false,
           })}
         />
         {this.state.tooShort ?
@@ -82,7 +83,8 @@ class Signup extends React.Component {
           placeholder='Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
-            password: text
+            password: text,
+            tooShort: false,
           })}
         />
         {this.state.notMatching ?
@@ -93,7 +95,8 @@ class Signup extends React.Component {
           placeholder='Confirm Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
-            confirmedPassword: text
+            confirmedPassword: text,
+            notMatching: false,
           })}
         />
         <Button
