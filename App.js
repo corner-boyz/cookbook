@@ -20,7 +20,7 @@ const Root = createMaterialBottomTabNavigator(
     },
     Recipes: {
       screen: RecipeList,
-    },
+    }
   },
   {
     initialRouteName: 'Home',
@@ -88,7 +88,7 @@ export default class App extends React.Component {
         return <Login
           screenProps={{
             logIn: this.logIn,
-            switchToSignUp: this.switchToSignUp,
+            switchToSignUp: this.switchToSignUp
           }} />
       }
       if (this.state.isLoggedIn === true) {
