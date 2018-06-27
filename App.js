@@ -37,34 +37,36 @@ export default class App extends React.Component {
       text: '',
       isLoggedIn: false,
       signUp: false,
+      email: '',
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.switchToSignUp = this.switchToSignUp.bind(this);
+    this.switchToLogin = this.switchToLogin.bind(this);
   }
   //====================================================
   componentDidMount() {
-    this.getIngredients();
   };
 
   getIngredients() {
-    // Hardcoded pizza@pizza.com until username is stored
-    axios.get(`http://${IP}/api/ingredients/pizza@pizza.com`)
+    console.log('Testing: ', this.state.email);
+    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
       .then(results => {
         this.setState({
           ingredients: results.data,
         });
-        // console.log(this.state.ingredients)
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
   }
 
-  logIn() {
+  logIn(email) {
     this.setState({
-      isLoggedIn: true
+      isLoggedIn: true,
+      email: email
     })
+    this.getIngredients();
   }
 
   logOut() {
@@ -78,17 +80,27 @@ export default class App extends React.Component {
       signUp: true
     })
   }
+  switchToLogin() {
+    this.setState({
+      signUp: false
+    })
+  }
   //==================================================== screenProps is the global state property!
   render() {
     {
       if (this.state.signUp === true) {
-        return <Signup />
+        return <Signup
+          screenProps={{
+            switchToLogin: this.switchToLogin
+          }}
+        />
       }
       if (this.state.isLoggedIn === false) {
         return <Login
           screenProps={{
             logIn: this.logIn,
-            switchToSignUp: this.switchToSignUp
+            switchToSignUp: this.switchToSignUp,
+            email: this.state.email
           }} />
       }
       if (this.state.isLoggedIn === true) {
@@ -107,3 +119,4 @@ export default class App extends React.Component {
 // npm start
 
 //npm run server
+
