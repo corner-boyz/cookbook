@@ -26,14 +26,6 @@ class Home extends React.Component {
     },
   }
   //====================================================
-  componentDidMount() {
-    // console.log(this.props.navigation)
-    setTimeout(() => {
-      this.props.navigation.actions.goBack();
-    }, 2000)
-  }
-
-  //====================================================
   render() {
     return (
       <View style={styles.container}>

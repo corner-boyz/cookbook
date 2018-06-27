@@ -22,7 +22,18 @@ class Login extends React.Component {
     this.submitLogin = this.submitLogin.bind(this);
   }
   //====================================================
-  componentDidMount() {
+  getIngredients() {
+    // Hardcoded pizza@pizza.com until username is stored
+    axios.get(`http://${IP}/api/ingredients/${this.props.screenProps.email}`)
+      .then(results => {
+        // this.setState({
+        //   ingredients: results.data,
+        // });
+        this.props.screenProps.ingredients = results.data;
+        // console.log(this.state.ingredients)
+      }).catch(error => {
+        console.log('Error in retrieving ingredients:', error);
+      });
   }
   //====================================================
   submitLogin() {
@@ -38,6 +49,9 @@ class Login extends React.Component {
         } else {
           let { email, name } = results.data;
           // Do something with this data
+          this.props.screenProps.email = email;
+          this.getIngredients();
+          
           this.props.screenProps.logIn();
         }
       }).catch(error => {
