@@ -33,6 +33,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      recipeListIndex: 0,
       ingredients: [],
       text: '',
       signUp: false,
@@ -46,25 +47,37 @@ export default class App extends React.Component {
     this.logOut = this.logOut.bind(this);
     this.switchToSignUp = this.switchToSignUp.bind(this);
     this.switchToLogin = this.switchToLogin.bind(this);
+    this.searchRecipes = this.searchRecipes.bind(this);
   }
   //====================================================
   componentDidMount() {
-    // console.log('App Mounted');
     this.getIngredients(); //uncomment for debugging
   };
-
+  //====================================================
   getIngredients() {
-    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
-    axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
+    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
       .then(results => {
+        this.searchRecipes(results.data);
         this.setState({
           ingredients: results.data,
+          recipes: undefined
         });
       }).catch(error => {
         console.log('Error in retrieving ingredients:', error);
       });
   }
 
+  searchRecipes(ingredients = this.state.ingredients) {
+    this.setState({
+      recipeListIndex: this.state.recipeListIndex + 1
+    });
+    axios.post(`http://${IP}/api/recipelist`, ingredients).then((results) => {
+      this.setState({
+        recipes: results.data,
+      });
+    });
+  }
+  //====================================================
   logIn(email) {
     this.setState({
       isLoggedIn: true,
@@ -110,10 +123,13 @@ export default class App extends React.Component {
       if (this.state.isLoggedIn === true) {
         return <Root
           screenProps={{
+            recipeListIndex: this.state.recipeListIndex,
             ingredients: this.state.ingredients,
+            getIngredients: this.getIngredients,
+            recipes: this.state.recipes,
+            searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
-            getIngredients: this.getIngredients
           }} />
       }
 

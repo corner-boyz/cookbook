@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 
 import { styles } from '../styles';
@@ -23,11 +23,30 @@ class RecipeListEntry extends React.Component {
         onPress={() => this.retrieveRecipe(this.props.recipe.id)}
         style={{backgroundColor: 'white'}}
       >
-        <Text>{this.props.recipe.title}</Text>
+        <Text style={styles.header}>{this.props.recipe.title}</Text>
         <Image
           style={styles.recipeImage}
           source={{ uri: this.props.recipe.image }}
         />
+        {this.props.recipe.usedIngredients.length && this.props.recipe.missedIngredients.length ?
+        <Text style={{fontWeight: 'bold'}}>Ingredients:</Text> 
+        : undefined}
+        {this.props.recipe.usedIngredients.length ?
+          <View>
+            <Text style={styles.owned}>
+            {this.props.recipe.usedIngredients.map((ingredient, i) => (
+              ingredient.name + ', '
+            ))} 
+            </Text></View> : undefined}
+        
+        {this.props.recipe.missedIngredients.length ?
+          <View>
+            <Text style={styles.missing}>
+            {this.props.recipe.missedIngredients.map((ingredient, i) => (
+              ingredient.name + ', '
+            ))} 
+            </Text></View> : undefined}
+        <Text>{'\n'}</Text>
       </TouchableOpacity>
     );
   }

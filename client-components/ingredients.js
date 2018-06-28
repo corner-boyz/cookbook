@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View, TextInput, FlatList, Picker } from 'react-native';
 import { Button } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 import { styles } from '../styles';
 import IP from '../IP.js';
@@ -102,7 +103,8 @@ class Ingredients extends React.Component {
         this.props.screenProps.getIngredients();
         this.setState({
           index: this.state.index + 1
-        })
+        });
+        this.props.screenProps.recipeListIndex++;
       })
       .catch((error) => {
         console.log(error);
