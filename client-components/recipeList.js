@@ -7,15 +7,12 @@ import Recipe from './recipe'
 import IP from '../IP';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
-
-
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0)
     };
@@ -27,30 +24,20 @@ class RecipeList extends React.Component {
     tabBarColor: 'blue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
-    },
-
+    }
   }
   //====================================================
   componentDidMount() {
-    this.findRecipes();
     Animated.timing(
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 2500,
+        duration: 1000,
       }
     ).start();
   }
 
   //====================================================
-  findRecipes() {
-    axios.post(`http://${IP}/api/recipelist`, this.props.screenProps.ingredients).then((results) => {
-      this.setState({
-        recipes: results.data
-      });
-    });
-  }
-
   selectRecipe(recipe) {
     this.setState({
       selectedRecipe: recipe
@@ -68,14 +55,15 @@ class RecipeList extends React.Component {
     let { fadeAnim } = this.state;
 
     if (!this.state.selectedRecipe) {
-      if (this.state.recipes) {
+      if (this.props.screenProps.recipes) {
         return (
           <View style={styles.container}>
             <Animated.View
               style={{ ...this.props.style, opacity: fadeAnim }}
             >
               <FlatList style={styles.list}
-                data={this.state.recipes}
+                data={this.props.screenProps.recipes}
+                extraData={this.state.recipeListIndex}
                 renderItem={
                   ({ item }) => (
                     <View>
@@ -86,7 +74,7 @@ class RecipeList extends React.Component {
                     </View>
                   )
                 }
-                keyExtractor={(item, index) => item.id.toString()}
+                keyExtractor={(item, recipeListIndex) => item.id.toString()}
               />
             </Animated.View>
           </View>

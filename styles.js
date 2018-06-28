@@ -1,6 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 module.exports.styles = StyleSheet.create({
+  header: {
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  owned: {
+    color: 'green'
+  },
+  missing: {
+    color: 'red'
+  },
   signUpText: {
     paddingTop: 20,
     paddingBottom: 10,
