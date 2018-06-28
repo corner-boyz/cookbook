@@ -48,6 +48,27 @@ class Recipe extends React.Component {
       console.log('ERROR SELECTING RECIPE', err);
     });
   }
+
+  convertMinutes(time) {
+    let hours = time /60;
+    let rhours = Math.floor(time / 60);
+    let minutes = Math.round((hours - rhours) * 60);
+    let strHour = ' hr';
+    let strMinute = ' min';
+    if (rhours > 1) {
+      strHour = ' hrs'
+    }
+    if (minutes > 1) {
+      strMinute = ' mins'
+    }
+    if (rhours && minutes) {
+      return (rhours.toString() + strHour + ' ' + minutes.toString() + strMinute);
+    }
+    if (rhours) {
+      return (rhours.toString() + strHour);
+    }
+    return minutes.toString() + strMinute;
+  }
   //====================================================
   render() {
     if (this.state.recipeDetails) {
@@ -74,13 +95,13 @@ class Recipe extends React.Component {
             source={{ uri: this.state.recipeDetails.image }}
           />
           {this.state.recipeDetails.preparationMinutes ?
-            <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+            <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
             : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-            <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+            <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
             : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-            <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
+            <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
             : undefined}
           {this.state.recipeDetails.diets.length ?
             <View>

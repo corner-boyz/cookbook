@@ -37,7 +37,7 @@ class RecipeList extends React.Component {
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 3000,
+        duration: 2500,
       }
     ).start();
   }

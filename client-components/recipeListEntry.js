@@ -21,7 +21,7 @@ class RecipeListEntry extends React.Component {
     return (
       <TouchableOpacity
         onPress={() => this.retrieveRecipe(this.props.recipe.id)}
-        style={styles.container}
+        style={{backgroundColor: 'white'}}
       >
         <Text>{this.props.recipe.title}</Text>
         <Image

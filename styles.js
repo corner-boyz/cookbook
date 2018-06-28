@@ -11,36 +11,11 @@ module.exports.styles = StyleSheet.create({
   warningText: {
     color: '#ff0000'
   },
-  homeContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   container: {
     flex: 1,
     backgroundColor: 'powderblue',
     alignItems: 'center',
     paddingTop: 20,
-    // justifyContent: 'center',
-  },
-  ingredientsContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 20,
-  },
-  ingredientsList: {
-    width: 350,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  },
-  homeContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     flex: 1,
@@ -49,7 +24,7 @@ module.exports.styles = StyleSheet.create({
     justifyContent: 'center',
   },
   list: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: 'white'
     // justifyContent: 'center',
   },
