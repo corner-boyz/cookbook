@@ -36,11 +36,11 @@ export default class App extends React.Component {
       recipeListIndex: 0,
       ingredients: [],
       text: '',
-      // isLoggedIn: false,
-      isLoggedIn: true, //uncomment for debugging
       signUp: false,
+      // isLoggedIn: false,
       // email: '',
-      email: 'theohzonelayer@gmail.com', //uncomment for debugging
+      isLoggedIn: true, //uncomment for debugging
+      email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
