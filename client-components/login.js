@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   warningText: {
     color: '#ff0000'
-  }
+  },
 });
 
 export default Login;
