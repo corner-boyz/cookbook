@@ -10,7 +10,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      wrongEmailOrPass: '',
+      wrongEmailOrPass: false,
     }
     this.submitLogin = this.submitLogin.bind(this);
   }
