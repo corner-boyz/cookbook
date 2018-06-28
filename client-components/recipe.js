@@ -7,19 +7,43 @@ import IP from '../IP';
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isSaved: false
+    };
   }
   //====================================================
   componentDidMount() {
-    this.findRecipes();
+    this.findRecipe();
+    this.selectUserRecipe();
   }
   //====================================================
-  findRecipes() {
+  findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
       this.setState({
         recipeDetails: results.data
       });
-      // setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
+    });
+  }
+
+  saveRecipe() {
+    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: this.props.selectedRecipe}).then((results) => {
+      console.log('SAVED RECIPE');
+      this.setState({
+        isSaved: true
+      });
+    }).catch((err) => {
+      console.log('ERROR SAVING RECIPE', err);
+    });
+  }
+
+  selectUserRecipe() {
+    axios.get(`http://${IP}/api/saverecipe/${this.props.selectedRecipe.id}/${this.props.email}`).then((results) => {
+      this.setState({
+        isSaved: results.data.length > 0
+      });
+      setTimeout(() => console.log(this.state.isSaved), 1000);
+    }).catch((err) => {
+      console.log('ERROR SELECTING RECIPE', err);
     });
   }
   //====================================================
@@ -30,9 +54,18 @@ class Recipe extends React.Component {
           <Button
             title="Back to Recipes"
             onPress={() => {
-              this.props.recipeBack()
+              this.props.recipeBack();
             }}
           />
+          {this.props.email && !this.state.isSaved ?
+          <Button
+          title="Save Recipe"
+          onPress={() => {
+            this.saveRecipe();
+          }}
+        /> 
+          : 
+          undefined}
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
             style={styles.stretch}

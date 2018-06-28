@@ -53,7 +53,6 @@ export default class App extends React.Component {
   };
 
   getIngredients() {
-    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
     axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
       .then(results => {
         this.setState({

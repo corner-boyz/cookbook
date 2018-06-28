@@ -87,7 +87,7 @@ class RecipeList extends React.Component {
       }
     } else {
       return (
-        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack} />
+        <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} />
       );
     }
   }
