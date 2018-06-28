@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
+import { Text, View, TextInput, Button } from 'react-native';
 import { styles } from '../styles';
+
 import IP from '../IP';
+
   //====================================================
 class Login extends React.Component {
   constructor(props) {

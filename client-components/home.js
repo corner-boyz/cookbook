@@ -25,18 +25,9 @@ class Home extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, {backgroundColor:'white', justifyContent:'center'}]}>
+      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
-        <Button
-          title='Testing'
-          icon={{
-            name: 'cloud'
-          }}
-
-          // backgroundColor='green'
-
-          onPress={() => { console.log('hello world') }}
-        />
+        
       </View>
     );
   };

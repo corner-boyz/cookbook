@@ -35,10 +35,10 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      // isLoggedIn: false,
-      isLoggedIn: true, //uncomment for debugging
       signUp: false,
+      // isLoggedIn: false,
       // email: '',
+      isLoggedIn: true, //uncomment for debugging
       email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);

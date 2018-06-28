@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, TextInput, FlatList, Picker, StatusBar } from 'react-native';
+import { Text, View, TextInput, FlatList, Picker } from 'react-native';
 import { Button } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
-import IP from '../IP.js'
+import IP from '../IP.js';
 
-
+import axios from 'axios';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -14,11 +14,11 @@ class Ingredients extends React.Component {
 
     this.state = {
       index: 0,
-      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 
+      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
         16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 
-        46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 
-        61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 
+        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+        46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+        61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
         76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
         91, 92, 93, 94, 95, 96, 97, 98, 99],
       quantity: 0,
@@ -65,7 +65,8 @@ class Ingredients extends React.Component {
         }
       ],
       selectedUnit: '',
-      name: ''
+      name: '',
+      editMode: false,
     }
 
   }
@@ -110,34 +111,102 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: 'white',}]}>
-        <StatusBar />
+      <View style={[styles.container, { backgroundColor: 'white', }]}>
         <Text>Here are your Ingredients:</Text>
         <FlatList
-          style={[styles.list, {width: 350}]}
+          style={[styles.list, { width: 350 }]}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
           renderItem={
-            ({ item }) =>
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <Text
-                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                >{item.quantity}{item.unit}
-                </Text>
-                <Text
-                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                >{item.ingredient}
-                </Text>
-                <Button
-                  title='Edit'
-                  onPress={() => {
-                    console.log(item);
-                  }}
-                />
-              </View>
+            ({ item }) => {
+              if (this.state.editMode === false) {
+                return (
+                  <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <Text
+                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
+                    >{item.quantity}{item.unit}
+                    </Text>
+                    <Text
+                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
+                    >{item.ingredient}
+                    </Text>
+                  </View>
+                )
+              }
+              else {
+                return (
+                  <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <Picker
+                      selectedValue={item.quantity}
+                      style={{
+                        height: 40,
+                        width: 50,
+                        backgroundColor: 'gray'
+                      }}
+                      mode='dropdown'
+                      onValueChange={(itemValue) => {
+                        item.quantity = itemValue
+                        this.forceUpdate();
+                      }}>
+                      {this.state.numbers.map((item, index) =>
+                        <Picker.Item
+                          key={index}
+                          label={item.toString()}
+                          value={item}
+                        />
+                      )}
+                    </Picker>
+                    <Picker
+                      selectedValue={item.unit}
+                      style={{
+                        height: 40,
+                        width: 50,
+                        backgroundColor: 'lightgray'
+                      }}
+                      mode='dropdown'
+                      onValueChange={(itemValue) => {
+                        item.unit = itemValue
+                        this.forceUpdate();
+                      }}>
+                      {this.state.units.map((item, index) =>
+                        <Picker.Item
+                          key={index}
+                          label={item.name}
+                          value={item.abrv}
+                        />
+                      )}
+                    </Picker>
+                    <Text
+                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
+                    >{item.ingredient}
+                    </Text>
+                  </View>
+                )
+              }
+            }
           }
-          keyExtractor={(item, index) => item.ingredient}
+          keyExtractor={(item) => item.ingredient}
         />
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Button
+            title='Edit'
+            onPress={() => {
+              // console.log(item);
+              this.setState({
+                editMode: true,
+              })
+              console.log(this.state.editSelection);
+            }}
+          />
+          <Button
+            title='Done'
+            onPress={() => {
+              this.setState({
+                editMode: false
+              })
+            }}
+          />
+        </View>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Picker
             selectedValue={this.state.quantity}
@@ -147,7 +216,7 @@ class Ingredients extends React.Component {
               backgroundColor: 'gray'
             }}
             mode='dropdown'
-            onValueChange={(itemValue, itemIndex) => this.setState({ quantity: itemValue })}>
+            onValueChange={(itemValue) => this.setState({ quantity: itemValue })}>
             {this.state.numbers.map((item, index) =>
               <Picker.Item
                 key={index}
@@ -155,7 +224,6 @@ class Ingredients extends React.Component {
                 value={item}
               />
             )}
-
           </Picker>
           <Picker
             selectedValue={this.state.selectedUnit}
@@ -187,6 +255,7 @@ class Ingredients extends React.Component {
           />
           <Button
             title="Add"
+            color='cyan'
             icon={{ name: 'keyboard-arrow-up' }}
             onPress={() => {
               this.submitIngredient();

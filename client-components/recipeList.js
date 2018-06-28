@@ -8,9 +8,6 @@ import IP from '../IP';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
-
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
@@ -71,24 +68,24 @@ class RecipeList extends React.Component {
       if (this.state.recipes) {
         return (
           <View style={styles.container}>
-            <Animated.View
-              style={{ ...this.props.style, opacity: fadeAnim }}
-            >
-              <FlatList style={styles.list}
-                data={this.state.recipes}
-                renderItem={
-                  ({ item }) => (
-                    <View>
+            <FlatList style={styles.list}
+              data={this.state.recipes}
+              renderItem={
+                ({ item }) => (
+                  <View>
+                    <Animated.View
+                      style={{ ...this.props.style, opacity: fadeAnim }}
+                    >
                       <RecipeListEntry
                         recipe={item}
                         selectRecipe={this.selectRecipe}
                       />
-                    </View>
-                  )
-                }
-                keyExtractor={(item, index) => item.id.toString()}
-              />
-            </Animated.View>
+                    </Animated.View>
+                  </View>
+                )
+              }
+              keyExtractor={(item, index) => item.id.toString()}
+            />
           </View>
         );
       } else {
