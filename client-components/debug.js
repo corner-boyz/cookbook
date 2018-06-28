@@ -1,48 +1,22 @@
-import React, {Component} from 'react';
-import {Modal, Text, TouchableHighlight, View} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, View } from 'react-native';
 
-class Debug extends React.Component {
-  state = {
-    modalVisible: false,
-  };
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
+class Debug extends Component {
   render() {
     return (
-      <View style={{marginTop: 22}}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
+      // Try setting `justifyContent` to `center`.
+      // Try setting `flexDirection` to `row`.
+      <View style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}>
+        <View style={{ width: 50, height: 50, backgroundColor: 'powderblue' }} />
+        <View style={{ width: 50, height: 50, backgroundColor: 'skyblue' }} />
+        <View style={{ width: 50, height: 50, backgroundColor: 'steelblue' }} />
       </View>
     );
   }
-}
+};
 
 export default Debug;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, FlatList, Picker } from 'react-native';
+import { Text, View, TextInput, FlatList, Picker, Modal } from 'react-native';
 import { Button } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -23,7 +23,7 @@ class Ingredients extends React.Component {
       quantity: 0,
       units: [
         {
-          name: 'no unit',
+          name: '',
           abrv: null
         },
         {
@@ -124,10 +124,10 @@ class Ingredients extends React.Component {
         }
       )
     })
-    console.log('Edited: ', editedIngredients);
+    // console.log('Edited: ', editedIngredients);
     axios.post(`http://${IP}/api/ingredients`, editedIngredients)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.props.screenProps.getIngredients();
         this.setState({
           index: this.state.index + 1
@@ -149,23 +149,40 @@ class Ingredients extends React.Component {
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
           renderItem={
-            ({ item }) => {
-              if (this.state.editMode === false) {
-                return (
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Text
-                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                    >{item.quantity}{item.unit}
-                    </Text>
-                    <Text
-                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                    >{item.ingredient}
-                    </Text>
-                  </View>
-                )
-              }
-              else {
-                return (
+            ({ item }) =>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text
+                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
+                >{item.quantity}{item.unit}
+                </Text>
+                <Text
+                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
+                >{item.ingredient}
+                </Text>
+              </View>
+          }
+          keyExtractor={(item) => item.ingredient}
+        />
+
+        <Modal
+          animationType='slide'
+          transparent={false}
+          visible={this.state.editMode}
+          onRequestClose={() => {
+            console.log('Modal Closing');
+            this.setState({
+              editMode: false
+            })
+          }}
+        >
+          <View style={[styles.container, { backgroundColor: 'white', }]}>
+            <Text>Editing Mode</Text>
+            <FlatList
+              style={[styles.list, { width: 350 }]}
+              data={this.props.screenProps.ingredients}
+              extraData={this.state.index}
+              renderItem={
+                ({ item }) =>
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Picker
                       selectedValue={item.quantity}
@@ -212,34 +229,34 @@ class Ingredients extends React.Component {
                     >{item.ingredient}
                     </Text>
                   </View>
-                )
               }
-            }
-          }
-          keyExtractor={(item) => item.ingredient}
-        />
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+              keyExtractor={(item) => item.ingredient}
+            />
+            <Button
+              title='Confirm'
+              onPress={() => {
+                this.editIngredients();
+                this.setState({
+                  editMode: false,
+                })
+              }}
+            />
+          </View>
+        </Modal>
+
+        <View style={{ alignItems: 'flex-end' }}>
           <Button
-            title='Edit'
+            title='Edit List'
             onPress={() => {
               // console.log(item);
               this.setState({
                 editMode: true,
               })
-              console.log(this.state.editSelection);
-            }}
-          />
-          <Button
-            title='Confirm'
-            onPress={() => {
-              this.editIngredients();
-              this.setState({
-                editMode: false,
-              })
+              // console.log(this.state.editSelection);
             }}
           />
         </View>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
           <Picker
             selectedValue={this.state.quantity}
             style={{
