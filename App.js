@@ -7,6 +7,7 @@ import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
 import Signup from './client-components/signup.js';
 import Login from './client-components/login.js';
+import Debug from './client-components/debug.js';
 
 import IP from './IP.js';
 //==================================================== this is the navigation bar at the bottom of the screen
@@ -20,6 +21,9 @@ const Root = createMaterialBottomTabNavigator(
     },
     Recipes: {
       screen: RecipeList,
+    },
+    Debug: {
+      screen: Debug,
     }
   },
   {
