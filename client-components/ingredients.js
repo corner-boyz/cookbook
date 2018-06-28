@@ -15,6 +15,9 @@ import axios from 'axios'
 import { Button } from 'react-native-elements'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import IP from '../IP.js'
+
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleSheet, Text, View, BackHandler, Button, Image, FlatList} from 'react-native';
 import axios from 'axios';
 
 import IP from '../IP';
@@ -15,53 +16,103 @@ class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeDetails: { diets: [], analyzedInstructions: [{ steps: [{}, {}] }] }
+      isSaved: false
     };
   }
   //====================================================
   componentDidMount() {
-    this.findRecipes();
+    this.findRecipe();
+    this.selectUserRecipe();
   }
   //====================================================
-  findRecipes() {
+  findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
       this.setState({
         recipeDetails: results.data
       });
-      setTimeout(() => console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)), 1000)
+    });
+  }
+
+  saveRecipe() {
+    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: this.props.selectedRecipe}).then((results) => {
+      console.log('SAVED RECIPE');
+      this.setState({
+        isSaved: true
+      });
+    }).catch((err) => {
+      console.log('ERROR SAVING RECIPE', err);
+    });
+  }
+
+  selectUserRecipe() {
+    axios.get(`http://${IP}/api/saverecipe/${this.props.selectedRecipe.id}/${this.props.email}`).then((results) => {
+      this.setState({
+        isSaved: results.data.length > 0
+      });
+      setTimeout(() => console.log(this.state.isSaved), 1000);
+    }).catch((err) => {
+      console.log('ERROR SELECTING RECIPE', err);
     });
   }
   //====================================================
   render() {
-    return (
-
-      <View style={styles.container}>
-        <Button
-          title="Back to Recipes"
+    if (this.state.recipeDetails) {
+      return(
+        <View style={styles.container}>
+          <Button
+            title="Back to Recipes"
+            onPress={() => {
+              this.props.recipeBack();
+            }}
+          />
+          {this.props.email && !this.state.isSaved ?
+          <Button
+          title="Save Recipe"
           onPress={() => {
-            this.props.recipeBack()
+            this.saveRecipe();
           }}
-        />
-        <Text>{this.state.recipeDetails.title}</Text>
-        <Text>{this.state.recipeDetails.id}</Text>
-        <Image
-          style={styles.stretch}
-          source={{ uri: this.state.recipeDetails.image }}
-        />
-        <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
-        <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
-        <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
-        <Text>Diet</Text>
-        {this.state.recipeDetails.diets.map((diet, index) => (
-          <Text key={index}>{diet}</Text>
-        ))}
-        <Text>Steps</Text>
-        {this.state.recipeDetails.analyzedInstructions[0].steps.map((diet, index) => (
-          <Text key={index}>{diet.number}. {diet.step}</Text>
-        ))}
-      </View>
-    );
-  }
+        /> 
+          : 
+          undefined}
+          <Text>{this.state.recipeDetails.title}</Text>
+          <Image
+            style={styles.stretch}
+            source={{uri: this.state.recipeDetails.image}}
+          />
+          {this.state.recipeDetails.preparationMinutes ?
+          <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+          : undefined}
+          {this.state.recipeDetails.preparationMinutes ?
+          <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+          : undefined}
+          {this.state.recipeDetails.preparationMinutes ?
+          <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
+          : undefined}
+          {this.state.recipeDetails.diets.length ? 
+            <View>
+              <Text>Diet</Text>
+                {this.state.recipeDetails.diets.map((diet, i) => (
+                  <Text key={i}>{diet}</Text>
+                ))}
+            </View> : undefined}
+
+          {this.state.recipeDetails.analyzedInstructions.length ? 
+            <View>
+              <Text>Instructions</Text>
+              {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                <Text key={i}>{step.number}. {step.step}</Text>
+              ))}
+            </View> : undefined}
+        </View>
+      ); 
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
+  } 
 }
 
 const styles = StyleSheet.create({

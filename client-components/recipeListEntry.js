@@ -1,14 +1,9 @@
 import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import axios from 'axios';
 
 import IP from '../IP';
 
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
 
 class RecipeListEntry extends React.Component {
   constructor(props) {
@@ -17,11 +12,7 @@ class RecipeListEntry extends React.Component {
   }
   retrieveRecipe = (recipeId) => {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
-      // this.setState({
-      //   recipe: results.data
-      // });
       this.props.selectRecipe(results.data);
-      // setTimeout(() => console.log('RECIPE', this.state.recipe.title), 1000)
     });
   }
 
