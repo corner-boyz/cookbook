@@ -1,14 +1,10 @@
 import React from 'react';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 
+import { styles } from '../styles';
 import IP from '../IP';
 
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
 
 class RecipeListEntry extends React.Component {
   constructor(props) {
@@ -17,11 +13,7 @@ class RecipeListEntry extends React.Component {
   }
   retrieveRecipe = (recipeId) => {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
-      // this.setState({
-      //   recipe: results.data
-      // });
       this.props.selectRecipe(results.data);
-      // setTimeout(() => console.log('RECIPE', this.state.recipe.title), 1000)
     });
   }
 
@@ -29,11 +21,11 @@ class RecipeListEntry extends React.Component {
     return (
       <TouchableOpacity
         onPress={() => this.retrieveRecipe(this.props.recipe.id)}
-        style={styles.container}
+        style={{backgroundColor: 'white'}}
       >
         <Text>{this.props.recipe.title}</Text>
         <Image
-          style={styles.stretch}
+          style={styles.recipeImage}
           source={{ uri: this.props.recipe.image }}
         />
       </TouchableOpacity>
@@ -41,21 +33,4 @@ class RecipeListEntry extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    backgroundColor: 'skyblue',
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  stretch: {
-    width: 300,
-    height: 200,
-  }
-});
-
 export default RecipeListEntry;
-
-// flex: 1,
-//     backgroundColor: 'powderblue',
-//     alignItems: 'center',

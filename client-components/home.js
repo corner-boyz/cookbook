@@ -1,12 +1,9 @@
 import React from 'react';
-
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { styles } from '../styles';
 //====================================================
 class Home extends React.Component {
   constructor(props) {
@@ -28,20 +25,21 @@ class Home extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor:'white', justifyContent:'center'}]}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
+        <Button
+          title='Testing'
+          icon={{
+            name: 'cloud'
+          }}
+
+          // backgroundColor='green'
+
+          onPress={() => { console.log('hello world') }}
+        />
       </View>
     );
   };
 }
-//============================================================= Styling
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default Home;

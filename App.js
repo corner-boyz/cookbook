@@ -1,14 +1,14 @@
 import React from 'react';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import axios from 'axios';
+
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
 import Signup from './client-components/signup.js';
 import Login from './client-components/login.js';
 
-import axios from 'axios';
 import IP from './IP.js';
-
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {
@@ -35,11 +35,11 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: false,
-      // isLoggedIn: true, //uncomment for debugging
+      // isLoggedIn: false,
+      isLoggedIn: true, //uncomment for debugging
       signUp: false,
-      email: '',
-      // email: 'a@a.com', //uncomment for debugging
+      // email: '',
+      email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -49,6 +49,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
+    // console.log('App Mounted');
     this.getIngredients(); //uncomment for debugging
   };
 

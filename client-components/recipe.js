@@ -1,70 +1,117 @@
 import React from 'react';
+import { Text, View, Button, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
-import IP from '../IP';
+import { styles } from '../styles';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  BackHandler,
-  Button,
-  Image,
-  FlatList
-} from 'react-native';
+import IP from '../IP';
 
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isSaved: false
+    };
   }
   //====================================================
   componentDidMount() {
-    this.findRecipes();
+    this.findRecipe();
+    this.selectUserRecipe();
   }
   //====================================================
-  findRecipes() {
+  findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
       this.setState({
         recipeDetails: results.data
       });
-      // setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
     });
+  }
+
+  saveRecipe() {
+    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
+      console.log('SAVED RECIPE');
+      this.setState({
+        isSaved: true
+      });
+    }).catch((err) => {
+      console.log('ERROR SAVING RECIPE', err);
+    });
+  }
+
+  selectUserRecipe() {
+    axios.get(`http://${IP}/api/saverecipe/${this.props.selectedRecipe.id}/${this.props.email}`).then((results) => {
+      this.setState({
+        isSaved: results.data.length > 0
+      });
+      setTimeout(() => console.log(this.state.isSaved), 1000);
+    }).catch((err) => {
+      console.log('ERROR SELECTING RECIPE', err);
+    });
+  }
+
+  convertMinutes(time) {
+    let hours = time /60;
+    let rhours = Math.floor(time / 60);
+    let minutes = Math.round((hours - rhours) * 60);
+    let strHour = ' hr';
+    let strMinute = ' min';
+    if (rhours > 1) {
+      strHour = ' hrs'
+    }
+    if (minutes > 1) {
+      strMinute = ' mins'
+    }
+    if (rhours && minutes) {
+      return (rhours.toString() + strHour + ' ' + minutes.toString() + strMinute);
+    }
+    if (rhours) {
+      return (rhours.toString() + strHour);
+    }
+    return minutes.toString() + strMinute;
   }
   //====================================================
   render() {
     if (this.state.recipeDetails) {
-      return(
+      return (
         <View style={styles.container}>
           <Button
             title="Back to Recipes"
             onPress={() => {
-              this.props.recipeBack()
+              this.props.recipeBack();
             }}
           />
+          {this.props.email && !this.state.isSaved ?
+            <Button
+              title="Save Recipe"
+              onPress={() => {
+                this.saveRecipe();
+              }}
+            />
+            :
+            undefined}
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
-            style={styles.stretch}
-            source={{uri: this.state.recipeDetails.image}}
+            style={styles.recipeImage}
+            source={{ uri: this.state.recipeDetails.image }}
           />
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
-          : undefined}
+            <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
+            : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
-          : undefined}
+            <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
+            : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
-          : undefined}
-          {this.state.recipeDetails.diets.length ? 
+            <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
+            : undefined}
+          {this.state.recipeDetails.diets.length ?
             <View>
               <Text>Diet</Text>
-                {this.state.recipeDetails.diets.map((diet, i) => (
-                  <Text key={i}>{diet}</Text>
-                ))}
+              {this.state.recipeDetails.diets.map((diet, i) => (
+                <Text key={i}>{diet}</Text>
+              ))}
             </View> : undefined}
 
-          {this.state.recipeDetails.analyzedInstructions.length ? 
+          {this.state.recipeDetails.analyzedInstructions.length ?
             <View>
               <Text>Instructions</Text>
               {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
@@ -72,40 +119,15 @@ class Recipe extends React.Component {
               ))}
             </View> : undefined}
         </View>
-      ); 
+      );
     } else {
       return (
-        <View style={styles.container}>
-          <Text>Loading...</Text>
+        <View style={styles.spinner}>
+          <ActivityIndicator size="large" color="gray" />
         </View>
       );
     }
-  } 
-}
-
-const styles = StyleSheet.create({
-  stretch: {
-    width: 312,
-    height: 231
-  },
-  text: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'powderblue',
-    alignItems: 'center',
-    paddingTop: 20,
-    // justifyContent: 'center',
-  },
-  list: {
-    flex: 1,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
   }
-});
+}
 
 export default Recipe;

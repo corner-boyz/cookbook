@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-} from 'react-native';
-
+import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
+
+import { styles } from '../styles';
 import IP from '../IP';
-//==================================================== 
+  //====================================================
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +38,7 @@ class Login extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: 'white', justifyContent: 'center'}]}>
         <Text>Log in to your CookBook account:</Text>
         <TextInput
           style={{ height: 40, width: 250 }}
@@ -86,29 +81,5 @@ class Login extends React.Component {
     )
   }
 }
-//==================================================== 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  list: {
-    width: 350,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  },
-  signUpText: {
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
-  signUpButton: {
-    backgroundColor: '#ff0000',
-  },
-  warningText: {
-    color: '#ff0000'
-  },
-});
 
 export default Login;

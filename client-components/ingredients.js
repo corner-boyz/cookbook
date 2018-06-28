@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  FlatList,
-  Picker,
-} from 'react-native';
-
-import IP from '../IP.js'
-import { List, ListItem } from 'react-native-elements';
-import axios from 'axios'
-
+import { Text, View, TextInput, FlatList, Picker, StatusBar } from 'react-native';
+import { Button } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { styles } from '../styles';
+import IP from '../IP.js'
+
+
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -21,106 +14,13 @@ class Ingredients extends React.Component {
 
     this.state = {
       index: 0,
-      numbers: [0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47,
-        48,
-        49,
-        50,
-        51,
-        52,
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        61,
-        62,
-        63,
-        64,
-        65,
-        66,
-        67,
-        68,
-        69,
-        70,
-        71,
-        72,
-        73,
-        74,
-        75,
-        76,
-        77,
-        78,
-        79,
-        80,
-        81,
-        82,
-        83,
-        84,
-        85,
-        86,
-        87,
-        88,
-        89,
-        90,
-        91,
-        92,
-        93,
-        94,
-        95,
-        96,
-        97,
-        98,
-        99],
+      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 
+        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 
+        46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 
+        61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 
+        76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+        91, 92, 93, 94, 95, 96, 97, 98, 99],
       quantity: 0,
       units: [
         {
@@ -210,10 +110,11 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: 'white',}]}>
+        <StatusBar />
         <Text>Here are your Ingredients:</Text>
         <FlatList
-          style={styles.list}
+          style={[styles.list, {width: 350}]}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
           renderItem={
@@ -221,10 +122,18 @@ class Ingredients extends React.Component {
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Text
                   style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                >{item.quantity}{item.unit}</Text>
+                >{item.quantity}{item.unit}
+                </Text>
                 <Text
                   style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                >{item.ingredient}</Text>
+                >{item.ingredient}
+                </Text>
+                <Button
+                  title='Edit'
+                  onPress={() => {
+                    console.log(item);
+                  }}
+                />
               </View>
           }
           keyExtractor={(item, index) => item.ingredient}
@@ -278,6 +187,7 @@ class Ingredients extends React.Component {
           />
           <Button
             title="Add"
+            icon={{ name: 'keyboard-arrow-up' }}
             onPress={() => {
               this.submitIngredient();
             }}
@@ -287,20 +197,5 @@ class Ingredients extends React.Component {
     )
   }
 }
-//==================================================== 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 20,
-  },
-  list: {
-    width: 350,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  }
-});
 
 export default Ingredients;

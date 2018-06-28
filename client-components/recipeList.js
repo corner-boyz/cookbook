@@ -1,25 +1,23 @@
 import React from 'react';
 import axios from 'axios';
+import { Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
+import { styles } from '../styles'
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
-
 import IP from '../IP';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList
-} from 'react-native';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+
 
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRecipe: undefined
+      selectedRecipe: undefined,
+      fadeAnim: new Animated.Value(0)
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -35,6 +33,13 @@ class RecipeList extends React.Component {
   //====================================================
   componentDidMount() {
     this.findRecipes();
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 2500,
+      }
+    ).start();
   }
 
   //====================================================
@@ -59,58 +64,47 @@ class RecipeList extends React.Component {
   }
   //====================================================
   render() {
+
+    let { fadeAnim } = this.state;
+
     if (!this.state.selectedRecipe) {
       if (this.state.recipes) {
-        return ( 
+        return (
           <View style={styles.container}>
-            <Text>Here are some Recipes</Text>
-            <FlatList style={styles.list}
-              data={this.state.recipes}
-              renderItem={
-                ({ item }) => (
-                  <View
-                  // style={{ flex: 1, flexDirection: 'row' }}
-                  >
-                    <RecipeListEntry
-                      recipe={item}
-                      selectRecipe={this.selectRecipe}
-                    />
-                  </View>
-                )
-              }
-              keyExtractor={(item, index) => item.id.toString()}
-            />
+            <Animated.View
+              style={{ ...this.props.style, opacity: fadeAnim }}
+            >
+              <FlatList style={styles.list}
+                data={this.state.recipes}
+                renderItem={
+                  ({ item }) => (
+                    <View>
+                      <RecipeListEntry
+                        recipe={item}
+                        selectRecipe={this.selectRecipe}
+                      />
+                    </View>
+                  )
+                }
+                keyExtractor={(item, index) => item.id.toString()}
+              />
+            </Animated.View>
           </View>
         );
       } else {
         return (
-          <View style={styles.container}>
-            <Text>Loading...</Text>
+          <View style={styles.spinner}>
+            <ActivityIndicator size="large" color="gray" />
           </View>
         );
       }
     } else {
       return (
-        <Recipe selectedRecipe={this.state.selectedRecipe} recipeBack={this.recipeBack} />
+        <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} />
       );
     }
   }
 }
-//====================================================
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'powderblue',
-    alignItems: 'center',
-    paddingTop: 20,
-    // justifyContent: 'center',
-  },
-  list: {
-    flex: 1,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  }
-});
 
 export default RecipeList;
 
