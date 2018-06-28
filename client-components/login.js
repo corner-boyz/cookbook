@@ -38,7 +38,7 @@ class Login extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.homeContainer}>
+      <View style={[styles.container, {backgroundColor: 'white', justifyContent: 'center'}]}>
         <Text>Log in to your CookBook account:</Text>
         <TextInput
           style={{ height: 40, width: 250 }}

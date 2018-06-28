@@ -110,11 +110,11 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.ingredientsContainer}>
+      <View style={[styles.container, {backgroundColor: 'white',}]}>
         <StatusBar />
         <Text>Here are your Ingredients:</Text>
         <FlatList
-          style={styles.ingredientsList}
+          style={[styles.list, {width: 350}]}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
           renderItem={

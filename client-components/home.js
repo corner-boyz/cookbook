@@ -25,7 +25,7 @@ class Home extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.homeContainer}>
+      <View style={[styles.container, {backgroundColor:'white', justifyContent:'center'}]}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
         <Button
           title='Testing'
