@@ -7,17 +7,15 @@ import {
   StyleSheet,
   Text,
   View,
-  BackHandler,
   Button,
   Image,
-  FlatList
 } from 'react-native';
 
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeDetails: {diets: [], analyzedInstructions: [{steps: [{}, {}]}]}
+      recipeDetails: { diets: [], analyzedInstructions: [{ steps: [{}, {}] }] }
     };
   }
   //====================================================
@@ -30,38 +28,38 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
-      setTimeout(()=>console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)),1000)
+      setTimeout(() => console.log('asdfd', (this.props.selectedRecipe.analyzedInstructions[0].steps)), 1000)
     });
   }
   //====================================================
   render() {
     return (
 
-        <View style={styles.container}>
-          <Button
-            title="Back to Recipes"
-            onPress={() => {
-              this.props.recipeBack()
-            }}
-          />
-          <Text>{this.state.recipeDetails.title}</Text>
-          <Text>{this.state.recipeDetails.id}</Text>
-          <Image
-            style={styles.stretch}
-            source={{uri: this.state.recipeDetails.image}}
-          />
-          <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
-          <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
-          <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
-          <Text>Diet</Text>
-          {this.state.recipeDetails.diets.map((diet) => (
-            <Text>{diet}</Text>
-          ))}
-          <Text>Steps</Text>
-          {this.state.recipeDetails.analyzedInstructions[0].steps.map((diet) => (
-            <Text>{diet.number}. {diet.step}</Text>
-          ))}
-        </View>
+      <View style={styles.container}>
+        <Button
+          title="Back to Recipes"
+          onPress={() => {
+            this.props.recipeBack()
+          }}
+        />
+        <Text>{this.state.recipeDetails.title}</Text>
+        <Text>{this.state.recipeDetails.id}</Text>
+        <Image
+          style={styles.stretch}
+          source={{ uri: this.state.recipeDetails.image }}
+        />
+        <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+        <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+        <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
+        <Text>Diet</Text>
+        {this.state.recipeDetails.diets.map((diet, index) => (
+          <Text key={index}>{diet}</Text>
+        ))}
+        <Text>Steps</Text>
+        {this.state.recipeDetails.analyzedInstructions[0].steps.map((diet, index) => (
+          <Text key={index}>{diet.number}. {diet.step}</Text>
+        ))}
+      </View>
     );
   }
 }

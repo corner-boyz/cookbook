@@ -6,6 +6,8 @@ import {
   View,
 } from 'react-native';
 
+import { Button } from 'react-native-elements';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
 class Home extends React.Component {
@@ -30,6 +32,16 @@ class Home extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Welcome to your CookBook, what would you like to do?</Text>
+        <Button
+          title='Testing'
+          icon={{
+            name: 'cloud'
+          }}
+
+          // backgroundColor='green'
+
+          onPress={() => { console.log('hello world') }}
+        />
       </View>
     );
   };

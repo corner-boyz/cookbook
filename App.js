@@ -49,6 +49,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
+    // console.log('App Mounted');
     this.getIngredients(); //uncomment for debugging
   };
 
