@@ -1,5 +1,5 @@
 import React from 'react';
-import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import axios from 'axios';
 
 import Home from './client-components/home.js'
@@ -35,11 +35,11 @@ export default class App extends React.Component {
     this.state = {
       ingredients: [],
       text: '',
-      isLoggedIn: false,
-      // isLoggedIn: true, //uncomment for debugging
+      // isLoggedIn: false,
+      isLoggedIn: true, //uncomment for debugging
       signUp: false,
-      email: '',
-      // email: 'a@a.com', //uncomment for debugging
+      // email: '',
+      email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -54,6 +54,7 @@ export default class App extends React.Component {
   };
 
   getIngredients() {
+    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
     axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
       .then(results => {
         this.setState({
