@@ -231,7 +231,9 @@ class Ingredients extends React.Component {
                 </Text>
                 <Button
                   title='Edit'
-                  onPress={() => { console.log('Firing'); }}
+                  onPress={() => {
+                    console.log(item);
+                  }}
                 />
               </View>
           }
