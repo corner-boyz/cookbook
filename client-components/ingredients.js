@@ -6,8 +6,6 @@ import axios from 'axios';
 
 import { styles } from '../styles';
 import IP from '../IP.js';
-
-import axios from 'axios';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -25,7 +23,7 @@ class Ingredients extends React.Component {
       quantity: 0,
       units: [
         {
-          name: 'unit',
+          name: 'no unit',
           abrv: null
         },
         {
@@ -83,7 +81,6 @@ class Ingredients extends React.Component {
   }
 
   submitIngredient() {
-    // console.log('Submitting new Ingredient...')
     let newIngredient = {
       email: this.props.screenProps.email,
       shouldReplace: false,
@@ -110,6 +107,38 @@ class Ingredients extends React.Component {
         console.log(error);
       })
   }
+
+  editIngredients() {
+    let editedIngredients = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: []
+    }
+
+    this.props.screenProps.ingredients.forEach((item) => {
+      editedIngredients.ingredients.push(
+        {
+          ingredient: item.ingredient,
+          quantity: item.quantity,
+          unit: item.unit,
+        }
+      )
+    })
+    console.log('Edited: ', editedIngredients);
+    axios.post(`http://${IP}/api/ingredients`, editedIngredients)
+      .then((response) => {
+        console.log(response.data);
+        this.props.screenProps.getIngredients();
+        this.setState({
+          index: this.state.index + 1
+        });
+        // this.props.screenProps.recipeListIndex++;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   //====================================================
   render() {
     return (
@@ -162,7 +191,7 @@ class Ingredients extends React.Component {
                       selectedValue={item.unit}
                       style={{
                         height: 40,
-                        width: 50,
+                        width: 100,
                         backgroundColor: 'lightgray'
                       }}
                       mode='dropdown'
@@ -203,8 +232,9 @@ class Ingredients extends React.Component {
           <Button
             title='Done'
             onPress={() => {
+              this.editIngredients();
               this.setState({
-                editMode: false
+                editMode: false,
               })
             }}
           />
@@ -231,7 +261,7 @@ class Ingredients extends React.Component {
             selectedValue={this.state.selectedUnit}
             style={{
               height: 40,
-              width: 50,
+              width: 100,
               backgroundColor: 'lightgray'
             }}
             mode='dropdown'
