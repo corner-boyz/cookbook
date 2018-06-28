@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios'
-import { StyleSheet, Text, View, TextInput, FlatList, Picker } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, Picker, StatusBar } from 'react-native';
 
 import IP from '../IP.js'
 
