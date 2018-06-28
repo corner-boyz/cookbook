@@ -1,22 +1,32 @@
 import React from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 
 import RecipeListEntry from './recipeListEntry';
 import Recipe from './recipe';
 import {styles} from '../styles';
 
+=======
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
+
+import RecipeListEntry from './recipeListEntry'
+import Recipe from './recipe'
+>>>>>>> 01554cdf89f2afb47a19f608c2a3db746c9553e5
 import IP from '../IP';
 
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+
 
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedRecipe: undefined
+      selectedRecipe: undefined,
+      fadeAnim: new Animated.Value(0)
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -32,6 +42,13 @@ class RecipeList extends React.Component {
   //====================================================
   componentDidMount() {
     this.findRecipes();
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 60000,
+      }
+    ).start();
   }
 
   //====================================================
@@ -56,27 +73,33 @@ class RecipeList extends React.Component {
   }
   //====================================================
   render() {
+
+    let { fadeAnim } = this.state;
+
     if (!this.state.selectedRecipe) {
       if (this.state.recipes) {
         return (
           <View style={styles.container}>
-            <Text>Here are some Recipes</Text>
-            <FlatList style={styles.list}
-              data={this.state.recipes}
-              renderItem={
-                ({ item }) => (
-                  <View
-                  // style={{ flex: 1, flexDirection: 'row' }}
-                  >
-                    <RecipeListEntry
-                      recipe={item}
-                      selectRecipe={this.selectRecipe}
-                    />
-                  </View>
-                )
-              }
-              keyExtractor={(item, index) => item.id.toString()}
-            />
+            <Animated.View
+              style={{ ...this.props.style, opacity: fadeAnim }}
+            >
+
+              <Text>Here are some Recipes</Text>
+              <FlatList style={styles.list}
+                data={this.state.recipes}
+                renderItem={
+                  ({ item }) => (
+                    <View>
+                      <RecipeListEntry
+                        recipe={item}
+                        selectRecipe={this.selectRecipe}
+                      />
+                    </View>
+                  )
+                }
+                keyExtractor={(item, index) => item.id.toString()}
+              />
+            </Animated.View>
           </View>
         );
       } else {

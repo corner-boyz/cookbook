@@ -112,6 +112,7 @@ class Ingredients extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar />
         <Text>Here are your Ingredients:</Text>
         <FlatList
           style={styles.list}
