@@ -1,16 +1,10 @@
 import React from 'react';
+import { Text, View, Button, Image, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
-import IP from '../IP';
+import { styles } from '../styles';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import IP from '../IP';
 
 class Recipe extends React.Component {
   constructor(props) {
@@ -76,7 +70,7 @@ class Recipe extends React.Component {
             undefined}
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
-            style={styles.stretch}
+            style={styles.recipeImage}
             source={{ uri: this.state.recipeDetails.image }}
           />
           {this.state.recipeDetails.preparationMinutes ?
@@ -107,37 +101,12 @@ class Recipe extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
+        <View style={styles.spinner}>
           <ActivityIndicator size="large" color="gray" />
         </View>
       );
     }
   }
 }
-
-const styles = StyleSheet.create({
-  stretch: {
-    width: 312,
-    height: 231
-  },
-  text: {
-    flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'powderblue',
-    alignItems: 'center',
-    paddingTop: 20,
-    // justifyContent: 'center',
-  },
-  list: {
-    flex: 1,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  }
-});
 
 export default Recipe;

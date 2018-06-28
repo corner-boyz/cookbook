@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
-
+import { Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
+import { styles } from '../styles'
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
 import IP from '../IP';
@@ -37,7 +37,7 @@ class RecipeList extends React.Component {
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 60000,
+        duration: 3000,
       }
     ).start();
   }
@@ -74,8 +74,6 @@ class RecipeList extends React.Component {
             <Animated.View
               style={{ ...this.props.style, opacity: fadeAnim }}
             >
-
-              <Text>Here are some Recipes</Text>
               <FlatList style={styles.list}
                 data={this.state.recipes}
                 renderItem={
@@ -95,7 +93,7 @@ class RecipeList extends React.Component {
         );
       } else {
         return (
-          <View style={styles.container}>
+          <View style={styles.spinner}>
             <ActivityIndicator size="large" color="gray" />
           </View>
         );
@@ -107,21 +105,6 @@ class RecipeList extends React.Component {
     }
   }
 }
-//====================================================
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'powderblue',
-    alignItems: 'center',
-    paddingTop: 20,
-    // justifyContent: 'center',
-  },
-  list: {
-    flex: 1,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  }
-});
 
 export default RecipeList;
 

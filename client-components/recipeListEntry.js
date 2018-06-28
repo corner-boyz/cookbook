@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 
+import { styles } from '../styles';
 import IP from '../IP';
 
 
@@ -24,7 +25,7 @@ class RecipeListEntry extends React.Component {
       >
         <Text>{this.props.recipe.title}</Text>
         <Image
-          style={styles.stretch}
+          style={styles.recipeImage}
           source={{ uri: this.props.recipe.image }}
         />
       </TouchableOpacity>
@@ -32,21 +33,4 @@ class RecipeListEntry extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    backgroundColor: 'skyblue',
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  stretch: {
-    width: 300,
-    height: 200,
-  }
-});
-
 export default RecipeListEntry;
-
-// flex: 1,
-//     backgroundColor: 'powderblue',
-//     alignItems: 'center',
