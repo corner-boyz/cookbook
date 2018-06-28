@@ -230,7 +230,7 @@ class Ingredients extends React.Component {
             }}
           />
           <Button
-            title='Done'
+            title='Confirm'
             onPress={() => {
               this.editIngredients();
               this.setState({
@@ -265,7 +265,7 @@ class Ingredients extends React.Component {
               backgroundColor: 'lightgray'
             }}
             mode='dropdown'
-            onValueChange={(itemValue, itemIndex) => this.setState({ selectedUnit: itemValue })}>
+            onValueChange={(itemValue) => this.setState({ selectedUnit: itemValue })}>
             {this.state.units.map((item, index) =>
               <Picker.Item
                 key={index}
