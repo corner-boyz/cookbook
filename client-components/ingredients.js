@@ -7,6 +7,7 @@ import {
   // Button,
   FlatList,
   Picker,
+  StatusBar,
 } from 'react-native';
 
 import IP from '../IP.js'
@@ -213,6 +214,7 @@ class Ingredients extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar />
         <Text>Here are your Ingredients:</Text>
         <FlatList
           style={styles.list}
