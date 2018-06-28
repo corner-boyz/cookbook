@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
@@ -57,7 +57,7 @@ class RecipeList extends React.Component {
   render() {
     if (!this.state.selectedRecipe) {
       if (this.state.recipes) {
-        return ( 
+        return (
           <View style={styles.container}>
             <Text>Here are some Recipes</Text>
             <FlatList style={styles.list}
@@ -81,7 +81,7 @@ class RecipeList extends React.Component {
       } else {
         return (
           <View style={styles.container}>
-            <Text>Loading...</Text>
+            <ActivityIndicator size="large" color="gray" />
           </View>
         );
       }

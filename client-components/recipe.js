@@ -1,8 +1,16 @@
 import React from 'react';
-import {StyleSheet, Text, View, BackHandler, Button, Image, FlatList} from 'react-native';
 import axios from 'axios';
 
 import IP from '../IP';
+
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 
 class Recipe extends React.Component {
   constructor(props) {
@@ -26,7 +34,7 @@ class Recipe extends React.Component {
   }
 
   saveRecipe() {
-    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: this.props.selectedRecipe}).then((results) => {
+    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
       console.log('SAVED RECIPE');
       this.setState({
         isSaved: true
@@ -49,7 +57,7 @@ class Recipe extends React.Component {
   //====================================================
   render() {
     if (this.state.recipeDetails) {
-      return(
+      return (
         <View style={styles.container}>
           <Button
             title="Back to Recipes"
@@ -58,37 +66,37 @@ class Recipe extends React.Component {
             }}
           />
           {this.props.email && !this.state.isSaved ?
-          <Button
-          title="Save Recipe"
-          onPress={() => {
-            this.saveRecipe();
-          }}
-        /> 
-          : 
-          undefined}
+            <Button
+              title="Save Recipe"
+              onPress={() => {
+                this.saveRecipe();
+              }}
+            />
+            :
+            undefined}
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
             style={styles.stretch}
-            source={{uri: this.state.recipeDetails.image}}
+            source={{ uri: this.state.recipeDetails.image }}
           />
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
-          : undefined}
+            <Text>Preparation: {this.state.recipeDetails.preparationMinutes} minutes</Text>
+            : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
-          : undefined}
+            <Text>Cooking: {this.state.recipeDetails.cookingMinutes} minutes</Text>
+            : undefined}
           {this.state.recipeDetails.preparationMinutes ?
-          <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
-          : undefined}
-          {this.state.recipeDetails.diets.length ? 
+            <Text>Ready In: {this.state.recipeDetails.readyInMinutes} minutes</Text>
+            : undefined}
+          {this.state.recipeDetails.diets.length ?
             <View>
               <Text>Diet</Text>
-                {this.state.recipeDetails.diets.map((diet, i) => (
-                  <Text key={i}>{diet}</Text>
-                ))}
+              {this.state.recipeDetails.diets.map((diet, i) => (
+                <Text key={i}>{diet}</Text>
+              ))}
             </View> : undefined}
 
-          {this.state.recipeDetails.analyzedInstructions.length ? 
+          {this.state.recipeDetails.analyzedInstructions.length ?
             <View>
               <Text>Instructions</Text>
               {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
@@ -96,15 +104,15 @@ class Recipe extends React.Component {
               ))}
             </View> : undefined}
         </View>
-      ); 
+      );
     } else {
       return (
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          <ActivityIndicator size="large" color="gray" />
         </View>
       );
     }
-  } 
+  }
 }
 
 const styles = StyleSheet.create({

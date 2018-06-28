@@ -1,10 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View, TextInput, Button, FlatList, Picker} from 'react-native';
-import { List, ListItem } from 'react-native-elements';
-import axios from 'axios'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  // Button,
+  FlatList,
+  Picker,
+} from 'react-native';
 
 import IP from '../IP.js'
+import axios from 'axios'
+
+import { Button } from 'react-native-elements'
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
@@ -213,10 +223,18 @@ class Ingredients extends React.Component {
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <Text
                   style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                >{item.quantity}{item.unit}</Text>
+                >{item.quantity}{item.unit}
+                </Text>
                 <Text
                   style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                >{item.ingredient}</Text>
+                >{item.ingredient}
+                </Text>
+                <Button
+                  title='Edit'
+                  onPress={() => {
+                    console.log(item);
+                  }}
+                />
               </View>
           }
           keyExtractor={(item, index) => item.ingredient}
@@ -270,6 +288,7 @@ class Ingredients extends React.Component {
           />
           <Button
             title="Add"
+            icon={{ name: 'keyboard-arrow-up' }}
             onPress={() => {
               this.submitIngredient();
             }}
