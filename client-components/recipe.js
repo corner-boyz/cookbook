@@ -50,7 +50,7 @@ class Recipe extends React.Component {
   }
 
   convertMinutes(time) {
-    let hours = time /60;
+    let hours = time / 60;
     let rhours = Math.floor(time / 60);
     let minutes = Math.round((hours - rhours) * 60);
     let strHour = ' hr';
@@ -74,12 +74,6 @@ class Recipe extends React.Component {
     if (this.state.recipeDetails) {
       return (
         <View style={styles.container}>
-          <Button
-            title="Back to Recipes"
-            onPress={() => {
-              this.props.recipeBack();
-            }}
-          />
           {this.props.email && !this.state.isSaved ?
             <Button
               title="Save Recipe"

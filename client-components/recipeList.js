@@ -1,10 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import { Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
+import { View, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
 import { styles } from '../styles'
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
-import IP from '../IP';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
@@ -14,7 +12,8 @@ class RecipeList extends React.Component {
     this.state = {
       recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
-      fadeAnim: new Animated.Value(0)
+      fadeAnim: new Animated.Value(0),
+      showRecipe: false
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -40,55 +39,55 @@ class RecipeList extends React.Component {
   //====================================================
   selectRecipe(recipe) {
     this.setState({
-      selectedRecipe: recipe
+      selectedRecipe: recipe,
+      showRecipe: true
     });
   }
 
   recipeBack() {
     this.setState({
-      selectedRecipe: undefined
+      selectedRecipe: undefined,
+      showRecipe: false
     });
   }
   //====================================================
   render() {
-
-    let { fadeAnim } = this.state;
-
-    if (!this.state.selectedRecipe) {
-      if (this.props.screenProps.recipes) {
-        return (
-          <View style={styles.container}>
-            <Animated.View
-              style={{ ...this.props.style, opacity: fadeAnim }}
-            >
-              <FlatList style={styles.list}
-                data={this.props.screenProps.recipes}
-                extraData={this.state.recipeListIndex}
-                renderItem={
-                  ({ item }) => (
-                    <View>
-                      <RecipeListEntry
-                        recipe={item}
-                        selectRecipe={this.selectRecipe}
-                      />
-                    </View>
-                  )
-                }
-                keyExtractor={(item, recipeListIndex) => item.id.toString()}
-              />
-            </Animated.View>
-          </View>
-        );
-      } else {
-        return (
-          <View style={styles.spinner}>
-            <ActivityIndicator size="large" color="gray" />
-          </View>
-        );
-      }
+    if (this.props.screenProps.recipes) {
+      return (
+        <View style={styles.container}>
+          <FlatList style={styles.list}
+            data={this.props.screenProps.recipes}
+            extraData={this.state.recipeListIndex}
+            renderItem={
+              ({ item }) => (
+                <View>
+                  <RecipeListEntry
+                    recipe={item}
+                    selectRecipe={this.selectRecipe}
+                  />
+                </View>
+              )
+            }
+            keyExtractor={(item) => item.id.toString()}
+          />
+          <Modal
+            animationType="fade"
+            transparent={false}
+            visible={this.state.showRecipe}
+            onRequestClose={() => {
+              this.setState({
+                showRecipe: false
+              })
+            }}>
+            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} />
+          </Modal>
+        </View>
+      );
     } else {
       return (
-        <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} />
+        <View style={styles.spinner}>
+          <ActivityIndicator size="large" color="gray" />
+        </View>
       );
     }
   }

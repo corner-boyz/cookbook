@@ -22,9 +22,9 @@ const Root = createMaterialBottomTabNavigator(
     Recipes: {
       screen: RecipeList,
     },
-    Debug: {
-      screen: Debug,
-    }
+    // Debug: {
+    //   screen: Debug,
+    // }
   },
   {
     initialRouteName: 'Home',
@@ -136,7 +136,6 @@ export default class App extends React.Component {
             email: this.state.email,
           }} />
       }
-
     }
   }
 }
