@@ -33,13 +33,14 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      recipeListIndex: 0,
       ingredients: [],
       text: '',
       // isLoggedIn: false,
       isLoggedIn: true, //uncomment for debugging
       signUp: false,
       // email: '',
-      email: 'a@a.com', //uncomment for debugging
+      email: 'theohzonelayer@gmail.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -50,14 +51,13 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    // console.log('App Mounted');
     this.getIngredients(); //uncomment for debugging
   };
   //====================================================
   getIngredients() {
-    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
-    axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
+    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
       .then(results => {
+        this.searchRecipes(results.data);
         this.setState({
           ingredients: results.data,
           recipes: undefined
@@ -67,10 +67,13 @@ export default class App extends React.Component {
       });
   }
 
-  searchRecipes() {
-    axios.post(`http://${IP}/api/recipelist`, this.state.ingredients).then((results) => {
+  searchRecipes(ingredients = this.state.ingredients) {
+    this.setState({
+      recipeListIndex: this.state.recipeListIndex + 1
+    });
+    axios.post(`http://${IP}/api/recipelist`, ingredients).then((results) => {
       this.setState({
-        recipes: results.data
+        recipes: results.data,
       });
     });
   }
@@ -120,6 +123,7 @@ export default class App extends React.Component {
       if (this.state.isLoggedIn === true) {
         return <Root
           screenProps={{
+            recipeListIndex: this.state.recipeListIndex,
             ingredients: this.state.ingredients,
             getIngredients: this.getIngredients,
             recipes: this.state.recipes,

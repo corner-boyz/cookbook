@@ -102,7 +102,8 @@ class Ingredients extends React.Component {
         this.props.screenProps.getIngredients();
         this.setState({
           index: this.state.index + 1
-        })
+        });
+        this.props.screenProps.recipeListIndex++;
       })
       .catch((error) => {
         console.log(error);

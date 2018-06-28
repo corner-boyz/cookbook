@@ -12,6 +12,7 @@ class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0)
     };
@@ -27,14 +28,11 @@ class RecipeList extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    console.log('SCREEN', this.props.screenProps.searchRecipes);
-    this.props.screenProps.searchRecipes();
-    setTimeout(()=>console.log('RECIPESjo', this.props.screenProps.recipes), 2000);
     Animated.timing(
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 2500,
+        duration: 1000,
       }
     ).start();
   }
@@ -65,6 +63,7 @@ class RecipeList extends React.Component {
             >
               <FlatList style={styles.list}
                 data={this.props.screenProps.recipes}
+                extraData={this.state.recipeListIndex}
                 renderItem={
                   ({ item }) => (
                     <View>
@@ -75,7 +74,7 @@ class RecipeList extends React.Component {
                     </View>
                   )
                 }
-                keyExtractor={(item, index) => item.id.toString()}
+                keyExtractor={(item, recipeListIndex) => item.id.toString()}
               />
             </Animated.View>
           </View>
