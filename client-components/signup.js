@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, TextInput, Button, FlatList} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
+import { styles } from '../styles';
 import IP from '../IP';
 
 //==================================================== 
@@ -47,7 +47,7 @@ class Signup extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.homeContainer}>
         <Text>Sign up for CookBook:</Text>
         <TextInput
           style={{ height: 40, width: 250 }}
@@ -111,26 +111,5 @@ class Signup extends React.Component {
     )
   }
 }
-//==================================================== 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  list: {
-    width: 350,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
-  },
-  warningText: {
-    color: '#ff0000'
-  },
-  signUpText: {
-    paddingTop: 20,
-    paddingBottom: 10,
-  }
-});
 
 export default Signup;

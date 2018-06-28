@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, FlatList, Picker, StatusBar } from 'react-native';
+import { Text, View, TextInput, FlatList, Picker, StatusBar } from 'react-native';
+import { Button } from 'react-native-elements'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { styles } from '../styles';
 import IP from '../IP.js'
 
-import { Button } from 'react-native-elements'
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
@@ -110,11 +110,11 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.ingredientsContainer}>
         <StatusBar />
         <Text>Here are your Ingredients:</Text>
         <FlatList
-          style={styles.list}
+          style={styles.ingredientsList}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
           renderItem={

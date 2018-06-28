@@ -1,6 +1,22 @@
 import { StyleSheet } from 'react-native';
 
 module.exports.styles = StyleSheet.create({
+  signUpText: {
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  signUpButton: {
+    backgroundColor: '#ff0000',
+  },
+  warningText: {
+    color: '#ff0000'
+  },
+  homeContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: 'powderblue',

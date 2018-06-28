@@ -1,18 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import { Text, View, FlatList, ActivityIndicator } from 'react-native';
-
-import RecipeListEntry from './recipeListEntry';
-import Recipe from './recipe';
-import {styles} from '../styles';
-
-=======
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
-
+import { Text, View, FlatList, ActivityIndicator, Animated } from 'react-native';
+import { styles } from '../styles'
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
->>>>>>> 01554cdf89f2afb47a19f608c2a3db746c9553e5
 import IP from '../IP';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -46,7 +37,7 @@ class RecipeList extends React.Component {
       this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 60000,
+        duration: 3000,
       }
     ).start();
   }
@@ -83,8 +74,6 @@ class RecipeList extends React.Component {
             <Animated.View
               style={{ ...this.props.style, opacity: fadeAnim }}
             >
-
-              <Text>Here are some Recipes</Text>
               <FlatList style={styles.list}
                 data={this.state.recipes}
                 renderItem={
@@ -116,25 +105,6 @@ class RecipeList extends React.Component {
     }
   }
 }
-//====================================================
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: 'powderblue',
-//     alignItems: 'center',
-//     paddingTop: 20,
-//     // justifyContent: 'center',
-//   },
-//   list: {
-//     flex: 1,
-//     backgroundColor: 'white'
-//     // justifyContent: 'center',
-//   },
-//   spinner: {
-//     flex: 1,
-//     justifyContent: 'center'
-//   }
-// });
 
 export default RecipeList;
 
