@@ -7,10 +7,6 @@ import Recipe from './recipe'
 import IP from '../IP';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
-
-
 //====================================================
 class RecipeList extends React.Component {
   constructor(props) {
@@ -27,12 +23,13 @@ class RecipeList extends React.Component {
     tabBarColor: 'blue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
-    },
-
+    }
   }
   //====================================================
   componentDidMount() {
-    this.findRecipes();
+    console.log('SCREEN', this.props.screenProps.searchRecipes);
+    this.props.screenProps.searchRecipes();
+    setTimeout(()=>console.log('RECIPESjo', this.props.screenProps.recipes), 2000);
     Animated.timing(
       this.state.fadeAnim,
       {
@@ -43,14 +40,6 @@ class RecipeList extends React.Component {
   }
 
   //====================================================
-  findRecipes() {
-    axios.post(`http://${IP}/api/recipelist`, this.props.screenProps.ingredients).then((results) => {
-      this.setState({
-        recipes: results.data
-      });
-    });
-  }
-
   selectRecipe(recipe) {
     this.setState({
       selectedRecipe: recipe
@@ -68,14 +57,14 @@ class RecipeList extends React.Component {
     let { fadeAnim } = this.state;
 
     if (!this.state.selectedRecipe) {
-      if (this.state.recipes) {
+      if (this.props.screenProps.recipes) {
         return (
           <View style={styles.container}>
             <Animated.View
               style={{ ...this.props.style, opacity: fadeAnim }}
             >
               <FlatList style={styles.list}
-                data={this.state.recipes}
+                data={this.props.screenProps.recipes}
                 renderItem={
                   ({ item }) => (
                     <View>

@@ -28,19 +28,20 @@ class RecipeListEntry extends React.Component {
           style={styles.recipeImage}
           source={{ uri: this.props.recipe.image }}
         />
+        {this.props.recipe.usedIngredients.length && this.props.recipe.missedIngredients.length ?
+        <Text style={{fontWeight: 'bold'}}>Ingredients:</Text> 
+        : undefined}
         {this.props.recipe.usedIngredients.length ?
           <View>
-            <Text>Owned: </Text>
-            <Text>
+            <Text style={styles.owned}>
             {this.props.recipe.usedIngredients.map((ingredient, i) => (
               ingredient.name + ', '
             ))} 
             </Text></View> : undefined}
         
-        {this.props.recipe.usedIngredients.length ?
+        {this.props.recipe.missedIngredients.length ?
           <View>
-            <Text>Missing: </Text>
-            <Text>
+            <Text style={styles.missing}>
             {this.props.recipe.missedIngredients.map((ingredient, i) => (
               ingredient.name + ', '
             ))} 
