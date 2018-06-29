@@ -1,4 +1,5 @@
 import React from 'react';
+import IngredientEntry from './ingredientEntry.js';
 import { Text, View, TextInput, FlatList, Picker, Modal, KeyboardAvoidingView } from 'react-native';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -155,14 +156,7 @@ class Ingredients extends React.Component {
           renderItem={
             ({ item }) =>
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                <Text
-                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-                >{item.quantity}{item.unit}
-                </Text>
-                <Text
-                  style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                >{item.ingredient}
-                </Text>
+                <IngredientEntry item={item}/>
               </View>
           }
           keyExtractor={(item) => item.ingredient}
