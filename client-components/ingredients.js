@@ -81,31 +81,35 @@ class Ingredients extends React.Component {
   }
 
   submitIngredient() {
-    let newIngredient = {
-      email: this.props.screenProps.email,
-      shouldReplace: false,
-      ingredients: [
-        {
-          ingredient: this.state.name,
-          quantity: this.state.quantity,
-          unit: this.state.selectedUnit
-        }
-      ]
-    };
-    console.log(newIngredient);
+    if (this.state.name.length > 0) {
+      let newIngredient = {
+        email: this.props.screenProps.email,
+        shouldReplace: false,
+        ingredients: [
+          {
+            ingredient: this.state.name,
+            quantity: this.state.quantity,
+            unit: this.state.selectedUnit
+          }
+        ]
+      };
+      console.log(newIngredient);
 
-    axios.post(`http://${IP}/api/ingredients`, newIngredient)
-      .then((response) => {
-        console.log(response.data);
-        this.props.screenProps.getIngredients();
-        this.setState({
-          index: this.state.index + 1
-        });
-        this.props.screenProps.recipeListIndex++;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+      axios.post(`http://${IP}/api/ingredients`, newIngredient)
+        .then((response) => {
+          console.log(response.data);
+          this.props.screenProps.getIngredients();
+          this.setState({
+            index: this.state.index + 1
+          });
+          this.props.screenProps.recipeListIndex++;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } else {
+      alert('Enter Valid Ingredient')
+    }
   }
 
   editIngredients() {
