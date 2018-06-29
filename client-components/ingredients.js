@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, FlatList, Picker, Modal } from 'react-native';
+import { Text, View, TextInput, FlatList, Picker, Modal, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -244,73 +244,75 @@ class Ingredients extends React.Component {
           </View>
         </Modal>
 
-        <View style={{ alignItems: 'flex-end' }}>
-          <Button
-            title='Edit List'
-            onPress={() => {
-              // console.log(item);
-              this.setState({
-                editMode: true,
-              })
-              // console.log(this.state.editSelection);
-            }}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-          <Picker
-            selectedValue={this.state.quantity}
-            style={{
-              height: 40,
-              width: 50,
-              backgroundColor: 'gray'
-            }}
-            mode='dropdown'
-            onValueChange={(itemValue) => this.setState({ quantity: itemValue })}>
-            {this.state.numbers.map((item, index) =>
-              <Picker.Item
-                key={index}
-                label={item.toString()}
-                value={item}
-              />
-            )}
-          </Picker>
-          <Picker
-            selectedValue={this.state.selectedUnit}
-            style={{
-              height: 40,
-              width: 100,
-              backgroundColor: 'lightgray'
-            }}
-            mode='dropdown'
-            onValueChange={(itemValue) => this.setState({ selectedUnit: itemValue })}>
-            {this.state.units.map((item, index) =>
-              <Picker.Item
-                key={index}
-                label={item.name}
-                value={item.abrv}
-              />
-            )}
-          </Picker>
-          <TextInput
-            style={{
-              height: 40,
-              width: 200
-            }}
-            placeholder='Add an Ingredient'
-            onChangeText={(text) => {
-              this.setState({ name: text })
-            }
-            }
-          />
-          <Button
-            title="Add"
-            color='cyan'
-            icon={{ name: 'keyboard-arrow-up' }}
-            onPress={() => {
-              this.submitIngredient();
-            }}
-          />
-        </View>
+        <KeyboardAvoidingView behavior="padding" enabled>
+          <View style={{ alignItems: 'flex-end' }}>
+            <Button
+              title='Edit List'
+              onPress={() => {
+                // console.log(item);
+                this.setState({
+                  editMode: true,
+                })
+                // console.log(this.state.editSelection);
+              }}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <Picker
+              selectedValue={this.state.quantity}
+              style={{
+                height: 40,
+                width: 50,
+                backgroundColor: 'gray'
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => this.setState({ quantity: itemValue })}>
+              {this.state.numbers.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.toString()}
+                  value={item}
+                />
+              )}
+            </Picker>
+            <Picker
+              selectedValue={this.state.selectedUnit}
+              style={{
+                height: 40,
+                width: 100,
+                backgroundColor: 'lightgray'
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => this.setState({ selectedUnit: itemValue })}>
+              {this.state.units.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.name}
+                  value={item.abrv}
+                />
+              )}
+            </Picker>
+            <TextInput
+              style={{
+                height: 40,
+                width: 150
+              }}
+              placeholder='Add an Ingredient'
+              onChangeText={(text) => {
+                this.setState({ name: text })
+              }
+              }
+            />
+            <Button
+              title="Add"
+              color='cyan'
+              icon={{ name: 'keyboard-arrow-up' }}
+              onPress={() => {
+                this.submitIngredient();
+              }}
+            />
+          </View>
+        </KeyboardAvoidingView>
       </View>
     )
   }
