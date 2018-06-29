@@ -20,18 +20,17 @@ class RecipeList extends React.Component {
   }
 
   static navigationOptions = {
-    tabBarColor: 'blue',
+    tabBarColor: 'dodgerblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
-    }
+    },
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(
-      this.state.fadeAnim,
+    Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 1000,
+        duration: 2000,
       }
     ).start();
   }
@@ -61,14 +60,13 @@ class RecipeList extends React.Component {
             renderItem={
               ({ item }) => (
                 <View>
-                  <RecipeListEntry
-                    recipe={item}
-                    selectRecipe={this.selectRecipe}
-                  />
+                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
             }
             keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            horizontal={false}
           />
           <Modal
             animationType="fade"
