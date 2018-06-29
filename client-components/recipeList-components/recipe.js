@@ -3,9 +3,9 @@ import { Text, View, Image, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
-import { styles } from '../styles';
+import { styles } from '../../styles';
 
-import IP from '../IP';
+import IP from '../../IP';
 
 class Recipe extends React.Component {
   constructor(props) {

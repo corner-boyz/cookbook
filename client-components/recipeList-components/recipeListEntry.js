@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, Image, Dimensions, Animated } from 'react
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
-import { styles } from '../styles';
-import IP from '../IP';
+import { styles } from '../../styles';
+import IP from '../../IP';
 
 
 class RecipeListEntry extends React.Component {
