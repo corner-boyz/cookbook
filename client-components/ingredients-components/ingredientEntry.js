@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-
 class IngredientEntry extends React.Component {
   constructor(props) {
     super(props);
@@ -8,7 +7,7 @@ class IngredientEntry extends React.Component {
     };
   }
   render() {
-    console.log(`Render IngredientEntry `, this.props);
+    // console.log(`Render IngredientEntry `, this.props);
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <Text

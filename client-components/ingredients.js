@@ -1,7 +1,9 @@
 import React from 'react';
-import IngredientEntry from './ingredientEntry.js';
+import IngredientEntry from './ingredients-components/ingredientEntry.js';
+import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
+import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { Text, View, TextInput, FlatList, Picker, Modal, KeyboardAvoidingView } from 'react-native';
-import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
@@ -21,7 +23,6 @@ class Ingredients extends React.Component {
         61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
         76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
         91, 92, 93, 94, 95, 96, 97, 98, 99],
-      quantity: 0,
       units: [
         {
           name: '',
@@ -64,11 +65,10 @@ class Ingredients extends React.Component {
           abrv: 'l',
         }
       ],
-      selectedUnit: '',
-      name: '',
       editMode: false,
     }
-
+    this.submitIngredient = this.submitIngredient.bind(this);
+    this.editMode = this.editMode.bind(this);
   }
   //==================================================== NavBar component
   static navigationOptions = {
@@ -81,16 +81,16 @@ class Ingredients extends React.Component {
   componentDidMount() {
   }
 
-  submitIngredient() {
-    if (this.state.name.length > 0 && this.state.quantity > 0) {
+  submitIngredient(quantity, unit, name) {
+    if (name.length > 0 && quantity > 0) {
       let newIngredient = {
         email: this.props.screenProps.email,
         shouldReplace: false,
         ingredients: [
           {
-            ingredient: this.state.name,
-            quantity: this.state.quantity,
-            unit: this.state.selectedUnit
+            ingredient: name,
+            quantity: quantity,
+            unit: unit
           }
         ]
       };
@@ -144,6 +144,12 @@ class Ingredients extends React.Component {
       })
   }
 
+  editMode() {
+    this.setState({
+      editMode: true
+    })
+  }
+
   //====================================================
   render() {
     return (
@@ -156,12 +162,11 @@ class Ingredients extends React.Component {
           renderItem={
             ({ item }) =>
               <View style={{ flex: 1, flexDirection: 'row' }}>
-                <IngredientEntry item={item}/>
+                <IngredientEntry item={item} />
               </View>
           }
           keyExtractor={(item) => item.ingredient}
         />
-
         <Modal
           animationType='slide'
           transparent={false}
@@ -181,51 +186,8 @@ class Ingredients extends React.Component {
               extraData={this.state.index}
               renderItem={
                 ({ item }) =>
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Picker
-                      selectedValue={item.quantity}
-                      style={{
-                        height: 40,
-                        width: 50,
-                        backgroundColor: 'gray'
-                      }}
-                      mode='dropdown'
-                      onValueChange={(itemValue) => {
-                        item.quantity = itemValue
-                        this.forceUpdate();
-                      }}>
-                      {this.state.numbers.map((item, index) =>
-                        <Picker.Item
-                          key={index}
-                          label={item.toString()}
-                          value={item}
-                        />
-                      )}
-                    </Picker>
-                    <Picker
-                      selectedValue={item.unit}
-                      style={{
-                        height: 40,
-                        width: 100,
-                        backgroundColor: 'lightgray'
-                      }}
-                      mode='dropdown'
-                      onValueChange={(itemValue) => {
-                        item.unit = itemValue
-                        this.forceUpdate();
-                      }}>
-                      {this.state.units.map((item, index) =>
-                        <Picker.Item
-                          key={index}
-                          label={item.name}
-                          value={item.abrv}
-                        />
-                      )}
-                    </Picker>
-                    <Text
-                      style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-                    >{item.ingredient}
-                    </Text>
+                  <View >
+                    <IngredientsEditor item={item} numbers={this.state.numbers} units={this.state.units} />
                   </View>
               }
               keyExtractor={(item) => item.ingredient}
@@ -241,93 +203,13 @@ class Ingredients extends React.Component {
             />
           </View>
         </Modal>
-
         <KeyboardAvoidingView behavior="padding" enabled>
-          <View style={{ alignItems: 'flex-end' }}>
-            <Button
-              title='Edit List'
-              rounded={true}
-              backgroundColor='limegreen'
-              onPress={() => {
-                // console.log(item);
-                this.setState({
-                  editMode: true,
-                })
-                // console.log(this.state.editSelection);
-              }}
-            />
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-            <Button
-              title=''
-              rounded={true}
-              raised={true}
-              backgroundColor='red'
-              icon={{ name: 'ios-camera', type: 'ionicon' }}
-              onPress={() => {
-                console.log('Open Camera');
-              }}
-            />
-            <Picker
-              selectedValue={this.state.quantity}
-              style={{
-                height: 40,
-                width: 50,
-                backgroundColor: 'gray'
-              }}
-              mode='dropdown'
-              prompt='Quantity'
-              onValueChange={(itemValue) => this.setState({ quantity: itemValue })}>
-              {this.state.numbers.map((item, index) =>
-                <Picker.Item
-                  key={index}
-                  label={item.toString()}
-                  value={item}
-                />
-              )}
-            </Picker>
-            <Picker
-              selectedValue={this.state.selectedUnit}
-              style={{
-                height: 40,
-                width: 100,
-                backgroundColor: 'lightgray'
-              }}
-              prompt='Units'
-              mode='dialog'
-              onValueChange={(itemValue) => this.setState({ selectedUnit: itemValue })}>
-              {this.state.units.map((item, index) =>
-                <Picker.Item
-                  key={index}
-                  label={item.name}
-                  value={item.abrv}
-                />
-              )}
-            </Picker>
-            <TextInput
-              style={{
-                height: 40,
-                width: 150
-              }}
-              placeholder='Add an Ingredient'
-              onChangeText={(text) => {
-                this.setState({ name: text })
-              }
-              }
-            />
-            <Button
-              title="Add"
-              raised={true}
-              rounded={true}
-              underlayColor='red'
-              icon={{ name: 'keyboard-arrow-up' }}
-              backgroundColor='orange'
-              onPress={() => {
-                this.submitIngredient();
-              }}
-            />
-
-          </View>
+          <IngredientAdder
+            numbers={this.state.numbers}
+            units={this.state.units}
+            editMode={this.editMode}
+            submitIngredient={this.submitIngredient}
+          />
         </KeyboardAvoidingView>
       </View>
     )
