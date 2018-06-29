@@ -15,7 +15,6 @@ class RecipeListEntry extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('Tile Mounting...');
     Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
