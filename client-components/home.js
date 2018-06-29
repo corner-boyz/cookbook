@@ -2,8 +2,6 @@ import React from 'react';
 import { Text, View, Animated } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Button } from 'react-native-elements';
-
 import { styles } from '../styles';
 //====================================================
 class Home extends React.Component {
@@ -15,7 +13,6 @@ class Home extends React.Component {
       text: '',
       fadeAnim: new Animated.Value(0),
     }
-
   }
   //====================================================
   static navigationOptions = {

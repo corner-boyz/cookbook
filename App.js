@@ -5,8 +5,8 @@ import axios from 'axios';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
-import Signup from './client-components/signup.js';
-import Login from './client-components/login.js';
+import Signup from './client-components/auth.js/signup';
+import Login from './client-components/auth.js/login';
 import Debug from './client-components/debug.js';
 
 import IP from './IP.js';
@@ -44,8 +44,9 @@ export default class App extends React.Component {
       name: '',
       isLoggedIn: false,
       email: '',
-      // isLoggedIn: true, //uncomment for debugging
-      // email: 'a@a.com', //uncomment for debugging
+      // isLoggedIn: true, //uncomment for development
+      // email: 'a@a.com', //uncomment for development
+      // name: 'a'         //uncomment for development
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -56,7 +57,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    // this.getIngredients(); //uncomment for debugging
+    // this.getIngredients(); //uncomment for development
   };
   //====================================================
   getIngredients() {

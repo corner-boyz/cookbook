@@ -67,7 +67,7 @@ class Ingredients extends React.Component {
       ],
       editMode: false,
     }
-    
+
     this.submitIngredient = this.submitIngredient.bind(this);
     this.editMode = this.editMode.bind(this);
   }
@@ -184,6 +184,8 @@ class Ingredients extends React.Component {
             />
             <Button
               title='Confirm'
+              backgroundColor='limegreen'
+              rounded={true}
               onPress={() => {
                 this.editIngredients();
                 this.setState({

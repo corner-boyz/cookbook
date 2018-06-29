@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, Picker } from 'react-native';
+import { Button } from 'react-native-elements';
 //====================================================
 class IngredientsEditor extends React.Component {
   constructor(props) {
