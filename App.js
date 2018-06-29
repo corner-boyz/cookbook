@@ -58,18 +58,19 @@ export default class App extends React.Component {
   //====================================================
   componentDidMount() {
     // this.getIngredients(); //uncomment for development
+
   };
   //====================================================
   getIngredients() {
-    axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
-      .then(results => {
-        this.searchRecipes(results.data);
+    return axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
+      .then((results) => {
         this.setState({
           ingredients: results.data,
           recipes: undefined
         });
-      }).catch(error => {
-        console.log('Error in retrieving ingredients:', error);
+        return results;
+      }).catch((err) => {
+        console.error('ERROR in retrieving ingredients:', err);
       });
   }
 
@@ -77,11 +78,14 @@ export default class App extends React.Component {
     this.setState({
       recipeListIndex: this.state.recipeListIndex + 1
     });
-    axios.post(`http://${IP}/api/recipelist`, ingredients).then((results) => {
+    return axios.post(`http://${IP}/api/recipelist`, ingredients).then((results) => {
       this.setState({
-        recipes: results.data,
+        recipes: results.data
       });
-    });
+      return results.data;
+    }).catch((err) => {
+      console.error('ERROR in searching recipes', err);
+    });;
   }
   //====================================================
   logIn(email, name) {
