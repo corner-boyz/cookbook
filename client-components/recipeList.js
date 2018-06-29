@@ -24,6 +24,13 @@ class RecipeList extends React.Component {
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
+    tabBarOnPress: ({navigation}) => {
+      navigation.navigate('Recipes');
+      let {recipes, searchRecipes} = navigation.getScreenProps();
+      if (!recipes) {
+        searchRecipes();
+      }
+    }
   }
   //====================================================
   componentDidMount() {
