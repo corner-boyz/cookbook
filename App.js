@@ -57,7 +57,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    // this.getIngredients(); //uncomment for development
+    //this.getIngredients(); //uncomment for development
   };
   //====================================================
   getIngredients() {
