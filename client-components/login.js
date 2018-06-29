@@ -30,7 +30,7 @@ class Login extends React.Component {
           });
         } else {
           let { email, name } = results.data;
-          this.props.screenProps.logIn(email);
+          this.props.screenProps.logIn(email, name);
         }
       }).catch(error => {
         console.log('Error in validating user login:', error);

@@ -41,10 +41,11 @@ export default class App extends React.Component {
       ingredients: [],
       text: '',
       signUp: false,
-      // isLoggedIn: false,
-      // email: '',
-      isLoggedIn: true, //uncomment for debugging
-      email: 'a@a.com', //uncomment for debugging
+      name: '',
+      isLoggedIn: false,
+      email: '',
+      // isLoggedIn: true, //uncomment for debugging
+      // email: 'a@a.com', //uncomment for debugging
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -55,7 +56,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    this.getIngredients(); //uncomment for debugging
+    // this.getIngredients(); //uncomment for debugging
   };
   //====================================================
   getIngredients() {
@@ -82,10 +83,11 @@ export default class App extends React.Component {
     });
   }
   //====================================================
-  logIn(email) {
+  logIn(email, name) {
     this.setState({
       isLoggedIn: true,
-      email: email
+      email: email,
+      name: name
     })
     this.getIngredients();
   }
@@ -121,7 +123,7 @@ export default class App extends React.Component {
           screenProps={{
             logIn: this.logIn,
             switchToSignUp: this.switchToSignUp,
-            email: this.state.email
+            // email: this.state.email
           }} />
       }
       if (this.state.isLoggedIn === true) {
@@ -134,6 +136,7 @@ export default class App extends React.Component {
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
+            name: this.state.name
           }} />
       }
     }
