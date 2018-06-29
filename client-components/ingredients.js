@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TextInput, FlatList, Picker, Modal, KeyboardAvoidingView } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
 
@@ -81,7 +81,7 @@ class Ingredients extends React.Component {
   }
 
   submitIngredient() {
-    if (this.state.name.length > 0) {
+    if (this.state.name.length > 0 && this.state.quantity > 0) {
       let newIngredient = {
         email: this.props.screenProps.email,
         shouldReplace: false,
@@ -108,7 +108,7 @@ class Ingredients extends React.Component {
           console.log(error);
         })
     } else {
-      alert('Enter Valid Ingredient')
+      alert('Enter Valid Ingredient/Quantity')
     }
   }
 
