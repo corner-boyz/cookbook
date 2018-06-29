@@ -2,8 +2,8 @@ import React from 'react';
 import { View, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
 
 import { styles } from '../styles'
-import RecipeListEntry from './recipeListEntry'
-import Recipe from './recipe'
+import RecipeListEntry from './recipeList-components/recipeListEntry'
+import Recipe from './recipeList-components/recipe'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
@@ -25,6 +25,13 @@ class RecipeList extends React.Component {
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
+    tabBarOnPress: ({navigation}) => {
+      navigation.navigate('Recipes');
+      let {recipes, searchRecipes} = navigation.getScreenProps();
+      if (!recipes) {
+        searchRecipes();
+      }
+    }
   }
   //====================================================
   componentDidMount() {
