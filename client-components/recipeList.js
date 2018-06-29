@@ -27,11 +27,10 @@ class RecipeList extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(
-      this.state.fadeAnim,
+    Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 1000,
+        duration: 2000,
       }
     ).start();
   }

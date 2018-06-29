@@ -40,16 +40,6 @@ class Home extends React.Component {
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
           <Text>Welcome to your CookBook, what would you like to do?</Text>
-
-
-
-
-
-
-
-
-
-
         </Animated.View>
       </View>
     );

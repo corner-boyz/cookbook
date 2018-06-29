@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Dimensions, Animated } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
@@ -10,7 +10,18 @@ import IP from '../IP';
 class RecipeListEntry extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      fadeAnim: new Animated.Value(0),
+    };
+  }
+  componentDidMount() {
+    console.log('Tile Mounting...');
+    Animated.timing(this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 2000,
+      }
+    ).start();
   }
   retrieveRecipe = (recipeId) => {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
@@ -19,6 +30,7 @@ class RecipeListEntry extends React.Component {
   }
   //====================================================
   render() {
+    let { fadeAnim } = this.state
     return (
       // <TouchableOpacity
       //   onPress={() => this.retrieveRecipe(this.props.recipe.id)}
@@ -49,24 +61,25 @@ class RecipeListEntry extends React.Component {
       //       </Text></View> : undefined}
       //   <Text>{'\n'}</Text>
       // </TouchableOpacity>
-      <Tile
-        imageSrc={{ uri: this.props.recipe.image }}
-        title={this.props.recipe.title}
-        titleStyle={{
-          fontSize: 16
-        }}
-        featured={true}
-        caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}\nNeed: ${this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name))}`}
-        captionStyle={{
-          fontSize: 12,
-          fontWeight: 'bold',
-          color: 'white',
-          justifyContent: 'flex-start'
-        }}
-        width={Dimensions.get('window').width / 2}
-        onPress={() => this.retrieveRecipe(this.props.recipe.id)}
-      />
-
+      <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
+        <Tile
+          imageSrc={{ uri: this.props.recipe.image }}
+          title={this.props.recipe.title}
+          titleStyle={{
+            fontSize: 16
+          }}
+          featured={true}
+          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}\nNeed: ${this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name))}`}
+          captionStyle={{
+            fontSize: 12,
+            fontWeight: 'bold',
+            color: 'white',
+            justifyContent: 'flex-start'
+          }}
+          width={Dimensions.get('window').width / 2}
+          onPress={() => this.retrieveRecipe(this.props.recipe.id)}
+        />
+      </Animated.View>
 
 
     );
