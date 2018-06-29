@@ -23,7 +23,7 @@ class RecipeList extends React.Component {
     tabBarColor: 'dodgerblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
-    }
+    },
   }
   //====================================================
   componentDidMount() {
@@ -60,10 +60,7 @@ class RecipeList extends React.Component {
             renderItem={
               ({ item }) => (
                 <View>
-                  <RecipeListEntry
-                    recipe={item}
-                    selectRecipe={this.selectRecipe}
-                  />
+                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
             }
