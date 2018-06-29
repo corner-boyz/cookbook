@@ -5,8 +5,8 @@ import axios from 'axios';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
-import Signup from './client-components/auth.js/signup';
-import Login from './client-components/auth.js/login';
+import Signup from './client-components/auth-components/signup';
+import Login from './client-components/auth-components/login';
 import Debug from './client-components/debug.js';
 
 import IP from './IP.js';
