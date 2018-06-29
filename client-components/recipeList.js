@@ -20,7 +20,7 @@ class RecipeList extends React.Component {
   }
 
   static navigationOptions = {
-    tabBarColor: 'blue',
+    tabBarColor: 'dodgerblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     }
@@ -69,6 +69,8 @@ class RecipeList extends React.Component {
               )
             }
             keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            horizontal={false}
           />
           <Modal
             animationType="fade"

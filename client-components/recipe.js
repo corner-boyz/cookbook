@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Button, Image, ActivityIndicator } from 'react-native';
+import { Text, View, Image, ActivityIndicator } from 'react-native';
+import { Button } from 'react-native-elements';
 import axios from 'axios';
 
 import { styles } from '../styles';
@@ -43,7 +44,7 @@ class Recipe extends React.Component {
       this.setState({
         isSaved: results.data.length > 0
       });
-      setTimeout(() => console.log(this.state.isSaved), 1000);
+      // setTimeout(() => console.log(this.state.isSaved), 1000);
     }).catch((err) => {
       console.log('ERROR SELECTING RECIPE', err);
     });
@@ -77,6 +78,8 @@ class Recipe extends React.Component {
           {this.props.email && !this.state.isSaved ?
             <Button
               title="Save Recipe"
+              rounded={true}
+              backgroundColor='green'
               onPress={() => {
                 this.saveRecipe();
               }}

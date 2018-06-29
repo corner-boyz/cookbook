@@ -23,7 +23,7 @@ module.exports.styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'powderblue',
+    backgroundColor: 'white',
     alignItems: 'center',
     paddingTop: 20,
   },
@@ -34,13 +34,11 @@ module.exports.styles = StyleSheet.create({
     justifyContent: 'center',
   },
   list: {
-    // flex: 1,
-    backgroundColor: 'white'
-    // justifyContent: 'center',
+    // backgroundColor: 'white'
   },
   recipeImage: {
     width: 312,
-    height: 231
+    height: 231,
   },
   spinner: {
     flex: 1,

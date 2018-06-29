@@ -71,7 +71,7 @@ class Ingredients extends React.Component {
   }
   //==================================================== NavBar component
   static navigationOptions = {
-    tabBarColor: 'green',
+    tabBarColor: 'deepskyblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-basket' size={25} color='white' />;
     },
@@ -252,6 +252,8 @@ class Ingredients extends React.Component {
           <View style={{ alignItems: 'flex-end' }}>
             <Button
               title='Edit List'
+              rounded={true}
+              backgroundColor='limegreen'
               onPress={() => {
                 // console.log(item);
                 this.setState({
@@ -262,6 +264,16 @@ class Ingredients extends React.Component {
             />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <Button
+              title=''
+              rounded={true}
+              raised={true}
+              backgroundColor='red'
+              icon={{ name: 'ios-camera', type: 'ionicon' }}
+              onPress={() => {
+                console.log('Open Camera');
+              }}
+            />
             <Picker
               selectedValue={this.state.quantity}
               style={{
@@ -270,6 +282,7 @@ class Ingredients extends React.Component {
                 backgroundColor: 'gray'
               }}
               mode='dropdown'
+              prompt='Quantity'
               onValueChange={(itemValue) => this.setState({ quantity: itemValue })}>
               {this.state.numbers.map((item, index) =>
                 <Picker.Item
@@ -286,7 +299,8 @@ class Ingredients extends React.Component {
                 width: 100,
                 backgroundColor: 'lightgray'
               }}
-              mode='dropdown'
+              prompt='Units'
+              mode='dialog'
               onValueChange={(itemValue) => this.setState({ selectedUnit: itemValue })}>
               {this.state.units.map((item, index) =>
                 <Picker.Item
@@ -309,12 +323,16 @@ class Ingredients extends React.Component {
             />
             <Button
               title="Add"
-              color='cyan'
+              raised={true}
+              rounded={true}
+              underlayColor='red'
               icon={{ name: 'keyboard-arrow-up' }}
+              backgroundColor='orange'
               onPress={() => {
                 this.submitIngredient();
               }}
             />
+
           </View>
         </KeyboardAvoidingView>
       </View>
