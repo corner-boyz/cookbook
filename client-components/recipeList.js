@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
+
 import { styles } from '../styles'
 import RecipeListEntry from './recipeListEntry'
 import Recipe from './recipe'
