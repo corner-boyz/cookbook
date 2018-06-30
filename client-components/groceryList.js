@@ -14,6 +14,10 @@ class GroceryList extends React.Component {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
+      showAdd: false,
+      ingredient: '',
+      unit: '',
+      quantity: '',
     };
   }
   //====================================================
@@ -51,6 +55,10 @@ class GroceryList extends React.Component {
         console.log(error);
       })
   }
+
+  addToCart() {
+
+  }
   //====================================================
   render() {
     // console.log(`Render GroceryList`, this.props);
@@ -67,7 +75,17 @@ class GroceryList extends React.Component {
             keyExtractor={(item) => item.ingredient}
           />
           <Button
-            title='Confirm Checklist'
+            title='Add to cart'
+            rounded={true}
+            backgroundColor='orange'
+            onPress={() => {
+              this.setState({
+                showAdd: true
+              })
+            }}
+          />
+          <Button
+            title='Purchased'
             rounded={true}
             backgroundColor='limegreen'
             onPress={() => {
