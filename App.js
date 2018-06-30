@@ -43,11 +43,10 @@ export default class App extends React.Component {
       text: '',
       signUp: false,
       name: '',
-      isLoggedIn: false,
-      email: '',
-      // isLoggedIn: true, //uncomment for development
-      // email: 'a@a.com', //uncomment for development
-      // name: 'a'         //uncomment for development
+      //Initially set to true so doesn't render login page briefly when stored logged in is true
+      //If stored logged in is false it will still redirect to login page
+      isLoggedIn: true,
+      email: ''
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -57,42 +56,51 @@ export default class App extends React.Component {
     this.searchRecipes = this.searchRecipes.bind(this);
   }
   //====================================================
+  componentDidMount() {
+    this.retrieveLogin().then(() => {
+      console.log(this.state.isLoggedIn)
+      if (this.state.isLoggedIn) {
+        this.getIngredients();
+      }
+    });
+    // this.removeLogin();
+  };
+  //AsyncStorage====================================================
   storeLogin = async (email, name) => {
-    try {
-      await AsyncStorage.setItem('isLoggedIn', 'true');
-      await AsyncStorage.setItem('email', email);
-      await AsyncStorage.setItem('name', name);
-    } catch (err) {
-      console.error('ERROR storing login', err);
-    }
+    const loginKeyValuePairs = [
+      ['cbIsLoggedIn', 'true'],
+      ['cbEmail', email],
+      ['cbName', name]
+    ];
+    await AsyncStorage.multiSet(loginKeyValuePairs);
   }
 
-  getStoredLogin = async () => {
-    try {
-      await AsyncStorage.getItem('isLoggedIn').then((storedIsLoggedIn)=> {
-        this.setState({
-          isLoggedIn: storedIsLoggedIn === 'true'
-        });
-      });
-      await AsyncStorage.getItem('email').then((storedEmail)=> {
-        this.setState({
-          email: storedEmail
-        });
-      });
-      await AsyncStorage.getItem('name').then((storedName)=> {
-        this.setState({
-          name: storedName
-        });
-      });
-    } catch (err) {
-      console.error('ERROR getting stored login', err);
-    }
+  removeLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    AsyncStorage.multiRemove(loginKeys, (err) => {
+      if (err) {
+        console.error('ERROR removing login', err);
+      }
+    });
   }
-  //====================================================
-  componentDidMount() {
-    // this.getIngredients(); //uncomment for development
-    this.getStoredLogin();
-  };
+
+  retrieveLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
+      keyValues.forEach((keyValue) => {
+        if (keyValue[0] === 'cbIsLoggedIn') {
+          console.log('isloggedin', keyValue[1])
+          this.setState({isLoggedIn: keyValue[1] === 'true'});
+        }
+        if (keyValue[0] === 'cbEmail') {
+          this.setState({email: keyValue[1]});
+        }
+        if (keyValue[0] === 'cbName') {
+          this.setState({name: keyValue[1]});
+        }
+      })
+    });
+  }
   //====================================================
   getIngredients() {
     return axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
@@ -181,9 +189,3 @@ export default class App extends React.Component {
     }
   }
 }
-
-// open application 'Nox'
-// npm start
-
-//npm run server
-
