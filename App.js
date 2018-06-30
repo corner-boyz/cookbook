@@ -167,12 +167,16 @@ export default class App extends React.Component {
     });
     this.storeLogin(email, name);
     this.getIngredients();
+    this.getUserRecipes();
   }
 
   logOut() {
     this.setState({
-      isLoggedIn: false
-    })
+      isLoggedIn: false,
+      email: '',
+      name: ''
+    });
+    this.removeLogin();
   }
 
   switchToSignUp() {
@@ -191,7 +195,8 @@ export default class App extends React.Component {
       if (this.state.signUp === true) {
         return <Signup
           screenProps={{
-            switchToLogin: this.switchToLogin
+            switchToLogin: this.switchToLogin,
+            logIn: this.logIn
           }}
         />
       }
@@ -206,6 +211,7 @@ export default class App extends React.Component {
       if (this.state.isLoggedIn === true) {
         return <Root
           screenProps={{
+            logOut: this.logOut,
             recipeListIndex: this.state.recipeListIndex,
             ingredients: this.state.ingredients,
             getIngredients: this.getIngredients,

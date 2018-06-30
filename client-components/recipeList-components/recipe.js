@@ -93,7 +93,6 @@ class Recipe extends React.Component {
               backgroundColor='green'
               onPress={() => {
                 this.saveRecipe();
-                // this.props.getUserRecipes();
               }}
             /> :
             <Button
@@ -102,7 +101,6 @@ class Recipe extends React.Component {
               backgroundColor='red'
               onPress={() => {
                 this.deleteRecipe();
-                // this.props.getUserRecipes();
               }}
             />
           }
