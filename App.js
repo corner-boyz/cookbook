@@ -1,4 +1,5 @@
 import React from 'react';
+import { AsyncStorage } from "react-native";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import axios from 'axios';
 
@@ -41,12 +42,12 @@ export default class App extends React.Component {
       ingredients: [],
       text: '',
       signUp: false,
-      // name: '',
-      // isLoggedIn: false,
-      // email: '',
-      isLoggedIn: true, //uncomment for development
-      email: 'a@a.com', //uncomment for development
-      name: 'a'         //uncomment for development
+      name: '',
+      isLoggedIn: false,
+      email: '',
+      // isLoggedIn: true, //uncomment for development
+      // email: 'a@a.com', //uncomment for development
+      // name: 'a'         //uncomment for development
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -56,8 +57,41 @@ export default class App extends React.Component {
     this.searchRecipes = this.searchRecipes.bind(this);
   }
   //====================================================
+  storeLogin = async (email, name) => {
+    try {
+      await AsyncStorage.setItem('isLoggedIn', 'true');
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('name', name);
+    } catch (err) {
+      console.error('ERROR storing login', err);
+    }
+  }
+
+  getStoredLogin = async () => {
+    try {
+      await AsyncStorage.getItem('isLoggedIn').then((storedIsLoggedIn)=> {
+        this.setState({
+          isLoggedIn: storedIsLoggedIn === 'true'
+        });
+      });
+      await AsyncStorage.getItem('email').then((storedEmail)=> {
+        this.setState({
+          email: storedEmail
+        });
+      });
+      await AsyncStorage.getItem('name').then((storedName)=> {
+        this.setState({
+          name: storedName
+        });
+      });
+    } catch (err) {
+      console.error('ERROR getting stored login', err);
+    }
+  }
+  //====================================================
   componentDidMount() {
-    this.getIngredients(); //uncomment for development
+    // this.getIngredients(); //uncomment for development
+    this.getStoredLogin();
   };
   //====================================================
   getIngredients() {
@@ -84,7 +118,7 @@ export default class App extends React.Component {
       return results.data;
     }).catch((err) => {
       console.error('ERROR in searching recipes', err);
-    });;
+    });
   }
   //====================================================
   logIn(email, name) {
@@ -92,7 +126,8 @@ export default class App extends React.Component {
       isLoggedIn: true,
       email: email,
       name: name
-    })
+    });
+    this.storeLogin(email, name);
     this.getIngredients();
   }
 
