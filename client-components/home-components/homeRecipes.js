@@ -21,7 +21,9 @@ class HomeRecipes extends React.Component {
   //====================================================
   render() {
     selectedRecipe = {
-      id: this.props.item.recipeid
+      id: this.props.item.recipeid,
+      title: this.props.item.title,
+      image: this.props.item.imageurl
     }
     return (
       <View >
@@ -44,7 +46,7 @@ class HomeRecipes extends React.Component {
               showRecipe: false
             })
           }}>
-          <Recipe selectedRecipe={selectedRecipe} recipeBack={this.recipeBack} />
+          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} />
         </Modal>
 
       </View >
