@@ -32,7 +32,7 @@ class HomeRecipes extends React.Component {
           roundAvatar={true}
           onPress={() => {
             // console.log(this.props.item.title);
-            this.setState({ showRecipe: true })
+            this.setState({ showRecipe: true });
           }}
         />
         <Modal
