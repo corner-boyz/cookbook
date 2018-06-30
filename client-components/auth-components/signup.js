@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
-import { styles } from '../styles';
-import IP from '../IP';
+import { styles } from '../../styles';
+import IP from '../../IP';
 
 //==================================================== 
 class Signup extends React.Component {
@@ -47,7 +47,7 @@ class Signup extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={styles.homeContainer}>
+      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Text>Sign up for CookBook:</Text>
         <TextInput
           style={{ height: 40, width: 250 }}

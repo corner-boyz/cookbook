@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 
 import { Text, View, TextInput, Button } from 'react-native';
-import { styles } from '../styles';
+import { styles } from '../../styles';
 
-import IP from '../IP';
+import IP from '../../IP';
 
-  //====================================================
+//====================================================
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class Login extends React.Component {
           });
         } else {
           let { email, name } = results.data;
-          this.props.screenProps.logIn(email);
+          this.props.screenProps.logIn(email, name);
         }
       }).catch(error => {
         console.log('Error in validating user login:', error);
@@ -40,7 +40,7 @@ class Login extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: 'white', justifyContent: 'center'}]}>
+      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Text>Log in to your CookBook account:</Text>
         <TextInput
           style={{ height: 40, width: 250 }}

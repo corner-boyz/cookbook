@@ -5,8 +5,8 @@ import axios from 'axios';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
-import Signup from './client-components/signup.js';
-import Login from './client-components/login.js';
+import Signup from './client-components/auth-components/signup';
+import Login from './client-components/auth-components/login';
 import Debug from './client-components/debug.js';
 
 import IP from './IP.js';
@@ -41,10 +41,12 @@ export default class App extends React.Component {
       ingredients: [],
       text: '',
       signUp: false,
-      // isLoggedIn: false,
-      // email: '',
-      isLoggedIn: true, //uncomment for debugging
-      email: 'a@a.com', //uncomment for debugging
+      name: '',
+      isLoggedIn: false,
+      email: '',
+      // isLoggedIn: true, //uncomment for development
+      // email: 'a@a.com', //uncomment for development
+      // name: 'a'         //uncomment for development
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -55,7 +57,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    this.getIngredients();
+    //this.getIngredients(); //uncomment for development
   };
   //====================================================
   getIngredients() {
@@ -85,10 +87,11 @@ export default class App extends React.Component {
     });;
   }
   //====================================================
-  logIn(email) {
+  logIn(email, name) {
     this.setState({
       isLoggedIn: true,
-      email: email
+      email: email,
+      name: name
     })
     this.getIngredients();
   }
@@ -124,7 +127,7 @@ export default class App extends React.Component {
           screenProps={{
             logIn: this.logIn,
             switchToSignUp: this.switchToSignUp,
-            email: this.state.email
+            // email: this.state.email
           }} />
       }
       if (this.state.isLoggedIn === true) {
@@ -137,6 +140,7 @@ export default class App extends React.Component {
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
+            name: this.state.name
           }} />
       }
     }

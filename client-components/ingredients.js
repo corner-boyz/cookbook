@@ -1,14 +1,14 @@
 import React from 'react';
+import axios from 'axios';
+import IP from '../IP.js';
 import IngredientEntry from './ingredients-components/ingredientEntry.js';
 import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
-import { Text, View, TextInput, FlatList, Picker, Modal, KeyboardAvoidingView } from 'react-native';
+import { styles } from '../styles';
+
+import { Text, View, FlatList, Modal, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from 'axios';
-
-import { styles } from '../styles';
-import IP from '../IP.js';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -67,6 +67,7 @@ class Ingredients extends React.Component {
       ],
       editMode: false,
     }
+
     this.submitIngredient = this.submitIngredient.bind(this);
     this.editMode = this.editMode.bind(this);
   }
@@ -159,12 +160,7 @@ class Ingredients extends React.Component {
           style={[styles.list, { width: 350 }]}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
-          renderItem={
-            ({ item }) =>
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                <IngredientEntry item={item} />
-              </View>
-          }
+          renderItem={({ item }) => <IngredientEntry item={item} />}
           keyExtractor={(item) => item.ingredient}
         />
         <Modal
@@ -176,31 +172,26 @@ class Ingredients extends React.Component {
             this.setState({
               editMode: false
             })
-          }}
-        >
+          }}>
           <View style={[styles.container, { backgroundColor: 'white', }]}>
             <Text>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: 350 }]}
               data={this.props.screenProps.ingredients}
               extraData={this.state.index}
-              renderItem={
-                ({ item }) =>
-                  <View >
-                    <IngredientsEditor item={item} numbers={this.state.numbers} units={this.state.units} />
-                  </View>
-              }
+              renderItem={({ item }) => <IngredientsEditor item={item} numbers={this.state.numbers} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
               title='Confirm'
+              backgroundColor='limegreen'
+              rounded={true}
               onPress={() => {
                 this.editIngredients();
                 this.setState({
                   editMode: false,
                 })
-              }}
-            />
+              }} />
           </View>
         </Modal>
         <KeyboardAvoidingView behavior="padding" enabled>

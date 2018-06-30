@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Picker, TextInput } from 'react-native'
 import { Button } from 'react-native-elements'
-
-
+//====================================================
 class IngredientAdder extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +11,7 @@ class IngredientAdder extends React.Component {
       name: '',
     };
   }
+  //====================================================
   render() {
     return (
       <View>
@@ -91,7 +91,12 @@ class IngredientAdder extends React.Component {
             icon={{ name: 'keyboard-arrow-up' }}
             backgroundColor='orange'
             onPress={() => {
-              this.props.submitIngredient(this.state.quantity, this.state.selectedUnit,this.state.name);
+              this.props.submitIngredient(this.state.quantity, this.state.selectedUnit, this.state.name);
+              this.setState({
+                quantity: 0,
+                selectedUnit: '',
+                name: ''
+              })
             }}
           />
         </View>
