@@ -1,11 +1,12 @@
 import React from 'react';
-import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
-import { Text, View, Animated, FlatList } from 'react-native';
-import { Button } from 'react-native-elements';
 import axios from 'axios';
+import IP from '../IP.js';
+import GroceryListEntry from './groceryList-components/groceryListEntry.js'
+import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+import { Text, View, Animated, FlatList, Modal } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
-import IP from '../IP.js';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
@@ -14,7 +15,14 @@ class GroceryList extends React.Component {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
+      showAdd: false,
+      ingredient: '',
+      unit: '',
+      quantity: '',
     };
+    this.addToCart = this.addToCart.bind(this);
+    this.closeAdd = this.closeAdd.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
   }
   //====================================================
   static navigationOptions = {
@@ -26,26 +34,65 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
-    // console.log('Testing: ', this.props.screenProps.userGroceries);
-    setTimeout(() => {
+  }
 
-      console.log(this.props.screenProps.userGroceries);
-      // console.log(typeof this.props.screenProps.userGroceries[0].ispurchased);
-    }, 2000)
+  closeAdd() {
+    this.setState({
+      showAdd: false
+    })
   }
 
   purchaseIngredients() {
-    console.log(this.props.screenProps.userGroceries);
+    // console.log(this.props.screenProps.userGroceries);
 
     let purchased = {
       email: this.props.screenProps.email,
       shouldReplace: true,
       ingredients: this.props.screenProps.userGroceries
     };
-    // console.log(purchased);
+    console.log(purchased);
     axios.post(`http://${IP}/api/grocerylist`, purchased)
       .then((response) => {
         console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  addToCart(newIngredient) {
+    const ingArr = [newIngredient]
+    axios.post(`http://${IP}/api/parse`, { ingredients: ingArr })
+      .then((response) => {
+        response.data[0].ispurchased = false
+        axios.post(`http://${IP}/api/groceryList`, {
+          email: this.props.screenProps.email,
+          shouldReplace: false,
+          ingredients: [response.data[0]]
+        })
+          .then(() => {
+            this.props.screenProps.getUserGroceries();
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  removeFromCart(ingredient) {
+    ingredient.quantity = 0
+    // console.log('Testing:', ingredient);
+    const obj = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: [ingredient]
+    }
+    axios.post(`http://${IP}/api/grocerylist`, obj)
+      .then(() => {
+        this.props.screenProps.getUserGroceries();
       })
       .catch((error) => {
         console.log(error);
@@ -63,17 +110,39 @@ class GroceryList extends React.Component {
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
             // extraData={this.state.index}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
             keyExtractor={(item) => item.ingredient}
           />
           <Button
-            title='Confirm Checklist'
+            title='Add to cart'
+            rounded={true}
+            backgroundColor='orange'
+            onPress={() => {
+              this.setState({
+                showAdd: true
+              })
+            }}
+          />
+          <Button
+            title='Purchase'
             rounded={true}
             backgroundColor='limegreen'
             onPress={() => {
               this.purchaseIngredients();
             }}
           />
+          <Modal
+            animationType='slide'
+            transparent={false}
+            visible={this.state.showAdd}
+            onRequestClose={() => {
+              this.setState({
+                showAdd: false
+              })
+            }}>
+            <GroceryListAdder addToCart={this.addToCart} closeAdd={this.closeAdd} />
+          </Modal>
+
         </Animated.View>
       </View>
     )

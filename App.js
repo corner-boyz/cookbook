@@ -58,6 +58,7 @@ export default class App extends React.Component {
     this.switchToLogin = this.switchToLogin.bind(this);
     this.searchRecipes = this.searchRecipes.bind(this);
     this.getUserRecipes = this.getUserRecipes.bind(this);
+    this.getUserGroceries = this.getUserGroceries.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -219,7 +220,7 @@ export default class App extends React.Component {
             userRecipes: this.state.userRecipes,
             getUserRecipes: this.getUserRecipes,
             userGroceries: this.state.userGroceries,
-            getUserGroceries: this.state.getUserGroceries,
+            getUserGroceries: this.getUserGroceries,
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
