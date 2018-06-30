@@ -30,12 +30,21 @@ class Recipe extends React.Component {
 
   saveRecipe() {
     axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
-      console.log('SAVED RECIPE');
       this.setState({
         isSaved: true
       });
     }).catch((err) => {
       console.log('ERROR SAVING RECIPE', err);
+    });
+  }
+
+  deleteRecipe() {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
+      this.setState({
+        isSaved: false
+      });
+    }).catch((err) => {
+      console.log('ERROR DELETING RECIPE', err);
     });
   }
 
@@ -83,7 +92,16 @@ class Recipe extends React.Component {
               onPress={() => {
                 this.saveRecipe();
               }}
-            /> : undefined}
+            /> : 
+            <Button
+              title="Remove Recipe"
+              rounded={true}
+              backgroundColor='red'
+              onPress={() => {
+                this.deleteRecipe();
+              }}
+            />
+          }
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
             style={styles.recipeImage}
