@@ -9,25 +9,26 @@ class GroceryListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false
+      checked: this.props.ispurchased
     };
   }
   render() {
-    console.log(`Render GroceryListEntry`, this.props);
+    // console.log(`Render GroceryListEntry`, this.props);
     return (
       <View>
-        <ListItem
-          key={this.props.index}
-          title={this.props.item.ingredient}
-          subtitle={this.props.item.quantity + this.props.item.unit}
-          hideChevron={true}
-        />
         <CheckBox
-          title='testing'
+          title={this.props.item.quantity + this.props.item.unit + ' ' + this.props.item.ingredient}
           checkedIcon='dot-circle-o'
           uncheckedIcon='circle-o'
-          checked={this.state.checked}
-          onPress={() => { this.setState({ checked: !this.state.checked }) }}
+          iconRight={true}
+          checked={this.props.item.ispurchased}
+          onPress={() => {
+            this.setState({
+              checked: !this.state.checked
+            })
+            this.props.item.ispurchased = !this.props.item.ispurchased
+            // console.log(this.props.item.ispurchased);
+          }}
         />
       </View>
     )

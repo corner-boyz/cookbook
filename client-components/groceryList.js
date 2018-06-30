@@ -1,6 +1,7 @@
 import React from 'react';
 import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
 import { Text, View, Animated, FlatList } from 'react-native';
+import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
 
@@ -23,6 +24,30 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
+    // console.log('Testing: ', this.props.screenProps.userGroceries);
+    setTimeout(() => {
+
+      console.log(this.props.screenProps.userGroceries);
+      // console.log(typeof this.props.screenProps.userGroceries[0].ispurchased);
+    }, 2000)
+  }
+
+  purchaseIngredients() {
+    console.log(this.props.screenProps.userGroceries);
+
+    let purchased = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: this.props.screenProps.userGroceries
+    };
+    // console.log(purchased);
+    axios.post('/api/grocerylist', purchased)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   //====================================================
   render() {
@@ -39,7 +64,14 @@ class GroceryList extends React.Component {
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} />}
             keyExtractor={(item) => item.ingredient}
           />
-
+          <Button
+            title='Confirm Checklist'
+            rounded={true}
+            backgroundColor='limegreen'
+            onPress={() => {
+              this.purchaseIngredients();
+            }}
+          />
         </Animated.View>
       </View>
     )
