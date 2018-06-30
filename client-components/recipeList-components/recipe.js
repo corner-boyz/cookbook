@@ -33,6 +33,7 @@ class Recipe extends React.Component {
       this.setState({
         isSaved: true
       });
+      this.props.getUserRecipes();
     }).catch((err) => {
       console.log('ERROR SAVING RECIPE', err);
     });
@@ -43,6 +44,7 @@ class Recipe extends React.Component {
       this.setState({
         isSaved: false
       });
+      this.props.getUserRecipes();
     }).catch((err) => {
       console.log('ERROR DELETING RECIPE', err);
     });
@@ -91,14 +93,16 @@ class Recipe extends React.Component {
               backgroundColor='green'
               onPress={() => {
                 this.saveRecipe();
+                // this.props.getUserRecipes();
               }}
-            /> : 
+            /> :
             <Button
               title="Remove Recipe"
               rounded={true}
               backgroundColor='red'
               onPress={() => {
                 this.deleteRecipe();
+                // this.props.getUserRecipes();
               }}
             />
           }

@@ -44,6 +44,7 @@ export default class App extends React.Component {
       text: '',
       signUp: false,
       name: '',
+      userRecipes: [],
       //Initially set to true so doesn't render login page briefly when stored logged in is true
       //If stored logged in is false it will still redirect to login page
       isLoggedIn: true,
@@ -55,6 +56,7 @@ export default class App extends React.Component {
     this.switchToSignUp = this.switchToSignUp.bind(this);
     this.switchToLogin = this.switchToLogin.bind(this);
     this.searchRecipes = this.searchRecipes.bind(this);
+    this.getUserRecipes = this.getUserRecipes.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -63,7 +65,9 @@ export default class App extends React.Component {
         this.getIngredients();
       }
     });
-    // this.removeLogin();
+    setTimeout(() => {
+      this.getUserRecipes();
+    }, 3000)
   };
   //AsyncStorage====================================================
   storeLogin = async (email, name) => {
@@ -89,13 +93,13 @@ export default class App extends React.Component {
     return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
       keyValues.forEach((keyValue) => {
         if (keyValue[0] === 'cbIsLoggedIn') {
-          this.setState({isLoggedIn: keyValue[1] === 'true'});
+          this.setState({ isLoggedIn: keyValue[1] === 'true' });
         }
         if (keyValue[0] === 'cbEmail') {
-          this.setState({email: keyValue[1]});
+          this.setState({ email: keyValue[1] });
         }
         if (keyValue[0] === 'cbName') {
-          this.setState({name: keyValue[1]});
+          this.setState({ name: keyValue[1] });
         }
       })
     });
@@ -126,6 +130,21 @@ export default class App extends React.Component {
     }).catch((err) => {
       console.error('ERROR in searching recipes', err);
     });
+  }
+
+  getUserRecipes() {
+    // console.log('Firing');
+    return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
+      .then((response) => {
+        // console.log(response.data);
+        this.setState({
+          // index: this.state.index + 1,
+          userRecipes: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   //====================================================
   logIn(email, name) {
@@ -179,6 +198,8 @@ export default class App extends React.Component {
             ingredients: this.state.ingredients,
             getIngredients: this.getIngredients,
             recipes: this.state.recipes,
+            userRecipes: this.state.userRecipes,
+            getUserRecipes: this.getUserRecipes,
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,

@@ -12,10 +12,14 @@ class HomeRecipes extends React.Component {
     };
   }
   //====================================================
+  componentDidMount() {
+    
+  }
   recipeBack() {
     this.setState({
       showRecipe: false
     });
+    this.props.getUserRecipes();
   }
 
   //====================================================
@@ -45,6 +49,7 @@ class HomeRecipes extends React.Component {
             this.setState({
               showRecipe: false
             })
+            this.props.getUserRecipes();
           }}>
           <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} />
         </Modal>
