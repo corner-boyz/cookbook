@@ -15,6 +15,17 @@ class IngredientAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+        <View style={{ alignItems: 'center' }}>
+          <Button
+            title='Edit List'
+            rounded={true}
+            backgroundColor='orange'
+            onPress={() => {
+              this.props.editMode();
+            }}
+          />
+        </View>
+
         <TextInput
           width={250}
           placeholder='Add an ingredient to your pantry'
