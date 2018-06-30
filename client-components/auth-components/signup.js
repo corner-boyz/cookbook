@@ -9,7 +9,6 @@ import IP from '../../IP';
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: '',
       email: '',
@@ -38,6 +37,7 @@ class Signup extends React.Component {
       })
         .then(() => {
           //Redirect to home page
+          this.props.screenProps.logIn(this.state.email, this.state.name)
           this.props.screenProps.switchToLogin();
         }).catch(error => {
           console.log('Error in creating new user:', error);
@@ -49,13 +49,6 @@ class Signup extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Text>Sign up for CookBook:</Text>
-        <TextInput
-          style={{ height: 40, width: 250 }}
-          placeholder='Name'
-          onChangeText={text => this.setState({
-            name: text
-          })}
-        />
         {this.state.noEmail ?
           <Text style={styles.warningText}>Please enter a valid email address.</Text>
           : (null)}
@@ -65,6 +58,13 @@ class Signup extends React.Component {
           onChangeText={text => this.setState({
             email: text,
             noEmail: false,
+          })}
+        />
+        <TextInput
+          style={{ height: 40, width: 250 }}
+          placeholder='Name'
+          onChangeText={text => this.setState({
+            name: text
           })}
         />
         {this.state.tooShort ?

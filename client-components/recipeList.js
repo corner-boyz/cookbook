@@ -29,6 +29,7 @@ class RecipeList extends React.Component {
       navigation.navigate('Recipes');
       let { recipes, searchRecipes } = navigation.getScreenProps();
       if (!recipes) {
+        console.log('no recipes');
         searchRecipes();
       }
     }

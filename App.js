@@ -183,7 +183,8 @@ export default class App extends React.Component {
       if (this.state.signUp === true) {
         return <Signup
           screenProps={{
-            switchToLogin: this.switchToLogin
+            switchToLogin: this.switchToLogin,
+            logIn: this.logIn
           }}
         />
       }
