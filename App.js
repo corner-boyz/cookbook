@@ -5,6 +5,7 @@ import axios from 'axios';
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
+import GroceryList from './client-components/groceryList';
 import Signup from './client-components/auth-components/signup';
 import Login from './client-components/auth-components/login';
 import Debug from './client-components/debug.js';
@@ -22,9 +23,9 @@ const Root = createMaterialBottomTabNavigator(
     Recipes: {
       screen: RecipeList,
     },
-    // Debug: {
-    //   screen: Debug,
-    // }
+    GroceryList: {
+      screen: GroceryList,
+    }
   },
   {
     initialRouteName: 'Home',
