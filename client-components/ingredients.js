@@ -80,6 +80,7 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
+    
   }
 
   submitIngredient(quantity, unit, name) {

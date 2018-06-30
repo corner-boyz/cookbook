@@ -6,7 +6,7 @@ import axios from 'axios';
 import { styles } from '../../styles';
 
 import IP from '../../IP';
-
+//====================================================
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
@@ -83,9 +83,7 @@ class Recipe extends React.Component {
               onPress={() => {
                 this.saveRecipe();
               }}
-            />
-            :
-            undefined}
+            /> : undefined}
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
             style={styles.recipeImage}
@@ -107,7 +105,6 @@ class Recipe extends React.Component {
                 <Text key={i}>{diet}</Text>
               ))}
             </View> : undefined}
-
           {this.state.recipeDetails.analyzedInstructions.length ?
             <View>
               <Text>Instructions</Text>
