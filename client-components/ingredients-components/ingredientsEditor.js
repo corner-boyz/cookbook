@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Picker } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, } from 'react-native-elements';
 //====================================================
 class IngredientsEditor extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class IngredientsEditor extends React.Component {
         <Picker
           selectedValue={this.props.item.quantity}
           style={{
-            height: 40,
+            height: 35,
             width: 50,
             backgroundColor: 'gray'
           }}
@@ -35,7 +35,7 @@ class IngredientsEditor extends React.Component {
         <Picker
           selectedValue={this.props.item.unit}
           style={{
-            height: 40,
+            height: 35,
             width: 100,
             backgroundColor: 'lightgray'
           }}
@@ -53,7 +53,7 @@ class IngredientsEditor extends React.Component {
           )}
         </Picker>
         <Text
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
+          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold', fontSize: 17, justifyContent: 'center' }}
         >{this.props.item.ingredient}
         </Text>
       </View>

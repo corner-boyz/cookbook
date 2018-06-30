@@ -15,7 +15,7 @@ class IngredientAdder extends React.Component {
   render() {
     return (
       <View>
-        <View style={{ alignItems: 'flex-end' }}>
+        <View style={{ alignItems: 'center' }}>
           <Button
             title='Edit List'
             rounded={true}
@@ -88,7 +88,7 @@ class IngredientAdder extends React.Component {
             raised={true}
             rounded={true}
             underlayColor='red'
-            icon={{ name: 'keyboard-arrow-up' }}
+            iconRight={{ name: 'keyboard-arrow-up' }}
             backgroundColor='orange'
             onPress={() => {
               this.props.submitIngredient(this.state.quantity, this.state.selectedUnit, this.state.name);
