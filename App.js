@@ -1,12 +1,15 @@
 import React from 'react';
+import { AsyncStorage } from "react-native";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import axios from 'axios';
 
 import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
-import Signup from './client-components/signup.js';
-import Login from './client-components/login.js';
+import GroceryList from './client-components/groceryList';
+import Signup from './client-components/auth-components/signup';
+import Login from './client-components/auth-components/login';
+import Debug from './client-components/debug.js';
 
 import IP from './IP.js';
 //==================================================== this is the navigation bar at the bottom of the screen
@@ -20,6 +23,9 @@ const Root = createMaterialBottomTabNavigator(
     },
     Recipes: {
       screen: RecipeList,
+    },
+    GroceryList: {
+      screen: GroceryList,
     }
   },
   {
@@ -33,43 +39,102 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      recipeListIndex: 0,
       ingredients: [],
       text: '',
-      // isLoggedIn: false,
-      isLoggedIn: true, //uncomment for debugging
       signUp: false,
-      // email: '',
-      email: 'a@a.com', //uncomment for debugging
+      name: '',
+      //Initially set to true so doesn't render login page briefly when stored logged in is true
+      //If stored logged in is false it will still redirect to login page
+      isLoggedIn: true,
+      email: ''
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.switchToSignUp = this.switchToSignUp.bind(this);
     this.switchToLogin = this.switchToLogin.bind(this);
+    this.searchRecipes = this.searchRecipes.bind(this);
   }
   //====================================================
   componentDidMount() {
-    // console.log('App Mounted');
-    this.getIngredients(); //uncomment for debugging
+    this.retrieveLogin().then(() => {
+      if (this.state.isLoggedIn) {
+        this.getIngredients();
+      }
+    });
+    // this.removeLogin();
   };
+  //AsyncStorage====================================================
+  storeLogin = async (email, name) => {
+    const loginKeyValuePairs = [
+      ['cbIsLoggedIn', 'true'],
+      ['cbEmail', email],
+      ['cbName', name]
+    ];
+    await AsyncStorage.multiSet(loginKeyValuePairs);
+  }
 
+  removeLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    AsyncStorage.multiRemove(loginKeys, (err) => {
+      if (err) {
+        console.error('ERROR removing login', err);
+      }
+    });
+  }
+
+  retrieveLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
+      keyValues.forEach((keyValue) => {
+        if (keyValue[0] === 'cbIsLoggedIn') {
+          this.setState({isLoggedIn: keyValue[1] === 'true'});
+        }
+        if (keyValue[0] === 'cbEmail') {
+          this.setState({email: keyValue[1]});
+        }
+        if (keyValue[0] === 'cbName') {
+          this.setState({name: keyValue[1]});
+        }
+      })
+    });
+  }
+  //====================================================
   getIngredients() {
-    // axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
-    axios.get(`http://${IP}/api/ingredients/a@a.com`) //uncomment for debugging
-      .then(results => {
+    return axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
+      .then((results) => {
         this.setState({
           ingredients: results.data,
+          recipes: undefined
         });
-      }).catch(error => {
-        console.log('Error in retrieving ingredients:', error);
+        return results;
+      }).catch((err) => {
+        console.error('ERROR in retrieving ingredients:', err);
       });
   }
 
-  logIn(email) {
+  searchRecipes(ingredients = this.state.ingredients) {
+    this.setState({
+      recipeListIndex: this.state.recipeListIndex + 1
+    });
+    return axios.post(`http://${IP}/api/recipelist`, ingredients).then((results) => {
+      this.setState({
+        recipes: results.data
+      });
+      return results.data;
+    }).catch((err) => {
+      console.error('ERROR in searching recipes', err);
+    });
+  }
+  //====================================================
+  logIn(email, name) {
     this.setState({
       isLoggedIn: true,
-      email: email
-    })
+      email: email,
+      name: name
+    });
+    this.storeLogin(email, name);
     this.getIngredients();
   }
 
@@ -104,25 +169,22 @@ export default class App extends React.Component {
           screenProps={{
             logIn: this.logIn,
             switchToSignUp: this.switchToSignUp,
-            email: this.state.email
+            // email: this.state.email
           }} />
       }
       if (this.state.isLoggedIn === true) {
         return <Root
           screenProps={{
+            recipeListIndex: this.state.recipeListIndex,
             ingredients: this.state.ingredients,
+            getIngredients: this.getIngredients,
+            recipes: this.state.recipes,
+            searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
-            getIngredients: this.getIngredients
+            name: this.state.name
           }} />
       }
-
     }
   }
 }
-
-// open application 'Nox'
-// npm start
-
-//npm run server
-

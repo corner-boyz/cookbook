@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View, Button, Image, ActivityIndicator } from 'react-native';
+import { Text, View, Image, ActivityIndicator } from 'react-native';
+import { Button } from 'react-native-elements';
 import axios from 'axios';
 
-import { styles } from '../styles';
+import { styles } from '../../styles';
 
-import IP from '../IP';
-
+import IP from '../../IP';
+//====================================================
 class Recipe extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +30,6 @@ class Recipe extends React.Component {
 
   saveRecipe() {
     axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
-      console.log('SAVED RECIPE');
       this.setState({
         isSaved: true
       });
@@ -38,19 +38,29 @@ class Recipe extends React.Component {
     });
   }
 
+  deleteRecipe() {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
+      this.setState({
+        isSaved: false
+      });
+    }).catch((err) => {
+      console.log('ERROR DELETING RECIPE', err);
+    });
+  }
+
   selectUserRecipe() {
     axios.get(`http://${IP}/api/saverecipe/${this.props.selectedRecipe.id}/${this.props.email}`).then((results) => {
       this.setState({
         isSaved: results.data.length > 0
       });
-      setTimeout(() => console.log(this.state.isSaved), 1000);
+      // setTimeout(() => console.log(this.state.isSaved), 1000);
     }).catch((err) => {
       console.log('ERROR SELECTING RECIPE', err);
     });
   }
-
+  //====================================================
   convertMinutes(time) {
-    let hours = time /60;
+    let hours = time / 60;
     let rhours = Math.floor(time / 60);
     let minutes = Math.round((hours - rhours) * 60);
     let strHour = ' hr';
@@ -74,21 +84,24 @@ class Recipe extends React.Component {
     if (this.state.recipeDetails) {
       return (
         <View style={styles.container}>
-          <Button
-            title="Back to Recipes"
-            onPress={() => {
-              this.props.recipeBack();
-            }}
-          />
           {this.props.email && !this.state.isSaved ?
             <Button
               title="Save Recipe"
+              rounded={true}
+              backgroundColor='green'
               onPress={() => {
                 this.saveRecipe();
               }}
+            /> : 
+            <Button
+              title="Remove Recipe"
+              rounded={true}
+              backgroundColor='red'
+              onPress={() => {
+                this.deleteRecipe();
+              }}
             />
-            :
-            undefined}
+          }
           <Text>{this.state.recipeDetails.title}</Text>
           <Image
             style={styles.recipeImage}
@@ -110,7 +123,6 @@ class Recipe extends React.Component {
                 <Text key={i}>{diet}</Text>
               ))}
             </View> : undefined}
-
           {this.state.recipeDetails.analyzedInstructions.length ?
             <View>
               <Text>Instructions</Text>
