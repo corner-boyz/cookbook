@@ -3,7 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 
 import HomeRecipes from './home-components/homeRecipes.js'
-import { Text, View, Animated, Easing, FlatList } from 'react-native';
+import { Text, View, Animated, Easing, FlatList, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
@@ -49,6 +49,13 @@ class Home extends React.Component {
 
 
 
+        <Button
+          title="Log Out"
+          backgroundColor='red'
+          onPress={() => {
+            this.props.screenProps.logOut();
+          }}
+        />
         </Animated.View>
       </View>
     );

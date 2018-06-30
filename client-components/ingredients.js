@@ -101,7 +101,6 @@ class Ingredients extends React.Component {
 
       axios.post(`http://${IP}/api/ingredients`, newIngredient)
         .then((response) => {
-          console.log(response.data);
           this.props.screenProps.getIngredients();
           this.setState({
             index: this.state.index + 1
