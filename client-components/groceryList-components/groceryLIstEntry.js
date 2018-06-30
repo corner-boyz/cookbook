@@ -13,6 +13,7 @@ class GroceryListEntry extends React.Component {
       showDelete: false,
     };
   }
+  //====================================================
   render() {
     // console.log(`Render GroceryListEntry`, this.props);
     return (
@@ -40,14 +41,14 @@ class GroceryListEntry extends React.Component {
           }}
         />
         <Modal
-          animationType="slide"
+          animationType='slide'
           transparent={false}
           visible={this.state.showDelete}
           onRequestClose={() => {
             this.setState({
               showDelete: false
             })
-          }}
+          }} a
         >
           <View
             style={{

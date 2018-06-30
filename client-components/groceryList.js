@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import IP from '../IP.js';
-import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
-import { Text, View, Animated, FlatList } from 'react-native';
+import GroceryListEntry from './groceryList-components/groceryListEntry.js'
+import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+import { Text, View, Animated, FlatList, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -85,13 +86,25 @@ class GroceryList extends React.Component {
             }}
           />
           <Button
-            title='Purchased'
+            title='Purchase'
             rounded={true}
             backgroundColor='limegreen'
             onPress={() => {
               this.purchaseIngredients();
             }}
           />
+          <Modal
+            animationType='slide'
+            transparent={false}
+            visible={this.state.showAdd}
+            onRequestClose={() => {
+              this.setState({
+                showAdd: false
+              })
+            }}>
+            <GroceryListAdder />
+          </Modal>
+
         </Animated.View>
       </View>
     )
