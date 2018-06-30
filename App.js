@@ -45,6 +45,7 @@ export default class App extends React.Component {
       signUp: false,
       name: '',
       userRecipes: [],
+      userGroceries: [],
       //Initially set to true so doesn't render login page briefly when stored logged in is true
       //If stored logged in is false it will still redirect to login page
       isLoggedIn: true,
@@ -67,6 +68,7 @@ export default class App extends React.Component {
     });
     setTimeout(() => {
       this.getUserRecipes();
+      this.getUserGroceries();
     }, 3000)
   };
   //AsyncStorage====================================================
@@ -136,10 +138,20 @@ export default class App extends React.Component {
     // console.log('Firing');
     return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
       .then((response) => {
-        // console.log(response.data);
         this.setState({
-          // index: this.state.index + 1,
           userRecipes: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getUserGroceries() {
+    return axios.get(`http://${IP}/api/grocerylist/${this.state.email}`, {})
+      .then((response) => {
+        this.setState({
+          userGroceries: response.data
         })
       })
       .catch((error) => {
@@ -200,6 +212,8 @@ export default class App extends React.Component {
             recipes: this.state.recipes,
             userRecipes: this.state.userRecipes,
             getUserRecipes: this.getUserRecipes,
+            userGroceries: this.state.userGroceries,
+            getUserGroceries: this.state.getUserGroceries,
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,

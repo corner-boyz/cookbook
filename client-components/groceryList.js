@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Animated } from 'react-native';
+import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
+import { Text, View, Animated, FlatList } from 'react-native';
 
 import { styles } from '../styles.js';
 
@@ -20,16 +21,26 @@ class GroceryList extends React.Component {
     },
   }
   //====================================================
-
+  componentDidMount() {
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
+  }
   //====================================================
   render() {
-    console.log(`Render GroceryList`, this.props);
+    // console.log(`Render GroceryList`, this.props);
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
-        {/* <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}> */}
-        <Text>Grocery List</Text>
+        <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
+          <Text style={{ fontSize: 18 }}>Here is your shopping cart</Text>
 
-        {/* </Animated.View> */}
+          <FlatList
+            style={[styles.list, { width: 350 }]}
+            data={this.props.screenProps.userGroceries}
+            // extraData={this.state.index}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            keyExtractor={(item) => item.ingredient}
+          />
+
+        </Animated.View>
       </View>
     )
   }
