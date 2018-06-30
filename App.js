@@ -58,7 +58,6 @@ export default class App extends React.Component {
   //====================================================
   componentDidMount() {
     this.retrieveLogin().then(() => {
-      console.log(this.state.isLoggedIn)
       if (this.state.isLoggedIn) {
         this.getIngredients();
       }
@@ -89,7 +88,6 @@ export default class App extends React.Component {
     return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
       keyValues.forEach((keyValue) => {
         if (keyValue[0] === 'cbIsLoggedIn') {
-          console.log('isloggedin', keyValue[1])
           this.setState({isLoggedIn: keyValue[1] === 'true'});
         }
         if (keyValue[0] === 'cbEmail') {
