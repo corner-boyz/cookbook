@@ -29,39 +29,39 @@ class Ingredients extends React.Component {
           abrv: null
         },
         {
-          name: 'tablespoon',
+          name: 'Tablespoon',
           abrv: 'tsp',
         },
         {
-          name: 'fluid ounce',
+          name: 'Fluid ounce',
           abrv: 'fl-oz',
         },
         {
-          name: 'cup',
+          name: 'Cup',
           abrv: 'cup',
         },
         {
-          name: 'pint',
+          name: 'Pint',
           abrv: 'pnt',
         },
         {
-          name: 'quart',
+          name: 'Quart',
           abrv: 'qt',
         },
         {
-          name: 'gallon',
+          name: 'Gallon',
           abrv: 'gal',
         },
         {
-          name: 'ounce',
+          name: 'Ounce',
           abrv: 'oz',
         },
         {
-          name: 'pound',
+          name: 'Pound',
           abrv: 'lb',
         },
         {
-          name: 'liter',
+          name: 'Liter',
           abrv: 'l',
         }
       ],
@@ -69,6 +69,7 @@ class Ingredients extends React.Component {
     }
 
     this.submitIngredient = this.submitIngredient.bind(this);
+    this.editIngredients = this.editIngredients.bind(this);
     this.editMode = this.editMode.bind(this);
   }
   //==================================================== NavBar component
@@ -80,6 +81,7 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
+
   }
 
   submitIngredient(quantity, unit, name) {
@@ -160,7 +162,7 @@ class Ingredients extends React.Component {
           style={[styles.list, { width: 350 }]}
           data={this.props.screenProps.ingredients}
           extraData={this.state.index}
-          renderItem={({ item }) => <IngredientEntry item={item} />}
+          renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
           keyExtractor={(item) => item.ingredient}
         />
         <Modal
@@ -168,7 +170,6 @@ class Ingredients extends React.Component {
           transparent={false}
           visible={this.state.editMode}
           onRequestClose={() => {
-            console.log('Modal Closing');
             this.setState({
               editMode: false
             })

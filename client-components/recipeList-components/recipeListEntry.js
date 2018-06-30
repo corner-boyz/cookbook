@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions, Animated } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
@@ -31,35 +31,6 @@ class RecipeListEntry extends React.Component {
   render() {
     let { fadeAnim } = this.state
     return (
-      // <TouchableOpacity
-      //   onPress={() => this.retrieveRecipe(this.props.recipe.id)}
-      //   style={{backgroundColor: 'white'}}
-      // >
-      //   <Text style={styles.header}>{this.props.recipe.title}</Text>
-      //   <Image
-      //     style={styles.recipeImage}
-      //     source={{ uri: this.props.recipe.image }}
-      //   />
-      //   {this.props.recipe.usedIngredients.length && this.props.recipe.missedIngredients.length ?
-      //   <Text style={{fontWeight: 'bold'}}>Ingredients:</Text> 
-      //   : undefined}
-      //   {this.props.recipe.usedIngredients.length ?
-      //     <View>
-      //       <Text style={styles.owned}>
-      //       {this.props.recipe.usedIngredients.map((ingredient, i) => (
-      //         ingredient.name + ', '
-      //       ))} 
-      //       </Text></View> : undefined}
-
-      //   {this.props.recipe.missedIngredients.length ?
-      //     <View>
-      //       <Text style={styles.missing}>
-      //       {this.props.recipe.missedIngredients.map((ingredient, i) => (
-      //         ingredient.name + ', '
-      //       ))} 
-      //       </Text></View> : undefined}
-      //   <Text>{'\n'}</Text>
-      // </TouchableOpacity>
       <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
         <Tile
           imageSrc={{ uri: this.props.recipe.image }}

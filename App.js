@@ -41,12 +41,12 @@ export default class App extends React.Component {
       ingredients: [],
       text: '',
       signUp: false,
-      name: '',
-      isLoggedIn: false,
-      email: '',
-      // isLoggedIn: true, //uncomment for development
-      // email: 'a@a.com', //uncomment for development
-      // name: 'a'         //uncomment for development
+      // name: '',
+      // isLoggedIn: false,
+      // email: '',
+      isLoggedIn: true, //uncomment for development
+      email: 'a@a.com', //uncomment for development
+      name: 'a'         //uncomment for development
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -57,7 +57,7 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    //this.getIngredients(); //uncomment for development
+    this.getIngredients(); //uncomment for development
   };
   //====================================================
   getIngredients() {
