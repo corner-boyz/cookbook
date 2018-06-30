@@ -29,7 +29,8 @@ class Recipe extends React.Component {
   }
 
   saveRecipe() {
-    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
+    console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
+    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
       this.setState({
         isSaved: true
       });
@@ -40,7 +41,7 @@ class Recipe extends React.Component {
   }
 
   deleteRecipe() {
-    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: this.props.selectedRecipe }).then((results) => {
+    axios.patch(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
       this.setState({
         isSaved: false
       });

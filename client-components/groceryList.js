@@ -2,8 +2,10 @@ import React from 'react';
 import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
 import { Text, View, Animated, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
+import axios from 'axios';
 
 import { styles } from '../styles.js';
+import IP from '../IP.js';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //====================================================
@@ -41,7 +43,7 @@ class GroceryList extends React.Component {
       ingredients: this.props.screenProps.userGroceries
     };
     // console.log(purchased);
-    axios.post('/api/grocerylist', purchased)
+    axios.post(`http://${IP}/api/grocerylist`, purchased)
       .then((response) => {
         console.log(response.data);
       })
