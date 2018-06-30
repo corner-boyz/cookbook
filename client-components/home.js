@@ -20,6 +20,7 @@ class Home extends React.Component {
       fadeAnim: new Animated.Value(0),
       yPosition: new Animated.Value(0),
     }
+    // console.log(this.props.screenProps.email)
   }
   //====================================================
   static navigationOptions = {
@@ -63,7 +64,7 @@ class Home extends React.Component {
           <FlatList
             data={this.state.recipes}
             extraData={this.state.index}
-            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} />}
+            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} />}
             keyExtractor={(item) => item.title}
           />
 

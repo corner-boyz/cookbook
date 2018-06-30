@@ -58,7 +58,7 @@ class Recipe extends React.Component {
       console.log('ERROR SELECTING RECIPE', err);
     });
   }
-
+  //====================================================
   convertMinutes(time) {
     let hours = time / 60;
     let rhours = Math.floor(time / 60);
