@@ -1,4 +1,5 @@
 import React from 'react';
+import { AsyncStorage } from "react-native";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import axios from 'axios';
 
@@ -41,12 +42,11 @@ export default class App extends React.Component {
       ingredients: [],
       text: '',
       signUp: false,
-      // name: '',
-      // isLoggedIn: false,
-      // email: '',
-      isLoggedIn: true, //uncomment for development
-      email: 'a@a.com', //uncomment for development
-      name: 'a'         //uncomment for development
+      name: '',
+      //Initially set to true so doesn't render login page briefly when stored logged in is true
+      //If stored logged in is false it will still redirect to login page
+      isLoggedIn: true,
+      email: ''
     }
     this.getIngredients = this.getIngredients.bind(this);
     this.logIn = this.logIn.bind(this);
@@ -57,8 +57,48 @@ export default class App extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    this.getIngredients(); //uncomment for development
+    this.retrieveLogin().then(() => {
+      if (this.state.isLoggedIn) {
+        this.getIngredients();
+      }
+    });
+    // this.removeLogin();
   };
+  //AsyncStorage====================================================
+  storeLogin = async (email, name) => {
+    const loginKeyValuePairs = [
+      ['cbIsLoggedIn', 'true'],
+      ['cbEmail', email],
+      ['cbName', name]
+    ];
+    await AsyncStorage.multiSet(loginKeyValuePairs);
+  }
+
+  removeLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    AsyncStorage.multiRemove(loginKeys, (err) => {
+      if (err) {
+        console.error('ERROR removing login', err);
+      }
+    });
+  }
+
+  retrieveLogin = async () => {
+    const loginKeys = ['cbIsLoggedIn', 'cbEmail', 'cbName'];
+    return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
+      keyValues.forEach((keyValue) => {
+        if (keyValue[0] === 'cbIsLoggedIn') {
+          this.setState({isLoggedIn: keyValue[1] === 'true'});
+        }
+        if (keyValue[0] === 'cbEmail') {
+          this.setState({email: keyValue[1]});
+        }
+        if (keyValue[0] === 'cbName') {
+          this.setState({name: keyValue[1]});
+        }
+      })
+    });
+  }
   //====================================================
   getIngredients() {
     return axios.get(`http://${IP}/api/ingredients/${this.state.email}`)
@@ -84,7 +124,7 @@ export default class App extends React.Component {
       return results.data;
     }).catch((err) => {
       console.error('ERROR in searching recipes', err);
-    });;
+    });
   }
   //====================================================
   logIn(email, name) {
@@ -92,7 +132,8 @@ export default class App extends React.Component {
       isLoggedIn: true,
       email: email,
       name: name
-    })
+    });
+    this.storeLogin(email, name);
     this.getIngredients();
   }
 
@@ -146,9 +187,3 @@ export default class App extends React.Component {
     }
   }
 }
-
-// open application 'Nox'
-// npm start
-
-//npm run server
-
