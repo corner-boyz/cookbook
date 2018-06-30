@@ -59,7 +59,7 @@ class IngredientAdder extends React.Component {
             style={{
               height: 40,
               width: 100,
-              backgroundColor: 'lightgray'
+              backgroundColor: 'lightgray',
             }}
             prompt='Units'
             mode='dialog'

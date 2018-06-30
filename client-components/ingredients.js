@@ -29,39 +29,39 @@ class Ingredients extends React.Component {
           abrv: null
         },
         {
-          name: 'tablespoon',
+          name: 'Tablespoon',
           abrv: 'tsp',
         },
         {
-          name: 'fluid ounce',
+          name: 'Fluid ounce',
           abrv: 'fl-oz',
         },
         {
-          name: 'cup',
+          name: 'Cup',
           abrv: 'cup',
         },
         {
-          name: 'pint',
+          name: 'Pint',
           abrv: 'pnt',
         },
         {
-          name: 'quart',
+          name: 'Quart',
           abrv: 'qt',
         },
         {
-          name: 'gallon',
+          name: 'Gallon',
           abrv: 'gal',
         },
         {
-          name: 'ounce',
+          name: 'Ounce',
           abrv: 'oz',
         },
         {
-          name: 'pound',
+          name: 'Pound',
           abrv: 'lb',
         },
         {
-          name: 'liter',
+          name: 'Liter',
           abrv: 'l',
         }
       ],
