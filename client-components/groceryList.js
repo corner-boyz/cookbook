@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryLIstEntry.js'
 import { Text, View, Animated, FlatList } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -33,15 +35,15 @@ class GroceryList extends React.Component {
   }
 
   purchaseIngredients() {
-    console.log(this.props.screenProps.userGroceries);
+    // console.log(this.props.screenProps.userGroceries);
 
     let purchased = {
       email: this.props.screenProps.email,
       shouldReplace: true,
       ingredients: this.props.screenProps.userGroceries
     };
-    // console.log(purchased);
-    axios.post('/api/grocerylist', purchased)
+    console.log(purchased);
+    axios.post(`http://${IP}/api/grocerylist`, purchased)
       .then((response) => {
         console.log(response.data);
       })

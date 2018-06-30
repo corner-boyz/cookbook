@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Modal } from 'react-native';
 import { Button, ListItem, CheckBox } from 'react-native-elements';
 
 //====================================================
@@ -9,7 +9,8 @@ class GroceryListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: this.props.ispurchased
+      checked: this.props.ispurchased,
+      showDelete: false,
     };
   }
   render() {
@@ -18,18 +19,57 @@ class GroceryListEntry extends React.Component {
       <View>
         <CheckBox
           title={this.props.item.quantity + this.props.item.unit + ' ' + this.props.item.ingredient}
-          checkedIcon='dot-circle-o'
-          uncheckedIcon='circle-o'
           iconRight={true}
           checked={this.props.item.ispurchased}
+          checkedColor='green'
+          uncheckedColor='gold'
           onPress={() => {
+            // console.log(`Delete ${this.props.item.ingredient}?`);
+            this.setState({
+              showDelete: true
+            })
+          }}
+          onLongIconPress={() => {
+            console.log('Delete ', this.props.item.ingredient);
+          }}
+          onIconPress={() => {
             this.setState({
               checked: !this.state.checked
             })
             this.props.item.ispurchased = !this.props.item.ispurchased
-            // console.log(this.props.item.ispurchased);
           }}
         />
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.showDelete}
+          onRequestClose={() => {
+            this.setState({
+              showDelete: false
+            })
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+            <Text
+              style={{ fontSize: 18 }}
+            >Delete {this.props.item.ingredient}?
+            </Text>
+            <Button
+              title='Delete'
+              backgroundColor='red'
+              rounded={true}
+              onPress={() => {
+                console.log('Deleting', this.props.item.ingredient);
+              }}
+            />
+          </View>
+        </Modal>
       </View>
     )
   }
