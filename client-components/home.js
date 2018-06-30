@@ -1,7 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import IP from '../IP.js';
-import { Text, View, Animated, Easing } from 'react-native';
+
+import HomeRecipes from './home-components/homeRecipes.js'
+import { Text, View, Animated, Easing, FlatList } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
@@ -38,9 +41,10 @@ class Home extends React.Component {
   getUserRecipes() {
     return axios.get(`http://${IP}/api/userRecipes/${this.props.screenProps.email}`, {})
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({
-          recipes: response.data
+          index: 0,
+          recipes: response.data,
         })
       })
       .catch((error) => {
@@ -53,11 +57,18 @@ class Home extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text>Welcome {this.props.screenProps.name}, what would you like to do?</Text>
-          <Text>Here are your recipes:</Text>
-          {this.state.recipes.map((item, index) =>
-            <Text key={index}>{item.title}</Text>
-          )}
+          <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name}</Text>
+          <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
+
+          <FlatList
+            data={this.state.recipes}
+            extraData={this.state.index}
+            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} />}
+            keyExtractor={(item) => item.title}
+          />
+
+
+
         </Animated.View>
       </View>
     );

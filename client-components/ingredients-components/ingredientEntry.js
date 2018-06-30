@@ -23,14 +23,6 @@ class IngredientEntry extends React.Component {
     // console.log(`Render IngredientEntry `, this.props);
     return (
       <View >
-        {/* <Text
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'yellow' }}
-        >{this.props.item.quantity}{this.props.item.unit}
-        </Text>
-        <Text
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold' }}
-        >{this.props.item.ingredient}
-        </Text> */}
         <ListItem
           key={this.props.item.index}
           title={this.props.item.ingredient}
