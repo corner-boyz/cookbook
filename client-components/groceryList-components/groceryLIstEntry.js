@@ -67,6 +67,10 @@ class GroceryListEntry extends React.Component {
               rounded={true}
               onPress={() => {
                 console.log('Deleting', this.props.item.ingredient);
+                this.props.removeFromCart(this.props.item)
+                this.setState({
+                  showDelete: false
+                })
               }}
             />
           </View>

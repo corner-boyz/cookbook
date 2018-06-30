@@ -20,6 +20,9 @@ class GroceryList extends React.Component {
       unit: '',
       quantity: '',
     };
+    this.addToCart = this.addToCart.bind(this);
+    this.closeAdd = this.closeAdd.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
   }
   //====================================================
   static navigationOptions = {
@@ -31,12 +34,12 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
-    // console.log('Testing: ', this.props.screenProps.userGroceries);
-    setTimeout(() => {
+  }
 
-      console.log(this.props.screenProps.userGroceries);
-      // console.log(typeof this.props.screenProps.userGroceries[0].ispurchased);
-    }, 2000)
+  closeAdd() {
+    this.setState({
+      showAdd: false
+    })
   }
 
   purchaseIngredients() {
@@ -57,8 +60,43 @@ class GroceryList extends React.Component {
       })
   }
 
-  addToCart() {
+  addToCart(newIngredient) {
+    const ingArr = [newIngredient]
+    axios.post(`http://${IP}/api/parse`, { ingredients: ingArr })
+      .then((response) => {
+        response.data[0].ispurchased = false
+        axios.post(`http://${IP}/api/groceryList`, {
+          email: this.props.screenProps.email,
+          shouldReplace: false,
+          ingredients: [response.data[0]]
+        })
+          .then(() => {
+            this.props.screenProps.getUserGroceries();
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
+  removeFromCart(ingredient) {
+    ingredient.quantity = 0
+    // console.log('Testing:', ingredient);
+    const obj = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: [ingredient]
+    }
+    axios.post(`http://${IP}/api/grocerylist`, obj)
+      .then(() => {
+        this.props.screenProps.getUserGroceries();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   //====================================================
   render() {
@@ -72,7 +110,7 @@ class GroceryList extends React.Component {
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
             // extraData={this.state.index}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
             keyExtractor={(item) => item.ingredient}
           />
           <Button
@@ -102,7 +140,7 @@ class GroceryList extends React.Component {
                 showAdd: false
               })
             }}>
-            <GroceryListAdder />
+            <GroceryListAdder addToCart={this.addToCart} closeAdd={this.closeAdd} />
           </Modal>
 
         </Animated.View>

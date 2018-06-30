@@ -10,6 +10,10 @@ class GroceryListAdder extends React.Component {
     };
   }
   //====================================================
+  //====================================================
+  //====================================================
+
+  //====================================================
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -23,7 +27,9 @@ class GroceryListAdder extends React.Component {
           rounded={true}
           backgroundColor='limegreen'
           onPress={() => {
-            console.log('Submit');
+            console.log(this.state.text);
+            this.props.addToCart(this.state.text)
+            this.props.closeAdd();
           }}
         />
       </View>
