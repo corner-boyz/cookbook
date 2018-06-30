@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions, Animated } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
