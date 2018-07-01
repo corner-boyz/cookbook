@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Picker, TextInput } from 'react-native'
+import { View, Picker, TextInput, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
 //====================================================
 class GroceryListAdder extends React.Component {
@@ -16,9 +16,20 @@ class GroceryListAdder extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
+      <View 
+      style={{ 
+        flex: 1,
+        justifyContent: 'center', 
+        alignItems: 'center'
+      }}>
+
+        <View 
+        style={{ 
+          // flex: 1, 
+          flexDirection: 'row'
+          }}>
         <TextInput
-          placeholder='Add an ingredient to your shopping cart'
+          placeholder='Add to cart Ex. "2 pound salmon"'
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
         />
@@ -32,6 +43,7 @@ class GroceryListAdder extends React.Component {
             this.props.closeAdd();
           }}
         />
+        </View>
       </View>
     )
   }

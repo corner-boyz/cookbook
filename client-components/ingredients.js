@@ -147,7 +147,7 @@ class Ingredients extends React.Component {
   render() {
     return (
       <View style={[styles.container, { backgroundColor: 'white', }]}>
-        <Text>Here are your Ingredients:</Text>
+        <Text style={{ fontSize: 18 }}>Here are your Ingredients:</Text>
         <FlatList
           style={[styles.list, { width: 350 }]}
           data={this.props.screenProps.ingredients}

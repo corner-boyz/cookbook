@@ -12,7 +12,7 @@ module.exports.styles = StyleSheet.create({
     color: 'red'
   },
   signUpText: {
-    paddingTop: 20,
+    paddingTop: 25,
     paddingBottom: 10,
   },
   signUpButton: {
@@ -25,20 +25,13 @@ module.exports.styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
-    paddingTop: 20,
+    paddingTop: 25,
   },
   text: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 25,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  list: {
-    // backgroundColor: 'white'
-  },
-  recipeImage: {
-    width: 312,
-    height: 231,
   },
   spinner: {
     flex: 1,

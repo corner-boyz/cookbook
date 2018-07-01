@@ -3,7 +3,8 @@ import axios from 'axios';
 import IP from '../IP.js';
 
 import HomeRecipes from './home-components/homeRecipes.js'
-import { Text, View, Animated, Easing, FlatList, Button } from 'react-native';
+import { Text, View, Animated, Easing, FlatList, Dimensions } from 'react-native';
+import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
@@ -41,6 +42,7 @@ class Home extends React.Component {
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
 
           <FlatList
+            style={[styles.list, { width: Dimensions.get('window').width / 1.5 }]}
             data={this.props.screenProps.userRecipes}
             extraData={this.state.index}
             renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} />}
@@ -49,13 +51,14 @@ class Home extends React.Component {
 
 
 
-        <Button
-          title="Log Out"
-          backgroundColor='red'
-          onPress={() => {
-            this.props.screenProps.logOut();
-          }}
-        />
+          <Button
+            title="Log Out"
+            backgroundColor='red'
+            raised={true}
+            onPress={() => {
+              this.props.screenProps.logOut();
+            }}
+          />
         </Animated.View>
       </View>
     );
