@@ -9,38 +9,48 @@ class IngredientAdder extends React.Component {
       quantity: 0,
       selectedUnit: '',
       name: '',
+      text: ''
     };
   }
   //====================================================
   render() {
     return (
-      <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-        <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: 'center' }}>
+
+        <Button
+          title='Edit List'
+          rounded={true}
+          backgroundColor='orange'
+          onPress={() => {
+            this.props.editMode();
+          }}
+        />
+
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            width={250}
+            placeholder='Add to pantry Ex. "2 pound salmon"'
+            onChangeText={(text) => this.setState({ text })}
+            value={this.state.text}
+          />
           <Button
-            title='Edit List'
+            title='Submit'
+            value={this.state.text}
             rounded={true}
-            backgroundColor='orange'
+            backgroundColor='limegreen'
             onPress={() => {
-              this.props.editMode();
+              if (this.state.text.length > 0) {
+                this.props.submitIngredient(this.state.text)
+                this.setState({
+                  text: ''
+                })
+              }
+              else {
+                alert('Enter a valid ingredient')
+              }
             }}
           />
         </View>
-
-        <TextInput
-          width={250}
-          placeholder='Add an ingredient to your pantry'
-          onChangeText={(text) => this.setState({ text })}
-          value={this.state.text}
-        />
-        <Button
-          title='Submit'
-          rounded={true}
-          backgroundColor='limegreen'
-          onPress={() => {
-            console.log(this.state.text);
-            this.props.submitIngredient(this.state.text)
-          }}
-        />
       </View>
     )
   }

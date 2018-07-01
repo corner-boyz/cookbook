@@ -3,7 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
-import { Text, View, Animated, FlatList, Modal } from 'react-native';
+import { Text, View, Animated, FlatList, Modal, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -132,6 +132,7 @@ class GroceryList extends React.Component {
             }}
           />
           <Modal
+
             animationType='slide'
             transparent={false}
             visible={this.state.showAdd}
