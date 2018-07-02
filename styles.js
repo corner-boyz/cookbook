@@ -27,6 +27,11 @@ module.exports.styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 25,
   },
+  scroll: {
+    flex: 1,
+    backgroundColor: 'white',
+    // alignItems: 'center',
+  },
   text: {
     flex: 1,
     paddingTop: 25,

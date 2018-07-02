@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ class Recipe extends React.Component {
 
   saveRecipe() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
-    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
+    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
       this.setState({
         isSaved: true
       });
@@ -41,7 +41,7 @@ class Recipe extends React.Component {
   }
 
   deleteRecipe() {
-    axios.patch(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
       this.setState({
         isSaved: false
       });
@@ -86,7 +86,7 @@ class Recipe extends React.Component {
   render() {
     if (this.state.recipeDetails) {
       return (
-        <View style={styles.container}>
+        <ScrollView style={styles.scroll}>
           {this.props.email && !this.state.isSaved ?
             <Button
               title="Save Recipe"
@@ -133,7 +133,7 @@ class Recipe extends React.Component {
                 <Text key={i}>{step.number}. {step.step}</Text>
               ))}
             </View> : undefined}
-        </View>
+        </ScrollView>
       );
     } else {
       return (
