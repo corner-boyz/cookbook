@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
-import { Button, ListItem, CheckBox } from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
 
 //====================================================
 
