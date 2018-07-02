@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -87,7 +87,7 @@ class Recipe extends React.Component {
   render() {
     if (this.state.recipeDetails) {
       return (
-        <View style={styles.container}>
+        <ScrollView style={styles.scroll}>
           {this.props.email && !this.state.isSaved ?
             <Button
               title="Save Recipe"
@@ -141,7 +141,7 @@ class Recipe extends React.Component {
                 <Text key={i}>{step.number}. {step.step}</Text>
               ))}
             </View> : undefined}
-        </View>
+        </ScrollView>
       );
     } else {
       return (
