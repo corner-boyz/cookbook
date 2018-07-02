@@ -21,11 +21,11 @@ const Root = createMaterialBottomTabNavigator(
     Pantry: {
       screen: Ingredients,
     },
-    Recipes: {
-      screen: RecipeList,
-    },
     GroceryList: {
       screen: GroceryList,
+    },
+    Recipes: {
+      screen: RecipeList,
     }
   },
   {
@@ -136,7 +136,6 @@ export default class App extends React.Component {
   }
 
   getUserRecipes() {
-    // console.log('Firing');
     return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
       .then((response) => {
         this.setState({
@@ -155,8 +154,8 @@ export default class App extends React.Component {
           userGroceries: response.data
         })
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error(err);
       });
   }
   //====================================================
