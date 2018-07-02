@@ -30,9 +30,6 @@ class GroceryListEntry extends React.Component {
               showDelete: true
             })
           }}
-          onLongIconPress={() => {
-            console.log('Delete ', this.props.item.ingredient);
-          }}
           onIconPress={() => {
             this.setState({
               checked: !this.state.checked
@@ -59,7 +56,7 @@ class GroceryListEntry extends React.Component {
             }}>
             <Text
               style={{ fontSize: 18 }}
-            >Delete {this.props.item.ingredient}?
+            >Delete {this.props.item.ingredient} from Grocery List?
             </Text>
             <Button
               title='Delete'

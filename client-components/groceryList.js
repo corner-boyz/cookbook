@@ -3,7 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
-import { Text, View, Animated, FlatList, Modal, Dimensions } from 'react-native';
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -22,6 +22,7 @@ class GroceryList extends React.Component {
     };
     this.addToCart = this.addToCart.bind(this);
     this.closeAdd = this.closeAdd.bind(this);
+    this.purchaseIngredients = this.purchaseIngredients.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
   }
   //====================================================
@@ -100,10 +101,9 @@ class GroceryList extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
+      <View style={[styles.container, { backgroundColor: 'white', }]}>
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 18 }}>Here is your shopping cart</Text>
-
+          <Text style={{ fontSize: 18 }}>Here is your Grocery List</Text>
           <FlatList
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
@@ -111,37 +111,17 @@ class GroceryList extends React.Component {
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
             keyExtractor={(item) => item.ingredient}
           />
-          <Button
-            title='Add to cart'
+          {/* <Button
+            title='Selected to cart'
             rounded={true}
             backgroundColor='orange'
             onPress={() => {
-              this.setState({
-                showAdd: true
-              })
-            }}
-          />
-          <Button
-            title='Purchase'
-            rounded={true}
-            backgroundColor='limegreen'
-            onPress={() => {
               this.purchaseIngredients();
             }}
-          />
-          <Modal
-
-            animationType='slide'
-            transparent={false}
-            visible={this.state.showAdd}
-            onRequestClose={() => {
-              this.setState({
-                showAdd: false
-              })
-            }}>
-            <GroceryListAdder addToCart={this.addToCart} closeAdd={this.closeAdd} />
-          </Modal>
-
+          /> */}
+          <KeyboardAvoidingView behavior="padding" enabled>
+            <GroceryListAdder addToCart={this.addToCart} closeAdd={this.closeAdd} purchaseIngredients={this.purchaseIngredients}/>
+          </KeyboardAvoidingView>
         </Animated.View>
       </View>
     )

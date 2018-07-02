@@ -6,7 +6,7 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView } from 'react-native';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -15,6 +15,7 @@ class Ingredients extends React.Component {
     super(props);
 
     this.state = {
+      fadeAnim: new Animated.Value(0),
       index: 0,
       numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
         16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -81,7 +82,7 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
-
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
   }
 
   submitIngredient(newIngredient) {
@@ -147,14 +148,22 @@ class Ingredients extends React.Component {
   render() {
     return (
       <View style={[styles.container, { backgroundColor: 'white', }]}>
-        <Text style={{ fontSize: 18 }}>Here are your Ingredients:</Text>
-        <FlatList
-          style={[styles.list, { width: 350 }]}
-          data={this.props.screenProps.ingredients}
-          extraData={this.state.index}
-          renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
-          keyExtractor={(item) => item.ingredient}
-        />
+        <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
+          <Text style={{ fontSize: 18 }}>Here are your Ingredients:</Text>
+          <FlatList
+            style={[styles.list, { width: 350 }]}
+            data={this.props.screenProps.ingredients}
+            extraData={this.state.index}
+            renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            keyExtractor={(item) => item.ingredient}
+          />
+          <KeyboardAvoidingView behavior="padding" enabled>
+            <IngredientAdder
+              editMode={this.editMode}
+              submitIngredient={this.submitIngredient}
+            />
+          </KeyboardAvoidingView>
+        </Animated.View>
         <Modal
           animationType='slide'
           transparent={false}
@@ -170,7 +179,7 @@ class Ingredients extends React.Component {
               style={[styles.list, { width: 350 }]}
               data={this.props.screenProps.ingredients}
               extraData={this.state.index}
-              renderItem={({ item }) => <IngredientsEditor item={item} numbers={this.state.numbers} units={this.state.units} />}
+              renderItem={({ item }) => <IngredientsEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
@@ -185,14 +194,7 @@ class Ingredients extends React.Component {
               }} />
           </View>
         </Modal>
-        <KeyboardAvoidingView behavior="padding" enabled>
-          <IngredientAdder
-            numbers={this.state.numbers}
-            units={this.state.units}
-            editMode={this.editMode}
-            submitIngredient={this.submitIngredient}
-          />
-        </KeyboardAvoidingView>
+
       </View>
     )
   }

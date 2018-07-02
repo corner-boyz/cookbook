@@ -1,18 +1,19 @@
 import React from 'react';
-import { Text, View, Picker } from 'react-native';
+import { Text, View, Picker, TextInput } from 'react-native';
 import { Button, } from 'react-native-elements';
 //====================================================
 class IngredientsEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      text: '',
     };
   }
   //====================================================
   render() {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <Picker
+        {/* <Picker
           selectedValue={this.props.item.quantity}
           style={{
             height: 35,
@@ -31,7 +32,17 @@ class IngredientsEditor extends React.Component {
               value={item}
             />
           )}
-        </Picker>
+        </Picker> */}
+        <TextInput
+          width={30}
+          placeholder={(this.props.item.quantity).toString()}
+          keyboardType='phone-pad'
+          onChangeText={(text) => {
+            this.setState({ text })
+            this.props.item.quantity = Number(text)
+          }}
+          value={this.state.text}
+        />
         <Picker
           selectedValue={this.props.item.unit}
           style={{
