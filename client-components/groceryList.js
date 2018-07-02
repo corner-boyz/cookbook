@@ -26,7 +26,7 @@ class GroceryList extends React.Component {
   }
   //====================================================
   static navigationOptions = {
-    tabBarColor: 'mediumblue',
+    tabBarColor: 'dodgerblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-cart' size={25} color='white' />;
     },

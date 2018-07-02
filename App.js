@@ -65,12 +65,10 @@ export default class App extends React.Component {
     this.retrieveLogin().then(() => {
       if (this.state.isLoggedIn) {
         this.getIngredients();
+        this.getUserRecipes();
+        this.getUserGroceries();
       }
     });
-    setTimeout(() => {
-      this.getUserRecipes();
-      this.getUserGroceries();
-    }, 3000)
   };
   //AsyncStorage====================================================
   storeLogin = async (email, name) => {
@@ -167,6 +165,7 @@ export default class App extends React.Component {
     });
     this.storeLogin(email, name);
     this.getIngredients();
+    this.getUserGroceries();
     this.getUserRecipes();
   }
 

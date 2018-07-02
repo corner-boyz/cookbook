@@ -21,7 +21,7 @@ class RecipeList extends React.Component {
   }
 
   static navigationOptions = {
-    tabBarColor: 'dodgerblue',
+    tabBarColor: 'mediumblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
