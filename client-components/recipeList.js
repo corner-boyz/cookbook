@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -29,7 +29,6 @@ class RecipeList extends React.Component {
       navigation.navigate('Recipes');
       let { recipes, searchRecipes } = navigation.getScreenProps();
       if (!recipes) {
-        console.log('no recipes');
         searchRecipes();
       }
     }
@@ -61,7 +60,7 @@ class RecipeList extends React.Component {
   }
   //====================================================
   render() {
-    if (this.props.screenProps.recipes) {
+    if (Array.isArray(this.props.screenProps.recipes) && this.props.screenProps.recipes.length) {
       return (
         <View style={styles.container}>
           <FlatList style={styles.list}
@@ -91,6 +90,13 @@ class RecipeList extends React.Component {
           </Modal>
         </View>
       );
+    } else if (Array.isArray(this.props.screenProps.recipes) && !this.props.screenProps.recipes.length) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
+        </View>
+      );
+
     } else {
       return (
         <View style={styles.spinner}>
