@@ -19,7 +19,7 @@ class Home extends React.Component {
       fadeAnim: new Animated.Value(0),
       // yPosition: new Animated.Value(0),
     }
-    console.log('GETUSERRECIPES', this.props.screenProps.getUserRecipes);
+    // console.log(this.props.screenProps.email)
   }
   //====================================================
   static navigationOptions = {
@@ -30,7 +30,7 @@ class Home extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
   }
   //====================================================
   render() {

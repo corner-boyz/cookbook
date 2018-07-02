@@ -9,43 +9,67 @@ class GroceryListAdder extends React.Component {
       text: ''
     };
   }
-  //====================================================
-  //====================================================
-  //====================================================
 
   //====================================================
   render() {
     return (
-      <View 
-      style={{ 
-        flex: 1,
-        justifyContent: 'center', 
-        alignItems: 'center'
-      }}>
-
-        <View 
-        style={{ 
-          // flex: 1, 
-          flexDirection: 'row'
-          }}>
-        <TextInput
-          placeholder='Add to cart Ex. "2 pound salmon"'
-          onChangeText={(text) => this.setState({ text })}
-          value={this.state.text}
-        />
+      <View style={{ alignItems: 'center' }}>
         <Button
-          title='Submit'
+          title='Selected to Pantry'
           rounded={true}
-          backgroundColor='limegreen'
+          backgroundColor='orange'
           onPress={() => {
-            console.log(this.state.text);
-            this.props.addToCart(this.state.text)
-            this.props.closeAdd();
+            this.props.purchaseIngredients();
           }}
         />
+
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            width={Dimensions.get('window').width / 2}
+            placeholder='Add to cart Ex. "2 pound salmon"'
+            onChangeText={(text) => this.setState({ text })}
+            value={this.state.text}
+          />
+          <Button
+            title='Add to List'
+            rounded={true}
+            backgroundColor='limegreen'
+            onPress={() => {
+              this.props.addToCart(this.state.text)
+              this.setState({
+                text: ''
+              })
+            }}
+          />
         </View>
       </View>
     )
   }
 }
 export default GroceryListAdder;
+
+{/* <View style={{ flexDirection: 'row' }}>
+  <TextInput
+    width={250}
+    placeholder='Add to pantry Ex. "2 pound salmon"'
+    onChangeText={(text) => this.setState({ text })}
+    value={this.state.text}
+  />
+  <Button
+    title='Submit'
+    value={this.state.text}
+    rounded={true}
+    backgroundColor='limegreen'
+    onPress={() => {
+      if (this.state.text.length > 0) {
+        this.props.submitIngredient(this.state.text)
+        this.setState({
+          text: ''
+        })
+      }
+      else {
+        alert('Enter a valid ingredient')
+      }
+    }}
+  />
+</View> */}

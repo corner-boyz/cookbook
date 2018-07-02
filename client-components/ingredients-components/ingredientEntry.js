@@ -35,7 +35,7 @@ class IngredientEntry extends React.Component {
           }}
         />
         <Modal
-          animationType="fade"
+          animationType="slide"
           transparent={false}
           visible={this.state.showOptions}
           onRequestClose={() => {
@@ -53,7 +53,7 @@ class IngredientEntry extends React.Component {
             }}>
             <Text
               style={{ fontSize: 18 }}
-            >Would you like to do with {this.props.item.ingredient}?
+            >Delete {this.props.item.ingredient} from pantry?
             </Text>
             <Button
               title='Delete'

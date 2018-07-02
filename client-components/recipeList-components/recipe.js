@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, SectionList } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ class Recipe extends React.Component {
 
   saveRecipe() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
-    axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
+    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
       this.setState({
         isSaved: true
       });
@@ -42,7 +42,7 @@ class Recipe extends React.Component {
   }
 
   deleteRecipe() {
-    axios.patch(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
       this.setState({
         isSaved: false
       });
@@ -85,62 +85,79 @@ class Recipe extends React.Component {
   }
   //====================================================
   render() {
+    const ingredientRender = ({ item, index }) => <Text key={index}>{item.original}</Text>
+    const stepsRender = ({ item, index }) => <Text key={index}>{item.number}. {item.step} </Text>
+
     if (this.state.recipeDetails) {
       return (
         <ScrollView style={styles.scroll}>
-          {this.props.email && !this.state.isSaved ?
-            <Button
-              title="Save Recipe"
-              rounded={true}
-              backgroundColor='green'
-              onPress={() => {
-                this.saveRecipe();
-              }}
-            /> :
-            <Button
-              title="Remove Recipe"
-              rounded={true}
-              backgroundColor='red'
-              onPress={() => {
-                this.deleteRecipe();
-              }}
+          <View style={styles.container}>
+            {this.props.email && !this.state.isSaved ?
+              <Button
+                title="Save Recipe"
+                rounded={true}
+                backgroundColor='green'
+                onPress={() => {
+                  this.saveRecipe();
+                }}
+              /> :
+              <Button
+                title="Remove Recipe"
+                rounded={true}
+                backgroundColor='red'
+                onPress={() => {
+                  this.deleteRecipe();
+                }}
+              />
+            }
+            <Text style={{ fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
+            <Image
+              style={styles.recipeImage}
+              source={{ uri: this.state.recipeDetails.image }}
             />
-          }
-          <Text>{this.state.recipeDetails.title}</Text>
-          <Image
-            style={styles.recipeImage}
-            source={{ uri: this.state.recipeDetails.image }}
-          />
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.diets.length ?
-            <View>
-              <Text>Diet</Text>
-              {this.state.recipeDetails.diets.map((diet, i) => (
-                <Text key={i}>{diet}</Text>
-              ))}
-            </View> : undefined}
-          {this.state.recipeDetails.extendedIngredients.length ?
-            <View>
-              <Text>Ingredients</Text>
-              {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
-                <Text key={i}>{ingredient.original}</Text>
-              ))}
-            </View> : undefined}
-          {this.state.recipeDetails.analyzedInstructions.length ?
-            <View>
-              <Text>Instructions</Text>
-              {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
-                <Text key={i}>{step.number}. {step.step}</Text>
-              ))}
-            </View> : undefined}
+            {/* {this.state.recipeDetails.preparationMinutes ?
+              <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.preparationMinutes ?
+              <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.preparationMinutes ?
+              <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.diets.length ?
+              <View>
+                <Text>Diet</Text>
+                {this.state.recipeDetails.diets.map((diet, i) => (
+                  <Text key={i}>{diet}</Text>
+                ))}
+              </View> : undefined}
+            {this.state.recipeDetails.extendedIngredients.length ?
+              <View>
+                <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
+                {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
+                  <Text key={i}>{ingredient.original}</Text>
+                ))}
+              </View> : undefined}
+            {this.state.recipeDetails.analyzedInstructions.length ?
+              <View>
+                <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
+                {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                  <Text key={i}>{step.number}. {step.step}</Text>
+                ))}
+              </View> : undefined} */}
+            <SectionList
+              renderSectionHeader={({ section: { title } }) => (<Text style={{ fontWeight: 'bold' }}>{title}</Text>)}
+              renderItem={({ item, index, section }) => <Text key={index}>{item}</Text>}
+              sections={[
+                { title: 'Time', data: [`Preperation: ${this.convertMinutes(this.state.recipeDetails.preparationMinutes)}`, `Cooking: ${this.convertMinutes(this.state.recipeDetails.cookingMinutes)}`, `Ready In: ${this.convertMinutes(this.state.recipeDetails.readyInMinutes)}`] },
+                { title: 'Diets', data: this.state.recipeDetails.diets },
+                { title: 'Ingredients', data: this.state.recipeDetails.extendedIngredients, renderItem: ingredientRender },
+                { title: 'Instructions', data: this.state.recipeDetails.analyzedInstructions[0].steps, renderItem: stepsRender }
+              ]}
+              keyExtractor={(item, index) => item + index}
+              stickySectionHeadersEnabled={true}
+            />
+          </View>
         </ScrollView>
       );
     } else {

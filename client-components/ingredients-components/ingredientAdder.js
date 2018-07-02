@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Picker, TextInput } from 'react-native'
+import { View, Picker, TextInput, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
 //====================================================
 class IngredientAdder extends React.Component {
@@ -18,23 +18,22 @@ class IngredientAdder extends React.Component {
       <View style={{ alignItems: 'center' }}>
 
         <Button
-          title='Edit List'
+          title='Edit Pantry'
           rounded={true}
           backgroundColor='orange'
           onPress={() => {
             this.props.editMode();
           }}
         />
-
         <View style={{ flexDirection: 'row' }}>
           <TextInput
-            width={250}
+            width={Dimensions.get('window').width / 2}
             placeholder='Add to pantry Ex. "2 pound salmon"'
             onChangeText={(text) => this.setState({ text })}
             value={this.state.text}
           />
           <Button
-            title='Submit'
+            title='Add to Pantry'
             value={this.state.text}
             rounded={true}
             backgroundColor='limegreen'

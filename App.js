@@ -15,16 +15,16 @@ import IP from './IP.js';
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {
-    Home: {
+    "Home": {
       screen: Home,
     },
-    Pantry: {
+    "Pantry": {
       screen: Ingredients,
     },
-    GroceryList: {
+    "Grocery List": {
       screen: GroceryList,
     },
-    Recipes: {
+    "Recipes": {
       screen: RecipeList,
     }
   },
@@ -228,3 +228,6 @@ export default class App extends React.Component {
     }
   }
 }
+//npm start
+//npm run server
+//npm run build 
