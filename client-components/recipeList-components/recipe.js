@@ -25,6 +25,7 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
+      console.log(results.data.image)
     });
   }
 
@@ -124,6 +125,13 @@ class Recipe extends React.Component {
               <Text>Diet</Text>
               {this.state.recipeDetails.diets.map((diet, i) => (
                 <Text key={i}>{diet}</Text>
+              ))}
+            </View> : undefined}
+          {this.state.recipeDetails.extendedIngredients.length ?
+            <View>
+              <Text>Ingredients</Text>
+              {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
+                <Text key={i}>{ingredient.original}</Text>
               ))}
             </View> : undefined}
           {this.state.recipeDetails.analyzedInstructions.length ?

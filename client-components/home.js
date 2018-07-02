@@ -19,7 +19,7 @@ class Home extends React.Component {
       fadeAnim: new Animated.Value(0),
       // yPosition: new Animated.Value(0),
     }
-    // console.log(this.props.screenProps.email)
+    console.log('GETUSERRECIPES', this.props.screenProps.getUserRecipes);
   }
   //====================================================
   static navigationOptions = {

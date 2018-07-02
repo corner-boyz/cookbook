@@ -36,5 +36,9 @@ module.exports.styles = StyleSheet.create({
   spinner: {
     flex: 1,
     justifyContent: 'center'
-  }
+  },
+  recipeImage: {
+    width: 312,
+    height: 231
+  },
 });
