@@ -29,7 +29,7 @@ class Recipe extends React.Component {
   }
 
   saveRecipe() {
-    console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
+    // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
     axios.post(`http://${IP}/api/saverecipe`, {email: this.props.email, recipe: {id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image}}).then((results) => {
       this.setState({
         isSaved: true
@@ -47,7 +47,7 @@ class Recipe extends React.Component {
       });
       this.props.getUserRecipes();
     }).catch((err) => {
-      console.log('ERROR DELETING RECIPE', err);
+      console.error('ERROR DELETING RECIPE', err);
     });
   }
 
