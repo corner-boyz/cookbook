@@ -33,7 +33,7 @@ class GroceryList extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
   }
 
   purchaseIngredients() {

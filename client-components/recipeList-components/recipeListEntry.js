@@ -18,7 +18,7 @@ class RecipeListEntry extends React.Component {
     Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 2000,
+        duration: 1000,
       }
     ).start();
   }

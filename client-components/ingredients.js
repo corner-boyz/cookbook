@@ -82,7 +82,7 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
   }
 
   submitIngredient(newIngredient) {
