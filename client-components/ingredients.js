@@ -97,12 +97,12 @@ class Ingredients extends React.Component {
           .then(() => {
             this.props.screenProps.getIngredients();
           })
-          .catch((error) => {
-            console.log(error);
+          .catch((err) => {
+            console.error(err);
           })
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error(err);
       })
   }
 
@@ -132,8 +132,8 @@ class Ingredients extends React.Component {
         });
         // this.props.screenProps.recipeListIndex++;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error(err);
       })
   }
 
