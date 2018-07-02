@@ -21,7 +21,6 @@ class GroceryList extends React.Component {
       quantity: '',
     };
     this.addToCart = this.addToCart.bind(this);
-    this.closeAdd = this.closeAdd.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
   }
@@ -35,12 +34,6 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 3500 }).start();
-  }
-
-  closeAdd() {
-    this.setState({
-      showAdd: false
-    })
   }
 
   purchaseIngredients() {
@@ -111,16 +104,8 @@ class GroceryList extends React.Component {
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
             keyExtractor={(item) => item.ingredient}
           />
-          {/* <Button
-            title='Selected to cart'
-            rounded={true}
-            backgroundColor='orange'
-            onPress={() => {
-              this.purchaseIngredients();
-            }}
-          /> */}
           <KeyboardAvoidingView behavior="padding" enabled>
-            <GroceryListAdder addToCart={this.addToCart} closeAdd={this.closeAdd} purchaseIngredients={this.purchaseIngredients}/>
+            <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients}/>
           </KeyboardAvoidingView>
         </Animated.View>
       </View>

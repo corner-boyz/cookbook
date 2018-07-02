@@ -35,9 +35,10 @@ class GroceryListAdder extends React.Component {
             rounded={true}
             backgroundColor='limegreen'
             onPress={() => {
-              console.log(this.state.text);
               this.props.addToCart(this.state.text)
-              this.props.closeAdd();
+              this.setState({
+                text: ''
+              })
             }}
           />
         </View>
