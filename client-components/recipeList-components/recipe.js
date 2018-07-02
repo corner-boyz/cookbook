@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, SectionList } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -85,6 +85,9 @@ class Recipe extends React.Component {
   }
   //====================================================
   render() {
+    const ingredientRender = ({ item, index }) => <Text key={index}>{item.original}</Text>
+    const stepsRender = ({ item, index }) => <Text key={index}>{item.number}. {item.step} </Text>
+
     if (this.state.recipeDetails) {
       return (
         <ScrollView style={styles.scroll}>
@@ -107,12 +110,12 @@ class Recipe extends React.Component {
                 }}
               />
             }
-            <Text>{this.state.recipeDetails.title}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
             <Image
               style={styles.recipeImage}
               source={{ uri: this.state.recipeDetails.image }}
             />
-            {this.state.recipeDetails.preparationMinutes ?
+            {/* {this.state.recipeDetails.preparationMinutes ?
               <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
               : undefined}
             {this.state.recipeDetails.preparationMinutes ?
@@ -130,18 +133,30 @@ class Recipe extends React.Component {
               </View> : undefined}
             {this.state.recipeDetails.extendedIngredients.length ?
               <View>
-                <Text>Ingredients</Text>
+                <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
                 {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
                   <Text key={i}>{ingredient.original}</Text>
                 ))}
               </View> : undefined}
             {this.state.recipeDetails.analyzedInstructions.length ?
               <View>
-                <Text>Instructions</Text>
+                <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
                 {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
                   <Text key={i}>{step.number}. {step.step}</Text>
                 ))}
-              </View> : undefined}
+              </View> : undefined} */}
+            <SectionList
+              renderSectionHeader={({ section: { title } }) => (<Text style={{ fontWeight: 'bold' }}>{title}</Text>)}
+              renderItem={({ item, index, section }) => <Text key={index}>{item}</Text>}
+              sections={[
+                { title: 'Time', data: [`Preperation: ${this.convertMinutes(this.state.recipeDetails.preparationMinutes)}`, `Cooking: ${this.convertMinutes(this.state.recipeDetails.cookingMinutes)}`, `Ready In: ${this.convertMinutes(this.state.recipeDetails.readyInMinutes)}`] },
+                { title: 'Diets', data: this.state.recipeDetails.diets },
+                { title: 'Ingredients', data: this.state.recipeDetails.extendedIngredients, renderItem: ingredientRender },
+                { title: 'Instructions', data: this.state.recipeDetails.analyzedInstructions[0].steps, renderItem: stepsRender }
+              ]}
+              keyExtractor={(item, index) => item + index}
+              stickySectionHeadersEnabled={true}
+            />
           </View>
         </ScrollView>
       );
