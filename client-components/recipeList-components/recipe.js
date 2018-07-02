@@ -25,6 +25,7 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
+      console.log(results.data.image)
     });
   }
 
