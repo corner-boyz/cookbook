@@ -28,7 +28,7 @@ class IngredientEntry extends React.Component {
           title={this.props.item.ingredient}
           subtitle={this.props.item.quantity + this.props.item.unit}
           onPress={() => {
-            console.log(this.props.item)
+            // console.log(this.props.item)
             this.setState({
               showOptions: true
             })

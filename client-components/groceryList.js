@@ -43,8 +43,6 @@ class GroceryList extends React.Component {
   }
 
   purchaseIngredients() {
-    // console.log(this.props.screenProps.userGroceries);
-
     let purchased = {
       email: this.props.screenProps.email,
       shouldReplace: true,
@@ -53,10 +51,11 @@ class GroceryList extends React.Component {
     console.log(purchased);
     axios.post(`http://${IP}/api/grocerylist`, purchased)
       .then((response) => {
-        console.log(response.data);
+        this.props.screenProps.getIngredients();
+        this.props.screenProps.getUserGroceries();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error(err);
       })
   }
 
@@ -73,8 +72,8 @@ class GroceryList extends React.Component {
           .then(() => {
             this.props.screenProps.getUserGroceries();
           })
-          .catch((error) => {
-            console.log(error);
+          .catch((err) => {
+            console.error(err);
           })
       })
       .catch((error) => {
@@ -100,7 +99,6 @@ class GroceryList extends React.Component {
   }
   //====================================================
   render() {
-    // console.log(`Render GroceryList`, this.props);
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
