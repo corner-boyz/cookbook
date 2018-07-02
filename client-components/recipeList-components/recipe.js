@@ -87,52 +87,54 @@ class Recipe extends React.Component {
     if (this.state.recipeDetails) {
       return (
         <ScrollView style={styles.scroll}>
-          {this.props.email && !this.state.isSaved ?
-            <Button
-              title="Save Recipe"
-              rounded={true}
-              backgroundColor='green'
-              onPress={() => {
-                this.saveRecipe();
-              }}
-            /> :
-            <Button
-              title="Remove Recipe"
-              rounded={true}
-              backgroundColor='red'
-              onPress={() => {
-                this.deleteRecipe();
-              }}
+          <View style={styles.container}>
+            {this.props.email && !this.state.isSaved ?
+              <Button
+                title="Save Recipe"
+                rounded={true}
+                backgroundColor='green'
+                onPress={() => {
+                  this.saveRecipe();
+                }}
+              /> :
+              <Button
+                title="Remove Recipe"
+                rounded={true}
+                backgroundColor='red'
+                onPress={() => {
+                  this.deleteRecipe();
+                }}
+              />
+            }
+            <Text>{this.state.recipeDetails.title}</Text>
+            <Image
+              style={styles.recipeImage}
+              source={{ uri: this.state.recipeDetails.image }}
             />
-          }
-          <Text>{this.state.recipeDetails.title}</Text>
-          <Image
-            style={styles.recipeImage}
-            source={{ uri: this.state.recipeDetails.image }}
-          />
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.preparationMinutes ?
-            <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
-            : undefined}
-          {this.state.recipeDetails.diets.length ?
-            <View>
-              <Text>Diet</Text>
-              {this.state.recipeDetails.diets.map((diet, i) => (
-                <Text key={i}>{diet}</Text>
-              ))}
-            </View> : undefined}
-          {this.state.recipeDetails.analyzedInstructions.length ?
-            <View>
-              <Text>Instructions</Text>
-              {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
-                <Text key={i}>{step.number}. {step.step}</Text>
-              ))}
-            </View> : undefined}
+            {this.state.recipeDetails.preparationMinutes ?
+              <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.preparationMinutes ?
+              <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.preparationMinutes ?
+              <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
+              : undefined}
+            {this.state.recipeDetails.diets.length ?
+              <View>
+                <Text>Diet</Text>
+                {this.state.recipeDetails.diets.map((diet, i) => (
+                  <Text key={i}>{diet}</Text>
+                ))}
+              </View> : undefined}
+            {this.state.recipeDetails.analyzedInstructions.length ?
+              <View>
+                <Text>Instructions</Text>
+                {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                  <Text key={i}>{step.number}. {step.step}</Text>
+                ))}
+              </View> : undefined}
+          </View>
         </ScrollView>
       );
     } else {
