@@ -40,5 +40,5 @@ module.exports.styles = StyleSheet.create({
   recipeImage: {
     width: 312,
     height: 231
-  }
+  },
 });
