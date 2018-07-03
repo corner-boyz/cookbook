@@ -45,7 +45,7 @@ class GroceryList extends React.Component {
       ingredients: this.props.screenProps.userGroceries
     };
     console.log(purchased);
-    axios.post(`http://${IP}/api/grocerylist`, purchased)
+    axios.post(`http://${IP}/api/grocerylistintopantry`, purchased)
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
