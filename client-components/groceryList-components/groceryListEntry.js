@@ -35,6 +35,7 @@ class GroceryListEntry extends React.Component {
               checked: !this.state.checked
             })
             this.props.item.ispurchased = !this.props.item.ispurchased
+            this.props.saveCheckboxes();
           }}
         />
         <Modal
