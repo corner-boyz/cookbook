@@ -19,6 +19,7 @@ class GroceryList extends React.Component {
       ingredient: '',
       unit: '',
       quantity: '',
+      cameraStorage: [],
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -125,7 +126,6 @@ class GroceryList extends React.Component {
           <FlatList
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
-            // extraData={this.state.index}
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
             keyExtractor={(item) => item.ingredient}
           />

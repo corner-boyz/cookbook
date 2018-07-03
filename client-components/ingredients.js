@@ -165,6 +165,7 @@ class Ingredients extends React.Component {
           </KeyboardAvoidingView>
         </Animated.View>
         <Modal
+      
           animationType='slide'
           transparent={false}
           visible={this.state.editMode}
