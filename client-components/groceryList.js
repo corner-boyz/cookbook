@@ -24,6 +24,7 @@ class GroceryList extends React.Component {
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
     this.deleteIngredients = this.deleteIngredients.bind(this);
+    this.saveCheckboxes = this.saveCheckboxes.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
   }
   //====================================================
@@ -73,6 +74,18 @@ class GroceryList extends React.Component {
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
+      })
+  }
+
+  saveCheckboxes() {
+    let purchased = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: this.props.screenProps.userGroceries
+    };
+    console.log(purchased);
+    axios.post(`http://${IP}/api/grocerylistcheckboxes`, purchased)
+      .then((response) => {
       })
       .catch((err) => {
         console.error(err);
@@ -126,7 +139,8 @@ class GroceryList extends React.Component {
           <FlatList
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} />}
+            // extraData={this.state.index}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} />}
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" enabled>
