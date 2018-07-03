@@ -3,7 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
-import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -84,10 +84,11 @@ class GroceryList extends React.Component {
           })
           .catch((err) => {
             console.log('ONE', err);
+            Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
           })
       })
       .catch((err) => {
-        console.error('TWO', err);
+        console.error(err);
       });
   }
 
