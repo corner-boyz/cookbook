@@ -66,7 +66,7 @@ class GroceryList extends React.Component {
       })
       .catch((err) => {
         console.error(err);
-      })
+      });
   }
 
   addToCart(newIngredient) {
@@ -83,12 +83,12 @@ class GroceryList extends React.Component {
             this.props.screenProps.getUserGroceries();
           })
           .catch((err) => {
-            console.error(err);
+            console.log('ONE', err);
           })
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((err) => {
+        console.error('TWO', err);
+      });
   }
 
   removeFromCart(ingredient) {
