@@ -22,6 +22,7 @@ class GroceryList extends React.Component {
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
+    this.deleteIngredients = this.deleteIngredients.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
   }
   //====================================================
@@ -44,6 +45,30 @@ class GroceryList extends React.Component {
     };
     console.log(purchased);
     axios.post(`http://${IP}/api/grocerylist`, purchased)
+      .then((response) => {
+        this.props.screenProps.getIngredients();
+        this.props.screenProps.getUserGroceries();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
+  deleteIngredients() {
+    console.log(this.props.screenProps.userGroceries);
+    let temp = this.props.screenProps.userGroceries;
+    temp.map((item) => {
+      if (item.ispurchased === true) {
+        item.quantity = 0;
+      }
+    })
+    let deleted = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: temp
+    };
+    console.log(deleted);
+    axios.post(`http://${IP}/api/grocerylist`, deleted)
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
@@ -105,7 +130,7 @@ class GroceryList extends React.Component {
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" enabled>
-            <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients}/>
+            <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
         </Animated.View>
       </View>

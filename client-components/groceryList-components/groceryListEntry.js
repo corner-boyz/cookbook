@@ -20,7 +20,7 @@ class GroceryListEntry extends React.Component {
       <View>
         <CheckBox
           title={this.props.item.quantity + this.props.item.unit + ' ' + this.props.item.ingredient}
-          iconRight={true}
+          // iconRight={true}
           checked={this.props.item.ispurchased}
           checkedColor='green'
           uncheckedColor='gold'

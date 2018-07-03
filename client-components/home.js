@@ -4,7 +4,7 @@ import IP from '../IP.js';
 
 import HomeRecipes from './home-components/homeRecipes.js'
 import { Text, View, Animated, Easing, FlatList, Dimensions } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
@@ -49,8 +49,6 @@ class Home extends React.Component {
             keyExtractor={(item) => item.title}
           />
 
-
-
           <Button
             title="Log Out"
             backgroundColor='red'
@@ -60,7 +58,7 @@ class Home extends React.Component {
             }}
           />
         </Animated.View>
-      </View>
+      </View >
     );
   };
 }

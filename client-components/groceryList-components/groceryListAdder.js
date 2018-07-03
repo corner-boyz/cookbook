@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Picker, TextInput, Dimensions } from 'react-native'
+import { View, Picker, TextInput, Dimensions, Switch } from 'react-native'
 import { Button } from 'react-native-elements'
 //====================================================
 class GroceryListAdder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      switcher: true,
     };
   }
 
@@ -14,14 +15,36 @@ class GroceryListAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-        <Button
-          title='Selected to Pantry'
-          rounded={true}
-          backgroundColor='orange'
-          onPress={() => {
-            this.props.purchaseIngredients();
+
+        <Switch
+          onValueChange={() => {
+            this.setState({
+              switcher: !this.state.switcher
+            })
+            // console.log(this.state.switcher);
           }}
+          value={this.state.switcher}
+          tintColor='red'
         />
+        {this.state.switcher === true ?
+          <Button
+            title='Selected => Pantry'
+            rounded={true}
+            backgroundColor='orange'
+            onPress={() => {
+              this.props.purchaseIngredients();
+            }}
+          />
+          :
+          <Button
+            title='Delete Selected'
+            rounded={true}
+            backgroundColor='red'
+            onPress={() => {
+              this.props.deleteIngredients();
+            }}
+          />
+        }
 
         <View style={{ flexDirection: 'row' }}>
           <TextInput
