@@ -17,22 +17,33 @@ class IngredientAdder extends React.Component {
     return (
       <View style={{ alignItems: 'center' }}>
 
-        <Button
+        {/* <Button
           title='Edit Pantry'
           rounded={true}
           backgroundColor='orange'
           onPress={() => {
             this.props.editMode();
           }}
-        />
+        /> */}
         <View style={{ flexDirection: 'row' }}>
           <TextInput
             width={Dimensions.get('window').width / 2}
             placeholder='Add to pantry Ex. "2 pound salmon"'
             onChangeText={(text) => this.setState({ text })}
             value={this.state.text}
+            onSubmitEditing={() => {
+              if (this.state.text.length > 0) {
+                this.props.submitIngredient(this.state.text)
+                this.setState({
+                  text: ''
+                })
+              }
+              else {
+                alert('Enter a valid ingredient')
+              }
+            }}
           />
-          <Button
+          {/* <Button
             title='Add to Pantry'
             value={this.state.text}
             rounded={true}
@@ -48,7 +59,7 @@ class IngredientAdder extends React.Component {
                 alert('Enter a valid ingredient')
               }
             }}
-          />
+          /> */}
         </View>
       </View>
     )

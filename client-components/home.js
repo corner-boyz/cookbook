@@ -38,7 +38,7 @@ class Home extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name}</Text>
+          <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name},</Text>
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
 
           <FlatList

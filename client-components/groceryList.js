@@ -3,6 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+import GroceryEditor from './groceryList-components/groceryEditor.js'
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -15,14 +16,58 @@ class GroceryList extends React.Component {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
+      index: 0,
       showAdd: false,
       ingredient: '',
       unit: '',
+      units: [
+        {
+          name: '',
+          abrv: null
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'tsp',
+        },
+        {
+          name: 'Fluid ounce',
+          abrv: 'fl-oz',
+        },
+        {
+          name: 'Cup',
+          abrv: 'cup',
+        },
+        {
+          name: 'Pint',
+          abrv: 'pnt',
+        },
+        {
+          name: 'Quart',
+          abrv: 'qt',
+        },
+        {
+          name: 'Gallon',
+          abrv: 'gal',
+        },
+        {
+          name: 'Ounce',
+          abrv: 'oz',
+        },
+        {
+          name: 'Pound',
+          abrv: 'lb',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        }
+      ],
       quantity: '',
-      cameraStorage: [],
+      editMode: false,
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
+    this.editIngredients = this.editIngredients.bind(this);
     this.deleteIngredients = this.deleteIngredients.bind(this);
     this.saveCheckboxes = this.saveCheckboxes.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
@@ -53,6 +98,19 @@ class GroceryList extends React.Component {
       })
       .catch((err) => {
         console.error(err);
+      })
+  }
+
+  editIngredients() {
+    let edited = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: this.props.screenProps.userGroceries,
+    }
+    axios.post(`http://${IP}/api/grocerylist`, edited)
+      .then((response) => {
+        this.props.screenProps.getIngredients();
+        this.props.screenProps.getUserGroceries();
       })
   }
 
@@ -135,7 +193,7 @@ class GroceryList extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white', }]}>
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 18 }}>Here is your Grocery List</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
           <FlatList
             style={[styles.list, { width: 350 }]}
             data={this.props.screenProps.userGroceries}
@@ -144,9 +202,40 @@ class GroceryList extends React.Component {
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" enabled>
+
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
         </Animated.View>
+        <Modal
+          animationType='slide'
+          transparent={false}
+          visible={this.state.editMode}
+          onRequestClose={() => {
+            this.setState({
+              editMode: false
+            })
+          }}>
+          <View style={[styles.container, { backgroundColor: 'white', }]}>
+            <Text>Editing Mode</Text>
+            <FlatList
+              style={[styles.list, { width: 350 }]}
+              data={this.props.screenProps.userGroceries}
+              extraData={this.state.index}
+              renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
+              keyExtractor={(item) => item.ingredient}
+            />
+            <Button
+              title='Confirm'
+              backgroundColor='limegreen'
+              rounded={true}
+              onPress={() => {
+                this.editIngredients();
+                this.setState({
+                  editMode: false,
+                })
+              }} />
+          </View>
+        </Modal>
       </View>
     )
   }

@@ -73,8 +73,9 @@ class RecipeList extends React.Component {
             horizontal={false}
           />
           <Modal
-            animationType="fade"
-            transparent={false}
+            animationType="slide"
+            // transparent={false}
+            // presentationStyle='formSheet'
             visible={this.state.showRecipe}
             onRequestClose={() => {
               this.setState({
