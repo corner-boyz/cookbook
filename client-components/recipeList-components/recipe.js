@@ -96,7 +96,9 @@ class Recipe extends React.Component {
               <Button
                 title="Save Recipe"
                 rounded={true}
-                backgroundColor='green'
+                buttonStyle={{
+                  backgroundColor: 'green'
+                }}
                 onPress={() => {
                   this.saveRecipe();
                 }}
@@ -104,7 +106,9 @@ class Recipe extends React.Component {
               <Button
                 title="Remove Recipe"
                 rounded={true}
-                backgroundColor='red'
+                buttonStyle={{
+                  backgroundColor: 'red'
+                }}
                 onPress={() => {
                   this.deleteRecipe();
                 }}

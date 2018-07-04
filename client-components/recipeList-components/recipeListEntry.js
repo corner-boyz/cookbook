@@ -40,14 +40,14 @@ class RecipeListEntry extends React.Component {
             fontSize: 16
           }}
           featured={true}
-          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length?'\nNeed:'+this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)):''}`}
+          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length ? '\nNeed:' + this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)) : ''}`}
           captionStyle={{
             fontSize: 12,
             fontWeight: 'bold',
             color: 'white',
             justifyContent: 'flex-start'
           }}
-          width={Dimensions.get('window').width / 2}
+          width={Dimensions.get('window').width / 2.1}
           onPress={() => this.retrieveRecipe(this.props.recipe.id)}
         />
       </Animated.View>
