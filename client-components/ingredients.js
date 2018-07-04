@@ -6,7 +6,7 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated } from 'react-native';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -99,7 +99,8 @@ class Ingredients extends React.Component {
             this.props.screenProps.getIngredients();
           })
           .catch((err) => {
-            console.error(err);
+            console.log('ERROR converting units', err);
+            Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
           })
       })
       .catch((err) => {

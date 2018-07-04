@@ -3,7 +3,7 @@ import axios from 'axios';
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
-import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -50,7 +50,8 @@ class GroceryList extends React.Component {
         this.props.screenProps.getUserGroceries();
       })
       .catch((err) => {
-        console.error(err);
+        console.log('ERROR converting units', err);
+        Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
       })
   }
 
@@ -66,7 +67,7 @@ class GroceryList extends React.Component {
       })
       .catch((err) => {
         console.error(err);
-      })
+      });
   }
 
   addToCart(newIngredient) {
@@ -83,17 +84,17 @@ class GroceryList extends React.Component {
             this.props.screenProps.getUserGroceries();
           })
           .catch((err) => {
-            console.error(err);
+            console.log('ERROR converting units', err);
+            Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
           })
       })
-      .catch((error) => {
-        console.log(error);
-      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   removeFromCart(ingredient) {
     ingredient.quantity = 0
-    // console.log('Testing:', ingredient);
     const obj = {
       email: this.props.screenProps.email,
       shouldReplace: true,
