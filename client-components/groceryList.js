@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import IP from '../IP.js';
-import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
+import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 

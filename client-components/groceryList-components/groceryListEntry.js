@@ -15,28 +15,26 @@ class GroceryListEntry extends React.Component {
   }
   //====================================================
   render() {
-    // console.log(`Render GroceryListEntry`, this.props);
     return (
       <View>
 
         <ListItem
           title={this.props.item.ingredient}
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
+          leftAvatar={{ source: { uri: this.props.item.imageurl } }}
+          roundAvatar={true}
           topDivider={true}
-          // checkBox={true}
           checkBox={{
             checked: this.props.item.ispurchased,
             checkmark: this.props.item.ispurchased,
             checkmarkColor: 'green',
             onIconPress: () => {
-              console.log('Firing');
               this.props.item.ispurchased = !this.props.item.ispurchased
               this.props.saveCheckboxes();
               this.forceUpdate();
             }
           }}
           onLongPress={() => {
-            // console.log(`Delete ${this.props.item.ingredient}?`);
             this.setState({
               showDelete: true
             })
