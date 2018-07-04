@@ -57,12 +57,14 @@ class LandingPage extends React.Component {
           alignItems: 'center',
           // resizeMode: 'cover',
           backgroundColor: 'black',
+
           position: 'absolute',
           width: Dimensions.get('window').width,
           height: Dimensions.get('window').height,
           justifyContent: 'center'
         }}
         source={require('./landing.jpg')}
+        blurRadius={1}
       >
         <Text style={{
           fontSize: 20,
@@ -82,7 +84,7 @@ class LandingPage extends React.Component {
             title='Sign Up'
             titleStyle={{ color: 'black' }}
             buttonStyle={{
-              backgroundColor: 'transparent'
+              backgroundColor: 'transparent',
             }}
             onPress={() => { this.setState({ loginCard: false }) }}
           />
