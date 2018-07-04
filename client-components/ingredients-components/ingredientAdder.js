@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Picker, TextInput, Dimensions } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Input } from 'react-native-elements'
 //====================================================
 class IngredientAdder extends React.Component {
   constructor(props) {
@@ -16,21 +16,22 @@ class IngredientAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-
-        {/* <Button
-          title='Edit Pantry'
-          rounded={true}
-          backgroundColor='orange'
-          onPress={() => {
-            this.props.editMode();
-          }}
-        /> */}
         <View style={{ flexDirection: 'row' }}>
-          <TextInput
-            width={Dimensions.get('window').width / 2}
-            placeholder='Add to pantry Ex. "2 pound salmon"'
-            onChangeText={(text) => this.setState({ text })}
+          <Input
+            label='Add to Pantry'
+            placeholder='Ex. "2 pound salmon"'
+            autoFocus={true}
+            shake={true}
+            inputContainerStyle={{
+              borderWidth: 2,  // size/width of the border
+              borderColor: 'orange',  // color of the border
+              paddingLeft: 10,
+              marginBottom: 7,
+              height: 50
+            }}
+
             value={this.state.text}
+            onChangeText={(text) => this.setState({ text })}
             onSubmitEditing={() => {
               if (this.state.text.length > 0) {
                 this.props.submitIngredient(this.state.text)
@@ -43,23 +44,6 @@ class IngredientAdder extends React.Component {
               }
             }}
           />
-          {/* <Button
-            title='Add to Pantry'
-            value={this.state.text}
-            rounded={true}
-            backgroundColor='limegreen'
-            onPress={() => {
-              if (this.state.text.length > 0) {
-                this.props.submitIngredient(this.state.text)
-                this.setState({
-                  text: ''
-                })
-              }
-              else {
-                alert('Enter a valid ingredient')
-              }
-            }}
-          /> */}
         </View>
       </View>
     )

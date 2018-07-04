@@ -51,9 +51,10 @@ class Home extends React.Component {
 
           <Button
             title="Log Out"
-            backgroundColor='red'
-            width={30}
-            raised={true}
+            buttonStyle={{
+              backgroundColor: 'red',
+
+            }}
             onPress={() => {
               this.props.screenProps.logOut();
             }}

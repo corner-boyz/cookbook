@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-import { styles } from '../../styles.js'
 //====================================================
 class IngredientEntry extends React.Component {
   constructor(props) {
@@ -26,13 +25,13 @@ class IngredientEntry extends React.Component {
         <ListItem
           key={this.props.item.index}
           title={this.props.item.ingredient}
-          subtitle={this.props.item.quantity + this.props.item.unit}
-          onPress={() => {
-            // console.log(this.props.item)
+          subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
+          onLongPress={() => {
             this.setState({
               showOptions: true
             })
           }}
+          topDivider={true}
         />
         <Modal
           animationType="slide"
@@ -47,17 +46,19 @@ class IngredientEntry extends React.Component {
           <View
             style={{
               flex: 1,
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center'
             }}>
+
             <Text
               style={{ fontSize: 18 }}
             >Delete {this.props.item.ingredient} from pantry?
             </Text>
             <Button
               title='Delete'
-              backgroundColor='red'
+              buttonStyle={{ backgroundColor: 'red' }}
+
               rounded={true}
               onPress={() => {
                 console.log('Firing');
