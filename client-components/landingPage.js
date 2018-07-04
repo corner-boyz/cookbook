@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
 import { Text, View, ImageBackground, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements'
 
-import IP from '../IP';
+
 
 //====================================================
 class LandingPage extends React.Component {
@@ -63,11 +64,13 @@ class LandingPage extends React.Component {
         source={require('../media/landing.jpg')}
         blurRadius={1}
       >
+
         <Text style={{
           fontSize: 20,
           backgroundColor: 'transparent',
           fontWeight: 'bold'
-        }}>CookBook</Text>
+        }}>CookBook
+        </Text>
         <View flexDirection='row'>
           <Button
             title='Login'

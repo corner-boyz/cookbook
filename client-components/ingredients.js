@@ -169,7 +169,6 @@ class Ingredients extends React.Component {
         </Animated.View>
         <Modal
           animationType='slide'
-          transparent={false}
           visible={this.state.editMode}
           onRequestClose={() => {
             this.setState({
@@ -177,7 +176,7 @@ class Ingredients extends React.Component {
             })
           }}>
           <View style={[styles.container, { backgroundColor: 'white', }]}>
-            <Text>Editing Mode</Text>
+            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: 350 }]}
               data={this.props.screenProps.ingredients}

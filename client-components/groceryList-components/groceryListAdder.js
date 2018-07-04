@@ -24,6 +24,7 @@ class GroceryListAdder extends React.Component {
           }}
           value={this.state.switcher}
           tintColor='red'
+          
         />
         {this.state.switcher === true ?
           <Button
