@@ -44,6 +44,7 @@ class Signup extends React.Component {
           // this.props.switchToLogin();
         }).catch(error => {
           console.log('Error in creating new user:', error);
+          alert('Error in creating new user')
         });
     }
   }
