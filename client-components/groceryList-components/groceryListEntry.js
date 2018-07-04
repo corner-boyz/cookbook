@@ -20,7 +20,7 @@ class GroceryListEntry extends React.Component {
         <ListItem
           title={this.props.item.ingredient}
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
-          leftAvatar={{ source:{ uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' }}}
+          leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
           roundAvatar={true}
           topDivider={true}
           checkBox={{
@@ -38,31 +38,9 @@ class GroceryListEntry extends React.Component {
               showDelete: true
             })
           }}
+          containerStyle={{ backgroundColor: 'transparent' }}
         />
 
-
-
-
-        {/* <CheckBox
-          title={this.props.item.quantity + this.props.item.unit + ' ' + this.props.item.ingredient}
-          // iconRight={true}
-          checked={this.props.item.ispurchased}
-          checkedColor='green'
-          uncheckedColor='gold'
-          onPress={() => {
-            // console.log(`Delete ${this.props.item.ingredient}?`);
-            this.setState({
-              showDelete: true
-            })
-          }}
-          onIconPress={() => {
-            this.setState({
-              checked: !this.state.checked
-            })
-            this.props.item.ispurchased = !this.props.item.ispurchased
-            this.props.saveCheckboxes();
-          }}
-        /> */}
         <Modal
           animationType='slide'
           transparent={false}
@@ -86,7 +64,9 @@ class GroceryListEntry extends React.Component {
             </Text>
             <Button
               title='Delete'
-              backgroundColor='red'
+              buttonStyle={{
+                backgroundColor: 'red'
+              }}
               rounded={true}
               onPress={() => {
                 console.log('Deleting', this.props.item.ingredient);

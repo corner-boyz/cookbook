@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Text, View, TextInput, Button } from 'react-native';
-import { styles } from '../../styles';
+import { Dimensions } from 'react-native';
+import { Card, Button, Input, } from 'react-native-elements';
 
 import IP from '../../IP';
 
@@ -30,7 +30,7 @@ class Login extends React.Component {
           });
         } else {
           let { email, name } = results.data;
-          this.props.screenProps.logIn(email, name);
+          this.props.logIn(email, name);
         }
       }).catch(err => {
         console.error('Error in validating user login:', err);
@@ -40,46 +40,77 @@ class Login extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
-        <Text>Log in to your CookBook account:</Text>
-        <TextInput
-          style={{ height: 40, width: 250 }}
+      <Card
+        containerStyle={{
+          width: 265,
+          borderRadius: 20,
+        }}>
+        <Input
           placeholder='Email'
           onChangeText={text => this.setState({
             email: text,
             wrongEmailOrPass: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-mail',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
-        {this.state.wrongEmailOrPass
-          ? <Text style={styles.warningText}>Wrong email or password.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
             password: text,
             wrongEmailOrPass: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-lock',
+            type: 'ionicon',
+            color: 'lightgrey'
+          }}
         />
         <Button
           title='Log In'
+          buttonStyle={{
+            backgroundColor: 'dodgerblue',
+            marginTop: 5,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginLeft: 15,
+          }}
+          loading={this.props.loading}
           onPress={() => {
-            this.submitLogin();
+            this.props.toggleLoading()
+            this.props.submitLogin(this.state.email, this.state.password);
           }}
         />
-        <Text style={styles.signUpText}>
-          Don't have an account?
-        </Text>
-        <Button
-          title="Sign Up"
-          onPress={() => {
-            this.props.screenProps.switchToSignUp();
-          }}
-          color='#ff0000'
-          style={styles.signUpButton}
-        />
-      </View>
+      </Card>
     )
   }
 }

@@ -63,7 +63,7 @@ class RecipeList extends React.Component {
             extraData={this.state.recipeListIndex}
             renderItem={
               ({ item }) => (
-                <View>
+                <View style={{ padding: 5 }}>
                   <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
@@ -74,8 +74,6 @@ class RecipeList extends React.Component {
           />
           <Modal
             animationType="slide"
-            // transparent={false}
-            // presentationStyle='formSheet'
             visible={this.state.showRecipe}
             onRequestClose={() => {
               this.setState({

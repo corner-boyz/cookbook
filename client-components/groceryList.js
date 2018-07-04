@@ -4,7 +4,8 @@ import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
-import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert } from 'react-native';
+
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -192,7 +193,16 @@ class GroceryList extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', }]}>
+      <ImageBackground
+        style={[styles.container, {
+          backgroundColor: 'white',
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height,
+          justifyContent: 'center'
+        }]}
+        source={require('../media/grocery.jpg')}
+        blurRadius={1}
+      >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
           <FlatList
@@ -202,7 +212,7 @@ class GroceryList extends React.Component {
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} />}
             keyExtractor={(item) => item.ingredient}
           />
-          <KeyboardAvoidingView behavior="padding" enabled>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
 
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
@@ -217,7 +227,7 @@ class GroceryList extends React.Component {
             })
           }}>
           <View style={[styles.container, { backgroundColor: 'white', }]}>
-            <Text>Editing Mode</Text>
+            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: 350 }]}
               data={this.props.screenProps.userGroceries}
@@ -237,7 +247,7 @@ class GroceryList extends React.Component {
               }} />
           </View>
         </Modal>
-      </View>
+      </ImageBackground>
     )
   }
 }

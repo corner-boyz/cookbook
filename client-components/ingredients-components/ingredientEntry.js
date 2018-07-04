@@ -25,8 +25,9 @@ class IngredientEntry extends React.Component {
         <ListItem
           key={this.props.item.index}
           title={this.props.item.ingredient}
+
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
-          leftAvatar={{ source:{ uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' }}}
+          leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
           roundAvatar={true}
           onLongPress={() => {
             this.setState({
@@ -34,6 +35,7 @@ class IngredientEntry extends React.Component {
             })
           }}
           topDivider={true}
+          containerStyle={{ backgroundColor: 'transparent' }}
         />
         <Modal
           animationType="slide"
