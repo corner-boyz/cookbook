@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Text, View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Card, Button, Input, } from 'react-native-elements';
-import { styles } from '../../styles';
 
 import IP from '../../IP';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //==================================================== 
 class Signup extends React.Component {
@@ -39,8 +40,8 @@ class Signup extends React.Component {
       })
         .then(() => {
           //Redirect to home page
-          this.props.screenProps.logIn(this.state.email, this.state.name)
-          this.props.screenProps.switchToLogin();
+          this.props.logIn(this.state.email, this.state.password)
+          // this.props.switchToLogin();
         }).catch(error => {
           console.log('Error in creating new user:', error);
         });
@@ -49,67 +50,6 @@ class Signup extends React.Component {
   //====================================================
   render() {
     return (
-      // <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
-      //   <Text>Sign up for CookBook:</Text>
-      //   {this.state.noEmail ?
-      //     <Text style={styles.warningText}>Please enter a valid email address.</Text>
-      //     : (null)}
-      //   <TextInput
-      //     style={{ height: 40, width: 250 }}
-      //     placeholder='Email'
-      //     onChangeText={text => this.setState({
-      //       email: text,
-      //       noEmail: false,
-      //     })}
-      //   />
-      //   <TextInput
-      //     style={{ height: 40, width: 250 }}
-      //     placeholder='Name'
-      //     onChangeText={text => this.setState({
-      //       name: text
-      //     })}
-      //   />
-      //   {this.state.tooShort ?
-      //     <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
-      //     : (null)}
-      //   <TextInput
-      //     style={{ height: 40, width: 250 }}
-      //     placeholder='Password'
-      //     secureTextEntry={true}
-      //     onChangeText={text => this.setState({
-      //       password: text,
-      //       tooShort: false,
-      //     })}
-      //   />
-      //   {this.state.notMatching ?
-      //     <Text style={styles.warningText}>Passwords do not match.</Text>
-      //     : (null)}
-      //   <TextInput
-      //     style={{ height: 40, width: 250 }}
-      //     placeholder='Confirm Password'
-      //     secureTextEntry={true}
-      //     onChangeText={text => this.setState({
-      //       confirmedPassword: text,
-      //       notMatching: false,
-      //     })}
-      //   />
-      //   <Button
-      //     title="Sign Up"
-      //     onPress={() => {
-      //       this.submitSignup();
-      //     }}
-      //   />
-      //   <Text
-      //     style={styles.signUpText}
-      //   >Already have an account?</Text>
-      //   <Button
-      //     title="Go Back"
-      //     onPress={() => {
-      //       this.props.screenProps.switchToLogin();
-      //     }}
-      //     color="red"
-      //   />
-      // </View>
       <Card
         containerStyle={{
           width: Dimensions.get('window').width / 2,
@@ -120,6 +60,9 @@ class Signup extends React.Component {
           onChangeText={text => this.setState({
             name: text
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
           inputContainerStyle={{
             borderWidth: 1,
             borderRadius: 20,
@@ -129,6 +72,11 @@ class Signup extends React.Component {
             marginBottom: 5,
             marginLeft: 15
           }}
+          leftIcon={{
+            name: 'ios-person',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
         <Input
           placeholder='Email'
@@ -136,6 +84,9 @@ class Signup extends React.Component {
             email: text,
             noEmail: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
           inputContainerStyle={{
             borderWidth: 1,
             borderRadius: 20,
@@ -144,6 +95,11 @@ class Signup extends React.Component {
             marginTop: 5,
             marginBottom: 5,
             marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-mail',
+            type: 'ionicon',
+            color: 'lightgray'
           }}
         />
         <Input
@@ -153,6 +109,9 @@ class Signup extends React.Component {
             password: text,
             tooShort: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
           inputContainerStyle={{
             borderWidth: 1,
             borderRadius: 20,
@@ -162,6 +121,11 @@ class Signup extends React.Component {
             marginBottom: 5,
             marginLeft: 15
           }}
+          leftIcon={{
+            name: 'ios-lock',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
         <Input
           placeholder='Confirm Password'
@@ -170,6 +134,9 @@ class Signup extends React.Component {
             confirmedPassword: text,
             notMatching: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
           inputContainerStyle={{
             borderWidth: 1,
             borderRadius: 20,
@@ -178,6 +145,11 @@ class Signup extends React.Component {
             marginTop: 5,
             marginBottom: 5,
             marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-lock',
+            type: 'ionicon',
+            color: 'lightgray'
           }}
         />
         <Button
@@ -191,9 +163,9 @@ class Signup extends React.Component {
 
             marginTop: 5,
           }}
-          onPress={() => { 
-            console.log(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword); 
-            // this.props.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
+          onPress={() => {
+            console.log(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword);
+            this.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
           }}
         />
       </Card>

@@ -3,9 +3,8 @@ import axios from 'axios';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, Image, ImageBackground, Dimensions } from 'react-native';
-import { Button, Input, Card } from 'react-native-elements'
-import { styles } from '../styles';
+import { Text, View, ImageBackground, Dimensions } from 'react-native';
+import { Button } from 'react-native-elements'
 
 import IP from '../IP';
 
@@ -30,9 +29,7 @@ class LandingPage extends React.Component {
         password: password,
       }).then(results => {
         if (results.data === 'Wrong email or password') {
-          // this.setState({
-          //   wrongEmailOrPass: true,
-          // });
+          alert(results.data)
           console.log(results.data);
         } else {
           let { email, name } = results.data;
@@ -87,7 +84,7 @@ class LandingPage extends React.Component {
         {this.state.loginCard ?
           <Login submitLogin={this.submitLogin} />
           :
-          <Signup />
+          <Signup logIn={this.props.logIn} />
         }
       </ImageBackground>
 

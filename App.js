@@ -9,10 +9,6 @@ import RecipeList from './client-components/recipeList';
 import GroceryList from './client-components/groceryList';
 import LandingPage from './client-components/landingPage.js';
 
-import Signup from './client-components/auth-components/signup';
-import Login from './client-components/auth-components/login';
-
-
 import IP from './IP.js';
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
@@ -193,22 +189,6 @@ export default class App extends React.Component {
   //==================================================== screenProps is the global state property!
   render() {
     {
-      // if (this.state.signUp === true) {
-      //   return <Signup
-      //     screenProps={{
-      //       switchToLogin: this.switchToLogin,
-      //       logIn: this.logIn
-      //     }}
-      //   />
-      // }
-      // if (this.state.isLoggedIn === false) {
-      //   return <Login
-      //     screenProps={{
-      //       logIn: this.logIn,
-      //       switchToSignUp: this.switchToSignUp,
-      //       // email: this.state.email
-      //     }} />
-      // }
       if (this.state.isLoggedIn === false) {
         return <LandingPage logIn={this.logIn} />
       }
