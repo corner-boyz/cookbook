@@ -16,10 +16,11 @@ class LandingPage extends React.Component {
       email: '',
       password: '',
       wrongEmailOrPass: false,
-
+      loading: false,
       loginCard: true,
     }
     this.submitLogin = this.submitLogin.bind(this);
+    this.toggleLoading = this.toggleLoading.bind(this);
   }
   //====================================================
   submitLogin(email, password) {
@@ -28,6 +29,7 @@ class LandingPage extends React.Component {
         email: email,
         password: password,
       }).then(results => {
+        this.toggleLoading();
         if (results.data === 'Wrong email or password') {
           alert(results.data)
           console.log(results.data);
@@ -40,9 +42,13 @@ class LandingPage extends React.Component {
       });
     }
   }
+  toggleLoading() {
+    this.setState({
+      loading: !this.state.loading
+    })
+  }
   //====================================================
   render() {
-    const resizeMode = 'center';
 
     return (
       <ImageBackground
@@ -82,9 +88,9 @@ class LandingPage extends React.Component {
           />
         </View>
         {this.state.loginCard ?
-          <Login submitLogin={this.submitLogin} />
+          <Login submitLogin={this.submitLogin} loading={this.state.loading} toggleLoading={this.toggleLoading} />
           :
-          <Signup logIn={this.props.logIn} />
+          <Signup logIn={this.props.logIn} loading={this.state.loading} toggleLoading={this.toggleLoading} />
         }
       </ImageBackground>
 

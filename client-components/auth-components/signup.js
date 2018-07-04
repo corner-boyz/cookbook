@@ -39,11 +39,10 @@ class Signup extends React.Component {
         name: this.state.name,
       })
         .then(() => {
-          //Redirect to home page
+          this.props.toggleLoading()
           this.props.logIn(this.state.email, this.state.password)
-          // this.props.switchToLogin();
         }).catch(error => {
-          console.log('Error in creating new user:', error);
+          this.props.toggleLoading()
           alert('Error in creating new user')
         });
     }
@@ -161,11 +160,11 @@ class Signup extends React.Component {
             height: 35,
             width: 200,
             marginLeft: 15,
-
             marginTop: 5,
           }}
+          loading={this.props.loading}
           onPress={() => {
-            console.log(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword);
+            this.props.toggleLoading()
             this.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
           }}
         />

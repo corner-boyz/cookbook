@@ -104,7 +104,9 @@ class Login extends React.Component {
             width: 200,
             marginLeft: 15,
           }}
+          loading={this.props.loading}
           onPress={() => {
+            this.props.toggleLoading()
             this.props.submitLogin(this.state.email, this.state.password);
           }}
         />
