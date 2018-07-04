@@ -203,7 +203,7 @@ class GroceryList extends React.Component {
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} />}
             keyExtractor={(item) => item.ingredient}
           />
-          <KeyboardAvoidingView behavior="padding" enabled>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
 
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>

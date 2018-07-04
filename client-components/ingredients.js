@@ -151,7 +151,7 @@ class Ingredients extends React.Component {
             renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
             keyExtractor={(item) => item.ingredient}
           />
-          <KeyboardAvoidingView behavior="padding" enabled>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
             <IngredientAdder
               editMode={this.editMode}
               submitIngredient={this.submitIngredient}

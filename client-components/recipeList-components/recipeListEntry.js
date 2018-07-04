@@ -34,7 +34,7 @@ class RecipeListEntry extends React.Component {
       <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
         <Tile
           imageSrc={{ uri: this.props.recipe.image }}
-          imageContainerStyle={{ paddingVertical: 10 }}
+          imageContainerStyle={{ paddingVertical: 10, borderRadius: 20 }}
           title={this.props.recipe.title}
           titleStyle={{
             fontSize: 16

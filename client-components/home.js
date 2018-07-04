@@ -52,6 +52,8 @@ class Home extends React.Component {
           <Button
             title="Log Out"
             buttonStyle={{
+              alignSelf: 'center',
+              width: 100,
               backgroundColor: 'red',
 
             }}
