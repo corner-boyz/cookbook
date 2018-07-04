@@ -38,7 +38,7 @@ class GroceryListAdder extends React.Component {
           <Button
             title='Delete Selected'
             rounded={true}
-            backgroundColor='red'
+            buttonStyle={{ backgroundColor: 'red' }}
             onPress={() => {
               this.props.deleteIngredients();
             }}
@@ -48,14 +48,15 @@ class GroceryListAdder extends React.Component {
           <Input
             label='Add to Grocery List'
             placeholder='Ex. "2 pound salmon"'
-            autoFocus={true}
+
             shake={true}
             inputContainerStyle={{
               borderWidth: 2,  // size/width of the border
               borderColor: 'orange',  // color of the border
-              paddingLeft: 10,
-              marginBottom: 7,
-              height: 50
+              borderRadius: 20,
+              marginTop: 10,
+              marginBottom: 10,
+              height: 40
             }}
 
             value={this.state.text}
