@@ -52,8 +52,8 @@ class Signup extends React.Component {
     return (
       <Card
         containerStyle={{
-          width: Dimensions.get('window').width / 2,
-          borderRadius: 20
+          width: 265,
+          borderRadius: 20,
         }}>
         <Input
           placeholder='Name'

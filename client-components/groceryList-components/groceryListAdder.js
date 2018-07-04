@@ -57,8 +57,9 @@ class GroceryListAdder extends React.Component {
               marginTop: 10,
               marginBottom: 10,
               height: 40
-            }}
 
+            }}
+            style={{ backgroundColor: 'white' }}
             value={this.state.text}
             onChangeText={(text) => this.setState({ text })}
             onSubmitEditing={() => {

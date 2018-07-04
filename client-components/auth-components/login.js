@@ -42,7 +42,7 @@ class Login extends React.Component {
     return (
       <Card
         containerStyle={{
-          width: Dimensions.get('window').width / 2,
+          width: 265,
           borderRadius: 20,
         }}>
         <Input

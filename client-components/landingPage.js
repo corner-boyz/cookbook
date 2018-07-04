@@ -55,15 +55,12 @@ class LandingPage extends React.Component {
         style={{
           flex: 1,
           alignItems: 'center',
-          // resizeMode: 'cover',
           backgroundColor: 'black',
-
-          position: 'absolute',
           width: Dimensions.get('window').width,
           height: Dimensions.get('window').height,
           justifyContent: 'center'
         }}
-        source={require('./landing.jpg')}
+        source={require('../media/landing.jpg')}
         blurRadius={1}
       >
         <Text style={{
@@ -95,7 +92,6 @@ class LandingPage extends React.Component {
           <Signup logIn={this.props.logIn} loading={this.state.loading} toggleLoading={this.toggleLoading} />
         }
       </ImageBackground>
-
     )
   }
 }

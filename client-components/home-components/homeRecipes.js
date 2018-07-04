@@ -41,6 +41,7 @@ class HomeRecipes extends React.Component {
           }}
           chevron={true}
           topDivider={true}
+          containerStyle={{ backgroundColor: 'transparent' }}
         />
         <Modal
           animationType="fade"

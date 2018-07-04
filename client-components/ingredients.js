@@ -6,7 +6,7 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert } from 'react-native';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -141,7 +141,16 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', }]}>
+      <ImageBackground
+        style={[styles.container, {
+          backgroundColor: 'white',
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height,
+          justifyContent: 'center'
+        }]}
+        source={require('../media/ingredients.jpg')}
+        blurRadius={1}
+      >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>
           <FlatList
@@ -188,7 +197,7 @@ class Ingredients extends React.Component {
               }} />
           </View>
         </Modal>
-      </View>
+      </ImageBackground>
     )
   }
 }

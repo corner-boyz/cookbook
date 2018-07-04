@@ -38,6 +38,7 @@ class GroceryListEntry extends React.Component {
               showDelete: true
             })
           }}
+          containerStyle={{ backgroundColor: 'transparent' }}
         />
 
         <Modal

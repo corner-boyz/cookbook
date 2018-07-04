@@ -27,7 +27,8 @@ class IngredientAdder extends React.Component {
               borderRadius: 20,
               marginTop: 10,
               marginBottom: 10,
-              height: 40
+              height: 40,
+
             }}
 
             value={this.state.text}
