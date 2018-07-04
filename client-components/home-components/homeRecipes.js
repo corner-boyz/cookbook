@@ -37,7 +37,6 @@ class HomeRecipes extends React.Component {
           leftAvatar={{ source: { uri: this.props.item.imageurl } }}
           roundAvatar={true}
           onPress={() => {
-            // console.log(this.props.item.title);
             this.setState({ showRecipe: true });
           }}
           chevron={true}
