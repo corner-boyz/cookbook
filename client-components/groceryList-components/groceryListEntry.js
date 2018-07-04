@@ -17,11 +17,10 @@ class GroceryListEntry extends React.Component {
   render() {
     return (
       <View>
-
         <ListItem
           title={this.props.item.ingredient}
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
-          leftAvatar={{ source: { uri: this.props.item.imageurl } }}
+          leftAvatar={{ source:{ uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' }}}
           roundAvatar={true}
           topDivider={true}
           checkBox={{
