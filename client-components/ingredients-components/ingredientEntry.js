@@ -26,6 +26,8 @@ class IngredientEntry extends React.Component {
           key={this.props.item.index}
           title={this.props.item.ingredient}
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
+          leftAvatar={{ source: { uri: this.props.item.imageurl } }}
+          roundAvatar={true}
           onLongPress={() => {
             this.setState({
               showOptions: true
