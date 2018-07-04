@@ -20,7 +20,6 @@ class IngredientAdder extends React.Component {
           <Input
             label='Add to Pantry'
             placeholder='Ex. "2 pound salmon"'
-
             shake={true}
             inputContainerStyle={{
               borderWidth: 2,  // size/width of the border

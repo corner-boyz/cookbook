@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
+import { Text, View, Dimensions } from 'react-native';
+import { Card, Button, Input, } from 'react-native-elements';
 import { styles } from '../../styles';
+
 import IP from '../../IP';
 
 //==================================================== 
@@ -47,67 +49,154 @@ class Signup extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
-        <Text>Sign up for CookBook:</Text>
-        {this.state.noEmail ?
-          <Text style={styles.warningText}>Please enter a valid email address.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+      // <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
+      //   <Text>Sign up for CookBook:</Text>
+      //   {this.state.noEmail ?
+      //     <Text style={styles.warningText}>Please enter a valid email address.</Text>
+      //     : (null)}
+      //   <TextInput
+      //     style={{ height: 40, width: 250 }}
+      //     placeholder='Email'
+      //     onChangeText={text => this.setState({
+      //       email: text,
+      //       noEmail: false,
+      //     })}
+      //   />
+      //   <TextInput
+      //     style={{ height: 40, width: 250 }}
+      //     placeholder='Name'
+      //     onChangeText={text => this.setState({
+      //       name: text
+      //     })}
+      //   />
+      //   {this.state.tooShort ?
+      //     <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
+      //     : (null)}
+      //   <TextInput
+      //     style={{ height: 40, width: 250 }}
+      //     placeholder='Password'
+      //     secureTextEntry={true}
+      //     onChangeText={text => this.setState({
+      //       password: text,
+      //       tooShort: false,
+      //     })}
+      //   />
+      //   {this.state.notMatching ?
+      //     <Text style={styles.warningText}>Passwords do not match.</Text>
+      //     : (null)}
+      //   <TextInput
+      //     style={{ height: 40, width: 250 }}
+      //     placeholder='Confirm Password'
+      //     secureTextEntry={true}
+      //     onChangeText={text => this.setState({
+      //       confirmedPassword: text,
+      //       notMatching: false,
+      //     })}
+      //   />
+      //   <Button
+      //     title="Sign Up"
+      //     onPress={() => {
+      //       this.submitSignup();
+      //     }}
+      //   />
+      //   <Text
+      //     style={styles.signUpText}
+      //   >Already have an account?</Text>
+      //   <Button
+      //     title="Go Back"
+      //     onPress={() => {
+      //       this.props.screenProps.switchToLogin();
+      //     }}
+      //     color="red"
+      //   />
+      // </View>
+      <Card
+        containerStyle={{
+          width: Dimensions.get('window').width / 2,
+          borderRadius: 20
+        }}>
+        <Input
+          placeholder='Name'
+          onChangeText={text => this.setState({
+            name: text
+          })}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+        />
+        <Input
           placeholder='Email'
           onChangeText={text => this.setState({
             email: text,
             noEmail: false,
           })}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
         />
-        <TextInput
-          style={{ height: 40, width: 250 }}
-          placeholder='Name'
-          onChangeText={text => this.setState({
-            name: text
-          })}
-        />
-        {this.state.tooShort ?
-          <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
             password: text,
             tooShort: false,
           })}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
         />
-        {this.state.notMatching ?
-          <Text style={styles.warningText}>Passwords do not match.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Confirm Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
             confirmedPassword: text,
             notMatching: false,
           })}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => {
-            this.submitSignup();
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
           }}
         />
-        <Text
-          style={styles.signUpText}
-        >Already have an account?</Text>
         <Button
-          title="Go Back"
-          onPress={() => {
-            this.props.screenProps.switchToLogin();
+          title='Sign Up'
+          buttonStyle={{
+            backgroundColor: 'red',
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginLeft: 15,
+
+            marginTop: 5,
           }}
-          color="red"
+          onPress={() => { 
+            console.log(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword); 
+            // this.props.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
+          }}
         />
-      </View>
+      </Card>
     )
   }
 }
