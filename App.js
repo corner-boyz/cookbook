@@ -26,7 +26,10 @@ const Root = createMaterialBottomTabNavigator(
     },
     "Recipes": {
       screen: RecipeList,
-    }
+    },
+    // "Debug": {
+    //   screen: Debug,
+    // },
   },
   {
     initialRouteName: 'Home',

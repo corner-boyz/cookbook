@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
-import { Button, CheckBox } from 'react-native-elements';
+import { Button, CheckBox, ListItem } from 'react-native-elements';
 
 //====================================================
 
@@ -18,9 +18,37 @@ class GroceryListEntry extends React.Component {
     // console.log(`Render GroceryListEntry`, this.props);
     return (
       <View>
-        <CheckBox
+
+        <ListItem
+          title={this.props.item.ingredient}
+          subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
+          topDivider={true}
+          // checkBox={true}
+          checkBox={{
+            checked: this.props.item.ispurchased,
+            checkmark: this.props.item.ispurchased,
+            checkmarkColor: 'green',
+            onIconPress: () => {
+              console.log('Firing');
+              this.props.item.ispurchased = !this.props.item.ispurchased
+              this.props.saveCheckboxes();
+              this.forceUpdate();
+            }
+          }}
+          onLongPress={() => {
+            // console.log(`Delete ${this.props.item.ingredient}?`);
+            this.setState({
+              showDelete: true
+            })
+          }}
+        />
+
+
+
+
+        {/* <CheckBox
           title={this.props.item.quantity + this.props.item.unit + ' ' + this.props.item.ingredient}
-          iconRight={true}
+          // iconRight={true}
           checked={this.props.item.ispurchased}
           checkedColor='green'
           uncheckedColor='gold'
@@ -37,7 +65,7 @@ class GroceryListEntry extends React.Component {
             this.props.item.ispurchased = !this.props.item.ispurchased
             this.props.saveCheckboxes();
           }}
-        />
+        /> */}
         <Modal
           animationType='slide'
           transparent={false}

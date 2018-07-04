@@ -4,7 +4,7 @@ import IP from '../IP.js';
 
 import HomeRecipes from './home-components/homeRecipes.js'
 import { Text, View, Animated, Easing, FlatList, Dimensions } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { styles } from '../styles';
@@ -38,7 +38,7 @@ class Home extends React.Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name}</Text>
+          <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name},</Text>
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
 
           <FlatList
@@ -49,18 +49,18 @@ class Home extends React.Component {
             keyExtractor={(item) => item.title}
           />
 
-
-
           <Button
             title="Log Out"
-            backgroundColor='red'
-            raised={true}
+            buttonStyle={{
+              backgroundColor: 'red',
+
+            }}
             onPress={() => {
               this.props.screenProps.logOut();
             }}
           />
         </Animated.View>
-      </View>
+      </View >
     );
   };
 }

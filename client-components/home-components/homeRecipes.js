@@ -13,7 +13,7 @@ class HomeRecipes extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    
+
   }
   recipeBack() {
     this.setState({
@@ -34,12 +34,14 @@ class HomeRecipes extends React.Component {
         <ListItem
           key={this.props.index}
           title={this.props.item.title}
-          avatar={{ uri: this.props.item.imageurl }}
+          leftAvatar={{ source: { uri: this.props.item.imageurl } }}
           roundAvatar={true}
           onPress={() => {
             // console.log(this.props.item.title);
             this.setState({ showRecipe: true });
           }}
+          chevron={true}
+          topDivider={true}
         />
         <Modal
           animationType="fade"
