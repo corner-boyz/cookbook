@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Dimensions } from 'react-native';
+import { Dimensions, Alert } from 'react-native';
 import { Card, Button, Input, } from 'react-native-elements';
 
 import IP from '../../IP';
@@ -17,26 +17,25 @@ class Signup extends React.Component {
       email: '',
       password: '',
       confirmedPassword: '',
-      noEmail: false,
-      notMatching: false,
-      tooShort: false,
     }
     //====================================================
   }
   componentDidMount() {
   }
 
-  submitSignup() {
-    this.setState({
-      noEmail: this.state.email.indexOf('@') === -1,
-      notMatching: this.state.password !== this.state.confirmedPassword,
-      tooShort: this.state.password.length < 6,
-    });
-    if (!this.state.noEmail && !this.state.notMatching && !this.state.tooShort) {
+  submitSignup(name, email, password, confirmedPassword) {
+    if (email.indexOf('@') === -1) {
+      Alert.alert('Invalid email address', 'Please enter a valid email address.');
+    } else if (password !== confirmedPassword) {
+      Alert.alert('Password error', 'Passwords do not match.');
+    } else if (password.length < 6) {
+      Alert.alert('Password too short', 'Passwords must be at least 6 characters.');
+    } else {
+      this.props.toggleLoading();
       axios.post(`http://${IP}/api/signup`, {
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
+        email: email,
+        password: password,
+        name: name,
       })
         .then(() => {
           this.props.toggleLoading()
@@ -85,7 +84,6 @@ class Signup extends React.Component {
           placeholder='Email'
           onChangeText={text => this.setState({
             email: text,
-            noEmail: false,
           })}
           inputStyle={{
             fontSize: 12
@@ -109,7 +107,6 @@ class Signup extends React.Component {
           secureTextEntry={true}
           onChangeText={text => this.setState({
             password: text,
-            tooShort: false,
           })}
           inputStyle={{
             fontSize: 12
@@ -134,7 +131,6 @@ class Signup extends React.Component {
           secureTextEntry={true}
           onChangeText={text => this.setState({
             confirmedPassword: text,
-            notMatching: false,
           })}
           inputStyle={{
             fontSize: 12
@@ -166,7 +162,7 @@ class Signup extends React.Component {
           }}
           loading={this.props.loading}
           onPress={() => {
-            this.props.toggleLoading()
+            
             this.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
           }}
         />
