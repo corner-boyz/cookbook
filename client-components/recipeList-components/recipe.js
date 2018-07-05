@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, SectionList } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -100,7 +100,11 @@ class Recipe extends React.Component {
 
     if (this.state.recipeDetails) {
       return (
-        <ScrollView >
+        <ScrollView
+          width={Dimensions.get('window').width}
+          alignSelf='center'
+          onLayout={() => { this.forceUpdate() }}
+        >
           <View style={styles.container}>
 
             {this.props.email && !this.state.isSaved ?
@@ -135,6 +139,9 @@ class Recipe extends React.Component {
               style={{ flex: 1, padding: 40 }}
             >
               {this.state.recipeDetails.preparationMinutes ?
+                <Text style={{ fontWeight: 'bold' }}>Time: </Text>
+                : undefined}
+              {this.state.recipeDetails.preparationMinutes ?
                 <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
                 : undefined}
               {this.state.recipeDetails.preparationMinutes ?
@@ -145,7 +152,7 @@ class Recipe extends React.Component {
                 : undefined}
               {this.state.recipeDetails.diets.length ?
                 <View>
-                  <Text>Diet</Text>
+                  <Text style={{ fontWeight: 'bold' }}>Diet</Text>
                   {this.state.recipeDetails.diets.map((diet, i) => (
                     <Text key={i}>{diet}</Text>
                   ))}
@@ -175,20 +182,6 @@ class Recipe extends React.Component {
                   ))}
                 </View> : undefined}
             </View>
-
-            {/* <SectionList
-              renderSectionHeader={({ section: { title } }) => (<Text style={{ fontWeight: 'bold' }}>{title}</Text>)}
-              renderItem={({ item, index, section }) => <Text key={index}>{item}</Text>}
-              sections={[
-                { title: 'Time', data: [`Preperation: ${this.convertMinutes(this.state.recipeDetails.preparationMinutes)}`, `Cooking: ${this.convertMinutes(this.state.recipeDetails.cookingMinutes)}`, `Ready In: ${this.convertMinutes(this.state.recipeDetails.readyInMinutes)}`] },
-                { title: 'Diets', data: this.state.recipeDetails.diets },
-                { title: 'Ingredients', data: this.state.recipeDetails.extendedIngredients, renderItem: ingredientRender },
-                { title: 'Instructions', data: this.state.recipeDetails.analyzedInstructions[0].steps, renderItem: stepsRender }
-              ]}
-              ListEmptyComponent={() => (<Text></Text>)}
-              keyExtractor={(item, index) => item + index}
-              stickySectionHeadersEnabled={true}
-            /> */}
           </View>
         </ScrollView>
       );
