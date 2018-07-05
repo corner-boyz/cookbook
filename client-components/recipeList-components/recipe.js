@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, SectionList } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
+import AddMissing from './addMissing.js';
+import Completed from './completed.js';
 
 import { styles } from '../../styles';
 
@@ -11,7 +13,10 @@ class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSaved: false
+      isSaved: false,
+      missing: [],
+      addMissing: false,
+      completed: false,
     };
   }
   //====================================================
@@ -32,8 +37,12 @@ class Recipe extends React.Component {
   compareIngredients() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
     // console.log('ingredients', this.props.ingredients)
-    axios.post(`http://${IP}/api/comparetorecipe`, {recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients}).then((results) => {
+    axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       console.log('COMPARED', results.data);
+      this.setState({
+        missing: results.data
+      })
+
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -41,7 +50,7 @@ class Recipe extends React.Component {
 
   saveRecipe() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
-    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image, sourceUrl: this.state.recipeDetails.sourceUrl} }).then((results) => {
+    axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image, sourceUrl: this.state.recipeDetails.sourceUrl } }).then((results) => {
       this.setState({
         isSaved: true
       });
@@ -100,18 +109,20 @@ class Recipe extends React.Component {
 
     if (this.state.recipeDetails) {
       return (
-        <ScrollView >
-          <View style={styles.container}>
-            <Button
-                  title="Compare"
-                  rounded={true}
-                  buttonStyle={{
-                    backgroundColor: 'blue'
-                  }}
-                  onPress={() => {
-                    this.compareIngredients();
-                  }}
-                />
+        <ScrollView
+          width={Dimensions.get('window').width}
+          alignSelf='center'
+          onLayout={() => { this.forceUpdate() }}
+          paddingTop={25}
+        >
+          <View
+            // style={styles.container}
+            style={{
+              flex: 1,
+              alignItems: 'center'
+            }}
+          >
+
             {this.props.email && !this.state.isSaved ?
               <Button
                 title="Save Recipe"
@@ -141,8 +152,15 @@ class Recipe extends React.Component {
             />
 
             <View
-              style={{ flex: 1, padding: 40 }}
+              style={{
+                flex: 1,
+                width: Dimensions.get('window').width / 1.2,
+                alignItems: 'flex-start'
+              }}
             >
+              {this.state.recipeDetails.preparationMinutes ?
+                <Text style={{ fontWeight: 'bold' }}>Time</Text>
+                : undefined}
               {this.state.recipeDetails.preparationMinutes ?
                 <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
                 : undefined}
@@ -154,7 +172,7 @@ class Recipe extends React.Component {
                 : undefined}
               {this.state.recipeDetails.diets.length ?
                 <View>
-                  <Text>Diet</Text>
+                  <Text style={{ fontWeight: 'bold' }}>Diet</Text>
                   {this.state.recipeDetails.diets.map((diet, i) => (
                     <Text key={i}>{diet}</Text>
                   ))}
@@ -166,6 +184,17 @@ class Recipe extends React.Component {
                     <Text key={i}>{ingredient.original}</Text>
                   ))}
                 </View> : undefined}
+              <Button
+                title="Compare"
+                buttonStyle={{
+                }}
+                onPress={() => {
+                  this.compareIngredients();
+                  this.setState({
+                    addMissing: true
+                  })
+                }}
+              />
               {this.state.recipeDetails.analyzedInstructions.length ?
                 <View>
                   <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
@@ -173,28 +202,39 @@ class Recipe extends React.Component {
                     <Text key={i}>{step.number}. {step.step}</Text>
                   ))}
                 </View> : undefined}
+              <Button
+                title='Complete!'
+                onPress={() => {
+                  console.log('Completed');
+                  this.setState({
+                    completed: true
+                  })
+                }}
+              />
+              <Modal
+                animationType='slide'
+                visible={this.state.addMissing}
+                onRequestClose={() => {
+                  this.setState({ addMissing: false })
+                }}
+              ><AddMissing missing={this.state.missing} />
+              </Modal>
+              <Modal
+                animationType='slide'
+                visible={this.state.completed}
+                onRequestClose={() => {
+                  this.setState({ completed: false })
+                }}
+              ><Completed ingredients={this.state.recipeDetails.extendedIngredients} />
+              </Modal>
             </View>
-
-            {/* <SectionList
-              renderSectionHeader={({ section: { title } }) => (<Text style={{ fontWeight: 'bold' }}>{title}</Text>)}
-              renderItem={({ item, index, section }) => <Text key={index}>{item}</Text>}
-              sections={[
-                { title: 'Time', data: [`Preperation: ${this.convertMinutes(this.state.recipeDetails.preparationMinutes)}`, `Cooking: ${this.convertMinutes(this.state.recipeDetails.cookingMinutes)}`, `Ready In: ${this.convertMinutes(this.state.recipeDetails.readyInMinutes)}`] },
-                { title: 'Diets', data: this.state.recipeDetails.diets },
-                { title: 'Ingredients', data: this.state.recipeDetails.extendedIngredients, renderItem: ingredientRender },
-                { title: 'Instructions', data: this.state.recipeDetails.analyzedInstructions[0].steps, renderItem: stepsRender }
-              ]}
-              ListEmptyComponent={() => (<Text></Text>)}
-              keyExtractor={(item, index) => item + index}
-              stickySectionHeadersEnabled={true}
-            /> */}
           </View>
         </ScrollView>
       );
     } else {
       return (
         <View style={styles.spinner}>
-          <ActivityIndicator size="large" color="gray" />
+          <ActivityIndicator size="large" color="orange" />
         </View>
       );
     }
