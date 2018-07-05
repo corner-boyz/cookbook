@@ -42,9 +42,13 @@ class Login extends React.Component {
     return (
       <Card
         containerStyle={{
-          width: 265,
+          width: Dimensions.get('window').width / 2,
           borderRadius: 20,
-        }}>
+        }}
+        wrapperStyle={{
+          alignItems: 'center',
+        }}
+      >
         <Input
           placeholder='Email'
           onChangeText={text => this.setState({
@@ -58,10 +62,9 @@ class Login extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
           }}
           leftIcon={{
             name: 'ios-mail',
@@ -83,10 +86,9 @@ class Login extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
           }}
           leftIcon={{
             name: 'ios-lock',
@@ -101,8 +103,7 @@ class Login extends React.Component {
             marginTop: 5,
             borderRadius: 20,
             height: 35,
-            width: 200,
-            marginLeft: 15,
+            width: Dimensions.get('window').width / 2.5,
           }}
           loading={this.props.loading}
           onPress={() => {

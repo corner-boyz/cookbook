@@ -163,17 +163,19 @@ class Ingredients extends React.Component {
       <ImageBackground
         style={[styles.container, {
           backgroundColor: 'white',
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
           justifyContent: 'center'
         }]}
-        source={require('../media/ingredients.jpg')}
-        blurRadius={1}
+        source={require('../media/4.jpg')}
+        blurRadius={0}
+        onLayout={() => {
+          // console.log('Rotated');
+          this.forceUpdate();
+        }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>
           <FlatList
-            style={[styles.list, { width: 350 }]}
+            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
             extraData={this.state.index}
             renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}

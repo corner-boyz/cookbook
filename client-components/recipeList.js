@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions } from 'react-native';
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -14,7 +14,8 @@ class RecipeList extends React.Component {
       recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0),
-      showRecipe: false
+      showRecipe: false,
+      rows: Dimensions.get('window').width < Dimensions.get('window').height ? 2 : 4
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -57,20 +58,35 @@ class RecipeList extends React.Component {
   render() {
     if (Array.isArray(this.props.screenProps.recipes) && this.props.screenProps.recipes.length) {
       return (
-        <View style={styles.container}>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            justifyContent: 'center'
+          }]}
+          source={require('../media/4.jpg')}
+          blurRadius={0}
+          onLayout={() => {
+            // console.log('Rotated');
+            Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({ rows: 2 }) : this.setState({ rows: 4 })
+
+            this.forceUpdate();
+
+          }}
+        >
           <FlatList style={styles.list}
+            key={this.state.rows}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
             renderItem={
               ({ item }) => (
-                <View style={{ padding: 5 }}>
+                <View style={{ padding: 5, }}>
                   <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
             }
             keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            horizontal={false}
+            numColumns={this.state.rows}
+            initialNumToRender={12}
           />
           <Modal
             animationType="slide"
@@ -82,20 +98,37 @@ class RecipeList extends React.Component {
             }}>
             <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} />
           </Modal>
-        </View>
+        </ImageBackground>
       );
     } else if (Array.isArray(this.props.screenProps.recipes) && !this.props.screenProps.recipes.length) {
       return (
-        <View style={styles.container}>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            justifyContent: 'center'
+          }]}
+          source={require('../media/4.jpg')}
+          blurRadius={0}
+        >
           <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
-        </View>
+        </ImageBackground>
       );
 
     } else {
       return (
-        <View style={styles.spinner}>
-          <ActivityIndicator size="large" color="gray" />
-        </View>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            justifyContent: 'center'
+          }]}
+          source={require('../media/4.jpg')}
+          blurRadius={0}
+        >
+          <View style={styles.spinner}>
+            <ActivityIndicator size="large" color="orange" />
+            {/* <Image source={require('../media/loading.gif')}/> */}
+          </View>
+        </ImageBackground>
       );
     }
   }

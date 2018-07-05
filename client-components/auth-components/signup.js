@@ -51,9 +51,13 @@ class Signup extends React.Component {
     return (
       <Card
         containerStyle={{
-          width: 265,
+          width: Dimensions.get('window').width / 2,
           borderRadius: 20,
-        }}>
+        }}
+        wrapperStyle={{
+          alignItems: 'center',
+        }}
+      >
         <Input
           placeholder='Name'
           onChangeText={text => this.setState({
@@ -66,10 +70,9 @@ class Signup extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
           }}
           leftIcon={{
             name: 'ios-person',
@@ -89,10 +92,9 @@ class Signup extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
           }}
           leftIcon={{
             name: 'ios-mail',
@@ -113,10 +115,10 @@ class Signup extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
+
           }}
           leftIcon={{
             name: 'ios-lock',
@@ -137,10 +139,10 @@ class Signup extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.5,
             marginTop: 5,
             marginBottom: 5,
-            marginLeft: 15
+
           }}
           leftIcon={{
             name: 'ios-lock',
@@ -152,11 +154,11 @@ class Signup extends React.Component {
           title='Sign Up'
           buttonStyle={{
             backgroundColor: 'red',
+            marginTop: 5,
             borderRadius: 20,
             height: 35,
-            width: 200,
-            marginLeft: 15,
-            marginTop: 5,
+            width: Dimensions.get('window').width / 2.5,
+
           }}
           loading={this.props.loading}
           onPress={() => {
