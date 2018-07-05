@@ -40,7 +40,7 @@ class RecipeListEntry extends React.Component {
         >
           <Tile
             imageSrc={{ uri: this.props.recipe.image }}
-            imageContainerStyle={{ paddingVertical: 5, borderRadius: 20 }}
+            imageContainerStyle={{ paddingVertical: 5, borderWidth: 5, borderColor: 'lightgray', borderRadius: 5 }}
             title={this.props.recipe.title}
             titleStyle={{
               fontSize: 16

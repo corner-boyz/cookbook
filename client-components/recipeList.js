@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions } from 'react-native';
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -86,7 +86,7 @@ class RecipeList extends React.Component {
             }
             keyExtractor={(item) => item.id.toString()}
             numColumns={this.state.rows}
-            horizontal={false}
+            initialNumToRender={12}
           />
           <Modal
             animationType="slide"
@@ -125,7 +125,8 @@ class RecipeList extends React.Component {
           blurRadius={0}
         >
           <View style={styles.spinner}>
-            <ActivityIndicator size="large" color="gray" />
+            <ActivityIndicator size="large" color="orange" />
+            {/* <Image source={require('../media/loading.gif')}/> */}
           </View>
         </ImageBackground>
       );
