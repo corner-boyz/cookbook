@@ -49,7 +49,7 @@ class Home extends React.Component {
             style={[styles.list, { width: Dimensions.get('window').width / 1.5 }]}
             data={this.props.screenProps.userRecipes}
             extraData={this.state.index}
-            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} />}
+            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} />}
             keyExtractor={(item) => item.title}
           />
           <Button
