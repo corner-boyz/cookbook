@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
+import AddMissing from './addMissing.js';
+import Completed from './completed.js';
 
 import { styles } from '../../styles';
 
@@ -11,7 +13,10 @@ class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSaved: false
+      isSaved: false,
+      missing: [],
+      addMissing: false,
+      completed: false,
     };
   }
   //====================================================
@@ -34,6 +39,10 @@ class Recipe extends React.Component {
     // console.log('ingredients', this.props.ingredients)
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       console.log('COMPARED', results.data);
+      this.setState({
+        missing: results.data
+      })
+
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -104,8 +113,15 @@ class Recipe extends React.Component {
           width={Dimensions.get('window').width}
           alignSelf='center'
           onLayout={() => { this.forceUpdate() }}
+          paddingTop={25}
         >
-          <View style={styles.container}>
+          <View
+            // style={styles.container}
+            style={{
+              flex: 1,
+              alignItems: 'center'
+            }}
+          >
 
             {this.props.email && !this.state.isSaved ?
               <Button
@@ -136,10 +152,14 @@ class Recipe extends React.Component {
             />
 
             <View
-              style={{ flex: 1, padding: 40 }}
+              style={{
+                flex: 1,
+                width: Dimensions.get('window').width / 1.2,
+                alignItems: 'flex-start'
+              }}
             >
               {this.state.recipeDetails.preparationMinutes ?
-                <Text style={{ fontWeight: 'bold' }}>Time: </Text>
+                <Text style={{ fontWeight: 'bold' }}>Time</Text>
                 : undefined}
               {this.state.recipeDetails.preparationMinutes ?
                 <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
@@ -166,12 +186,13 @@ class Recipe extends React.Component {
                 </View> : undefined}
               <Button
                 title="Compare"
-                rounded={true}
                 buttonStyle={{
-                  backgroundColor: 'blue'
                 }}
                 onPress={() => {
                   this.compareIngredients();
+                  this.setState({
+                    addMissing: true
+                  })
                 }}
               />
               {this.state.recipeDetails.analyzedInstructions.length ?
@@ -181,6 +202,31 @@ class Recipe extends React.Component {
                     <Text key={i}>{step.number}. {step.step}</Text>
                   ))}
                 </View> : undefined}
+              <Button
+                title='Complete!'
+                onPress={() => {
+                  console.log('Completed');
+                  this.setState({
+                    completed: true
+                  })
+                }}
+              />
+              <Modal
+                animationType='slide'
+                visible={this.state.addMissing}
+                onRequestClose={() => {
+                  this.setState({ addMissing: false })
+                }}
+              ><AddMissing missing={this.state.missing} />
+              </Modal>
+              <Modal
+                animationType='slide'
+                visible={this.state.completed}
+                onRequestClose={() => {
+                  this.setState({ completed: false })
+                }}
+              ><Completed ingredients={this.state.recipeDetails.extendedIngredients} />
+              </Modal>
             </View>
           </View>
         </ScrollView>
@@ -188,7 +234,7 @@ class Recipe extends React.Component {
     } else {
       return (
         <View style={styles.spinner}>
-          <ActivityIndicator size="large" color="gray" />
+          <ActivityIndicator size="large" color="orange" />
         </View>
       );
     }
