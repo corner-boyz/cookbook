@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Animated } from 'react-native';
+import { Dimensions, Animated, View } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
@@ -12,6 +12,7 @@ class RecipeListEntry extends React.Component {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
+      size: Dimensions.get('window').width < Dimensions.get('window').height ? 2.1 : 4.3
     };
   }
   componentDidMount() {
@@ -32,24 +33,30 @@ class RecipeListEntry extends React.Component {
     let { fadeAnim } = this.state
     return (
       <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-        <Tile
-          imageSrc={{ uri: this.props.recipe.image }}
-          imageContainerStyle={{ paddingVertical: 5, borderRadius: 20 }}
-          title={this.props.recipe.title}
-          titleStyle={{
-            fontSize: 16
+        <View
+          onLayout={() => {
+            Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({ size: 2.1 }) : this.setState({ size: 4.3 })
           }}
-          featured={true}
-          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length ? '\nNeed:' + this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)) : ''}`}
-          captionStyle={{
-            fontSize: 12,
-            fontWeight: 'bold',
-            color: 'white',
-            justifyContent: 'flex-start'
-          }}
-          width={Dimensions.get('window').width / 2.1}
-          onPress={() => this.retrieveRecipe(this.props.recipe.id)}
-        />
+        >
+          <Tile
+            imageSrc={{ uri: this.props.recipe.image }}
+            imageContainerStyle={{ paddingVertical: 5, borderRadius: 20 }}
+            title={this.props.recipe.title}
+            titleStyle={{
+              fontSize: 16
+            }}
+            featured={true}
+            caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length ? '\nNeed:' + this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)) : ''}`}
+            captionStyle={{
+              fontSize: 12,
+              fontWeight: 'bold',
+              color: 'white',
+              justifyContent: 'flex-start'
+            }}
+            width={Dimensions.get('window').width / this.state.size}
+            onPress={() => this.retrieveRecipe(this.props.recipe.id)}
+          />
+        </View>
       </Animated.View>
 
 

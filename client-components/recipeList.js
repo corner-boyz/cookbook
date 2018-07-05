@@ -15,7 +15,7 @@ class RecipeList extends React.Component {
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0),
       showRecipe: false,
-      rows: 2
+      rows: Dimensions.get('window').width < Dimensions.get('window').height ? 2 : 4
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -67,10 +67,14 @@ class RecipeList extends React.Component {
           blurRadius={0}
           onLayout={() => {
             // console.log('Rotated');
+            Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({ rows: 2 }) : this.setState({ rows: 4 })
+
             this.forceUpdate();
+
           }}
         >
           <FlatList style={styles.list}
+            key={this.state.rows}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
             renderItem={
