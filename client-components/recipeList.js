@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Dimensions } from 'react-native';
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -57,7 +57,14 @@ class RecipeList extends React.Component {
   render() {
     if (Array.isArray(this.props.screenProps.recipes) && this.props.screenProps.recipes.length) {
       return (
-        <View style={styles.container}>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            justifyContent: 'center'
+          }]}
+          source={require('../media/creme.jpg')}
+          blurRadius={0}
+        >
           <FlatList style={styles.list}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
@@ -82,20 +89,40 @@ class RecipeList extends React.Component {
             }}>
             <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} />
           </Modal>
-        </View>
+        </ImageBackground>
       );
     } else if (Array.isArray(this.props.screenProps.recipes) && !this.props.screenProps.recipes.length) {
       return (
-        <View style={styles.container}>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center'
+          }]}
+          source={require('../media/creme.jpg')}
+          blurRadius={0}
+        >
           <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
-        </View>
+        </ImageBackground>
       );
 
     } else {
       return (
-        <View style={styles.spinner}>
-          <ActivityIndicator size="large" color="gray" />
-        </View>
+        <ImageBackground
+          style={[styles.container, {
+            backgroundColor: 'white',
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+            justifyContent: 'center'
+          }]}
+          source={require('../media/creme.jpg')}
+          blurRadius={0}
+        >
+          <View style={styles.spinner}>
+            <ActivityIndicator size="large" color="gray" />
+          </View>
+        </ImageBackground>
       );
     }
   }

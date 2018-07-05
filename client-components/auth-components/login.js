@@ -42,7 +42,7 @@ class Login extends React.Component {
     return (
       <Card
         containerStyle={{
-          width: 265,
+          width: Dimensions.get('window').width / 2,
           borderRadius: 20,
         }}>
         <Input
@@ -58,7 +58,7 @@ class Login extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.7,
             marginTop: 5,
             marginBottom: 5,
             marginLeft: 15
@@ -83,7 +83,7 @@ class Login extends React.Component {
             borderWidth: 1,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.7,
             marginTop: 5,
             marginBottom: 5,
             marginLeft: 15
@@ -101,7 +101,7 @@ class Login extends React.Component {
             marginTop: 5,
             borderRadius: 20,
             height: 35,
-            width: 200,
+            width: Dimensions.get('window').width / 2.7,
             marginLeft: 15,
           }}
           loading={this.props.loading}

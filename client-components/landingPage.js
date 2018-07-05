@@ -57,12 +57,10 @@ class LandingPage extends React.Component {
           flex: 1,
           alignItems: 'center',
           backgroundColor: 'black',
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
           justifyContent: 'center'
         }}
-        source={require('../media/landing.jpg')}
-        blurRadius={1}
+        source={require('../media/creme.jpg')}
+        blurRadius={0}
       >
 
         <Text style={{

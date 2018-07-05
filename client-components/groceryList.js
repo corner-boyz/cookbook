@@ -196,12 +196,10 @@ class GroceryList extends React.Component {
       <ImageBackground
         style={[styles.container, {
           backgroundColor: 'white',
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
           justifyContent: 'center'
         }]}
-        source={require('../media/grocery.jpg')}
-        blurRadius={1}
+        source={require('../media/creme.jpg')}
+        blurRadius={0}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
@@ -229,7 +227,7 @@ class GroceryList extends React.Component {
           <View style={[styles.container, { backgroundColor: 'white', }]}>
             <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
-              style={[styles.list, { width: 350 }]}
+              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.props.screenProps.userGroceries}
               extraData={this.state.index}
               renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
