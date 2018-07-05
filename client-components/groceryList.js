@@ -98,8 +98,8 @@ class GroceryList extends React.Component {
         this.props.screenProps.getUserGroceries();
       })
       .catch((err) => {
-        console.log('ERROR converting units', err);
-        Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
+        console.log('ERROR converting units', err.response.request.response);
+        Alert.alert('Invalid unit conversion', err.response.request.response);
       })
   }
 
@@ -165,9 +165,9 @@ class GroceryList extends React.Component {
           .then(() => {
             this.props.screenProps.getUserGroceries();
           })
-          .catch((err) => {
-            console.log('ERROR converting units', err);
-            Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
+          .catch((err, a) => {
+            console.log('ERROR converting units', err.response.request.response);
+            Alert.alert('Invalid unit conversion', err.response.request.response);
           })
       })
       .catch((err) => {
