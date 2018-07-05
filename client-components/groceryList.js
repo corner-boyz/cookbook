@@ -55,6 +55,13 @@ class GroceryList extends React.Component {
           abrv: 'gal',
         },
         {
+          name: 'Liter',
+          abrv: 'l',
+        },{
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
           name: 'Ounce',
           abrv: 'oz',
         },
@@ -63,8 +70,12 @@ class GroceryList extends React.Component {
           abrv: 'lb',
         },
         {
-          name: 'Liter',
-          abrv: 'l',
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
         }
       ],
       quantity: '',
