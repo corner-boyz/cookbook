@@ -19,12 +19,16 @@ class Ingredients extends React.Component {
       index: 0,
       units: [
         {
-          name: '',
+          name: 'Count',
           abrv: null
         },
         {
-          name: 'Tablespoon',
+          name: 'Teaspoon',
           abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
         },
         {
           name: 'Fluid ounce',
@@ -47,6 +51,17 @@ class Ingredients extends React.Component {
           abrv: 'gal',
         },
         {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        },{
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
           name: 'Ounce',
           abrv: 'oz',
         },
@@ -55,8 +70,12 @@ class Ingredients extends React.Component {
           abrv: 'lb',
         },
         {
-          name: 'Liter',
-          abrv: 'l',
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
         }
       ],
       editMode: false,
