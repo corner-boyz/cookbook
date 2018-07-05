@@ -63,7 +63,7 @@ class RecipeList extends React.Component {
             backgroundColor: 'white',
             justifyContent: 'center'
           }]}
-          source={require('../media/creme.jpg')}
+          source={require('../media/4.jpg')}
           blurRadius={0}
           onLayout={() => {
             // console.log('Rotated');
@@ -107,7 +107,7 @@ class RecipeList extends React.Component {
             backgroundColor: 'white',
             justifyContent: 'center'
           }]}
-          source={require('../media/creme.jpg')}
+          source={require('../media/4.jpg')}
           blurRadius={0}
         >
           <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
@@ -121,7 +121,7 @@ class RecipeList extends React.Component {
             backgroundColor: 'white',
             justifyContent: 'center'
           }]}
-          source={require('../media/creme.jpg')}
+          source={require('../media/4.jpg')}
           blurRadius={0}
         >
           <View style={styles.spinner}>

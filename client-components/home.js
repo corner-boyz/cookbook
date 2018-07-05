@@ -39,7 +39,7 @@ class Home extends React.Component {
           backgroundColor: 'white',
           justifyContent: 'center'
         }]}
-        source={require('../media/creme.jpg')}
+        source={require('../media/4.jpg')}
         blurRadius={0}
         onLayout={() => {
           // console.log('Rotated');
