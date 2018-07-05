@@ -51,6 +51,10 @@ class Ingredients extends React.Component {
           abrv: 'gal',
         },
         {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
           name: 'Liter',
           abrv: 'l',
         },{
