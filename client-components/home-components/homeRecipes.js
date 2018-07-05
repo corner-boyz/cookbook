@@ -12,10 +12,14 @@ class HomeRecipes extends React.Component {
     };
   }
   //====================================================
+  componentDidMount() {
+
+  }
   recipeBack() {
     this.setState({
       showRecipe: false
     });
+    this.props.getUserRecipes();
   }
 
   //====================================================
@@ -30,12 +34,14 @@ class HomeRecipes extends React.Component {
         <ListItem
           key={this.props.index}
           title={this.props.item.title}
-          avatar={{ uri: this.props.item.imageurl }}
+          leftAvatar={{ source: { uri: this.props.item.imageurl } }}
           roundAvatar={true}
           onPress={() => {
-            // console.log(this.props.item.title);
             this.setState({ showRecipe: true });
           }}
+          chevron={true}
+          topDivider={true}
+          containerStyle={{ backgroundColor: 'transparent' }}
         />
         <Modal
           animationType="fade"
@@ -45,8 +51,9 @@ class HomeRecipes extends React.Component {
             this.setState({
               showRecipe: false
             })
+            this.props.getUserRecipes();
           }}>
-          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} />
+          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} getUserRecipes={this.props.getUserRecipes} />
         </Modal>
 
       </View >

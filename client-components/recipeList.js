@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal } from 'react-native';
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -21,7 +21,7 @@ class RecipeList extends React.Component {
   }
 
   static navigationOptions = {
-    tabBarColor: 'dodgerblue',
+    tabBarColor: 'mediumblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-list' size={25} color='white' />;
     },
@@ -35,12 +35,7 @@ class RecipeList extends React.Component {
   }
   //====================================================
   componentDidMount() {
-    Animated.timing(this.state.fadeAnim,
-      {
-        toValue: 1,
-        duration: 2000,
-      }
-    ).start();
+    // Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000, }).start();
   }
 
   //====================================================
@@ -60,7 +55,7 @@ class RecipeList extends React.Component {
   }
   //====================================================
   render() {
-    if (this.props.screenProps.recipes) {
+    if (Array.isArray(this.props.screenProps.recipes) && this.props.screenProps.recipes.length) {
       return (
         <View style={styles.container}>
           <FlatList style={styles.list}
@@ -68,7 +63,7 @@ class RecipeList extends React.Component {
             extraData={this.state.recipeListIndex}
             renderItem={
               ({ item }) => (
-                <View>
+                <View style={{ padding: 5 }}>
                   <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
@@ -78,18 +73,24 @@ class RecipeList extends React.Component {
             horizontal={false}
           />
           <Modal
-            animationType="fade"
-            transparent={false}
+            animationType="slide"
             visible={this.state.showRecipe}
             onRequestClose={() => {
               this.setState({
                 showRecipe: false
               })
             }}>
-            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} />
+            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} />
           </Modal>
         </View>
       );
+    } else if (Array.isArray(this.props.screenProps.recipes) && !this.props.screenProps.recipes.length) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
+        </View>
+      );
+
     } else {
       return (
         <View style={styles.spinner}>

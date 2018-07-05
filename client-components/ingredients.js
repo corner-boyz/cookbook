@@ -6,7 +6,7 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView } from 'react-native';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -15,14 +15,8 @@ class Ingredients extends React.Component {
     super(props);
 
     this.state = {
+      fadeAnim: new Animated.Value(0),
       index: 0,
-      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
-        46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-        61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,
-        76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-        91, 92, 93, 94, 95, 96, 97, 98, 99],
       units: [
         {
           name: '',
@@ -81,39 +75,30 @@ class Ingredients extends React.Component {
   }
   //====================================================
   componentDidMount() {
-
+    Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
   }
 
-  submitIngredient(quantity, unit, name) {
-    if (name.length > 0 && quantity > 0) {
-      let newIngredient = {
-        email: this.props.screenProps.email,
-        shouldReplace: false,
-        ingredients: [
-          {
-            ingredient: name,
-            quantity: quantity,
-            unit: unit
-          }
-        ]
-      };
-      console.log(newIngredient);
-
-      axios.post(`http://${IP}/api/ingredients`, newIngredient)
-        .then((response) => {
-          console.log(response.data);
-          this.props.screenProps.getIngredients();
-          this.setState({
-            index: this.state.index + 1
-          });
-          this.props.screenProps.recipeListIndex++;
+  submitIngredient(newIngredient) {
+    const ingArr = [newIngredient]
+    axios.post(`http://${IP}/api/parse`, { ingredients: ingArr })
+      .then((response) => {
+        response.data[0].ispurchased = false
+        axios.post(`http://${IP}/api/ingredients`, {
+          email: this.props.screenProps.email,
+          shouldReplace: false,
+          ingredients: [response.data[0]]
         })
-        .catch((error) => {
-          console.log(error);
-        })
-    } else {
-      alert('Enter Valid Ingredient/Quantity')
-    }
+          .then(() => {
+            this.props.screenProps.getIngredients();
+          })
+          .catch((err) => {
+            console.log('ERROR converting units', err);
+            Alert.alert('Invalid unit conversion', 'Please pick convertable unit');
+          })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   editIngredients() {
@@ -142,8 +127,8 @@ class Ingredients extends React.Component {
         });
         // this.props.screenProps.recipeListIndex++;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error(err);
       })
   }
 
@@ -156,18 +141,34 @@ class Ingredients extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', }]}>
-        <Text>Here are your Ingredients:</Text>
-        <FlatList
-          style={[styles.list, { width: 350 }]}
-          data={this.props.screenProps.ingredients}
-          extraData={this.state.index}
-          renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
-          keyExtractor={(item) => item.ingredient}
-        />
+      <ImageBackground
+        style={[styles.container, {
+          backgroundColor: 'white',
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height,
+          justifyContent: 'center'
+        }]}
+        source={require('../media/ingredients.jpg')}
+        blurRadius={1}
+      >
+        <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>
+          <FlatList
+            style={[styles.list, { width: 350 }]}
+            data={this.props.screenProps.ingredients}
+            extraData={this.state.index}
+            renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            keyExtractor={(item) => item.ingredient}
+          />
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
+            <IngredientAdder
+              editMode={this.editMode}
+              submitIngredient={this.submitIngredient}
+            />
+          </KeyboardAvoidingView>
+        </Animated.View>
         <Modal
           animationType='slide'
-          transparent={false}
           visible={this.state.editMode}
           onRequestClose={() => {
             this.setState({
@@ -175,12 +176,12 @@ class Ingredients extends React.Component {
             })
           }}>
           <View style={[styles.container, { backgroundColor: 'white', }]}>
-            <Text>Editing Mode</Text>
+            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: 350 }]}
               data={this.props.screenProps.ingredients}
               extraData={this.state.index}
-              renderItem={({ item }) => <IngredientsEditor item={item} numbers={this.state.numbers} units={this.state.units} />}
+              renderItem={({ item }) => <IngredientsEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
@@ -195,15 +196,7 @@ class Ingredients extends React.Component {
               }} />
           </View>
         </Modal>
-        <KeyboardAvoidingView behavior="padding" enabled>
-          <IngredientAdder
-            numbers={this.state.numbers}
-            units={this.state.units}
-            editMode={this.editMode}
-            submitIngredient={this.submitIngredient}
-          />
-        </KeyboardAvoidingView>
-      </View>
+      </ImageBackground>
     )
   }
 }

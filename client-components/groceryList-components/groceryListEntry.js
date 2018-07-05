@@ -1,72 +1,79 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
-import { Button, ListItem } from 'react-native-elements';
+import { Button, CheckBox, ListItem } from 'react-native-elements';
+
 //====================================================
-class IngredientEntry extends React.Component {
+
+
+class GroceryListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showOptions: false
+      checked: this.props.ispurchased,
+      showDelete: false,
     };
   }
   //====================================================
-  deleteIngredient() {
-    this.props.item.quantity = 0;
-    this.props.editIngredients();
-    this.setState({
-      showOptions: false
-    })
-  }
-  //====================================================
   render() {
-    // console.log(`Render IngredientEntry `, this.props);
     return (
-      <View >
+      <View>
         <ListItem
-          key={this.props.item.index}
           title={this.props.item.ingredient}
-
           subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
           leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
           roundAvatar={true}
+          topDivider={true}
+          checkBox={{
+            checked: this.props.item.ispurchased,
+            checkmark: this.props.item.ispurchased,
+            checkmarkColor: 'green',
+            onIconPress: () => {
+              this.props.item.ispurchased = !this.props.item.ispurchased
+              this.props.saveCheckboxes();
+              this.forceUpdate();
+            }
+          }}
           onLongPress={() => {
             this.setState({
-              showOptions: true
+              showDelete: true
             })
           }}
-          topDivider={true}
           containerStyle={{ backgroundColor: 'transparent' }}
         />
+
         <Modal
-          animationType="slide"
+          animationType='slide'
           transparent={false}
-          visible={this.state.showOptions}
+          visible={this.state.showDelete}
           onRequestClose={() => {
             this.setState({
-              showOptions: false
+              showDelete: false
             })
-          }}
+          }} a
         >
           <View
             style={{
               flex: 1,
-              flexDirection: 'column',
+              flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-
             <Text
               style={{ fontSize: 18 }}
-            >Delete {this.props.item.ingredient} from pantry?
+            >Delete {this.props.item.ingredient} from Grocery List?
             </Text>
             <Button
               title='Delete'
-              buttonStyle={{ backgroundColor: 'red' }}
-
+              buttonStyle={{
+                backgroundColor: 'red'
+              }}
               rounded={true}
               onPress={() => {
-                console.log('Firing');
-                this.deleteIngredient();
+                console.log('Deleting', this.props.item.ingredient);
+                this.props.removeFromCart(this.props.item)
+                this.setState({
+                  showDelete: false
+                })
               }}
             />
           </View>
@@ -75,4 +82,4 @@ class IngredientEntry extends React.Component {
     )
   }
 }
-export default IngredientEntry;
+export default GroceryListEntry;

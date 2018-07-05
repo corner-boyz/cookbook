@@ -7,26 +7,24 @@ import Home from './client-components/home.js'
 import Ingredients from './client-components/ingredients.js';
 import RecipeList from './client-components/recipeList';
 import GroceryList from './client-components/groceryList';
-import Signup from './client-components/auth-components/signup';
-import Login from './client-components/auth-components/login';
-import Debug from './client-components/debug.js';
+import LandingPage from './client-components/landingPage.js';
 
 import IP from './IP.js';
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {
-    Home: {
+    "Home": {
       screen: Home,
     },
-    Pantry: {
+    "Pantry": {
       screen: Ingredients,
     },
-    Recipes: {
+    "Grocery List": {
+      screen: GroceryList,
+    },
+    "Recipes": {
       screen: RecipeList,
     },
-    GroceryList: {
-      screen: GroceryList,
-    }
   },
   {
     initialRouteName: 'Home',
@@ -44,6 +42,8 @@ export default class App extends React.Component {
       text: '',
       signUp: false,
       name: '',
+      userRecipes: [],
+      userGroceries: [],
       //Initially set to true so doesn't render login page briefly when stored logged in is true
       //If stored logged in is false it will still redirect to login page
       isLoggedIn: true,
@@ -55,15 +55,18 @@ export default class App extends React.Component {
     this.switchToSignUp = this.switchToSignUp.bind(this);
     this.switchToLogin = this.switchToLogin.bind(this);
     this.searchRecipes = this.searchRecipes.bind(this);
+    this.getUserRecipes = this.getUserRecipes.bind(this);
+    this.getUserGroceries = this.getUserGroceries.bind(this);
   }
   //====================================================
   componentDidMount() {
     this.retrieveLogin().then(() => {
       if (this.state.isLoggedIn) {
         this.getIngredients();
+        this.getUserRecipes();
+        this.getUserGroceries();
       }
     });
-    // this.removeLogin();
   };
   //AsyncStorage====================================================
   storeLogin = async (email, name) => {
@@ -89,13 +92,13 @@ export default class App extends React.Component {
     return await AsyncStorage.multiGet(loginKeys).then((keyValues) => {
       keyValues.forEach((keyValue) => {
         if (keyValue[0] === 'cbIsLoggedIn') {
-          this.setState({isLoggedIn: keyValue[1] === 'true'});
+          this.setState({ isLoggedIn: keyValue[1] === 'true' });
         }
         if (keyValue[0] === 'cbEmail') {
-          this.setState({email: keyValue[1]});
+          this.setState({ email: keyValue[1] });
         }
         if (keyValue[0] === 'cbName') {
-          this.setState({name: keyValue[1]});
+          this.setState({ name: keyValue[1] });
         }
       })
     });
@@ -127,6 +130,30 @@ export default class App extends React.Component {
       console.error('ERROR in searching recipes', err);
     });
   }
+
+  getUserRecipes() {
+    return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
+      .then((response) => {
+        this.setState({
+          userRecipes: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getUserGroceries() {
+    return axios.get(`http://${IP}/api/grocerylist/${this.state.email}`, {})
+      .then((response) => {
+        this.setState({
+          userGroceries: response.data
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
   //====================================================
   logIn(email, name) {
     this.setState({
@@ -136,12 +163,17 @@ export default class App extends React.Component {
     });
     this.storeLogin(email, name);
     this.getIngredients();
+    this.getUserGroceries();
+    this.getUserRecipes();
   }
 
   logOut() {
     this.setState({
-      isLoggedIn: false
-    })
+      isLoggedIn: false,
+      email: '',
+      name: ''
+    });
+    this.removeLogin();
   }
 
   switchToSignUp() {
@@ -157,28 +189,21 @@ export default class App extends React.Component {
   //==================================================== screenProps is the global state property!
   render() {
     {
-      if (this.state.signUp === true) {
-        return <Signup
-          screenProps={{
-            switchToLogin: this.switchToLogin
-          }}
-        />
-      }
       if (this.state.isLoggedIn === false) {
-        return <Login
-          screenProps={{
-            logIn: this.logIn,
-            switchToSignUp: this.switchToSignUp,
-            // email: this.state.email
-          }} />
+        return <LandingPage logIn={this.logIn} />
       }
       if (this.state.isLoggedIn === true) {
         return <Root
           screenProps={{
+            logOut: this.logOut,
             recipeListIndex: this.state.recipeListIndex,
             ingredients: this.state.ingredients,
             getIngredients: this.getIngredients,
             recipes: this.state.recipes,
+            userRecipes: this.state.userRecipes,
+            getUserRecipes: this.getUserRecipes,
+            userGroceries: this.state.userGroceries,
+            getUserGroceries: this.getUserGroceries,
             searchRecipes: this.searchRecipes,
             text: '',
             email: this.state.email,
@@ -188,3 +213,6 @@ export default class App extends React.Component {
     }
   }
 }
+//npm start
+//npm run server
+//npm run build 

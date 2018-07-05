@@ -1,15 +1,17 @@
 import React from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
-import { styles } from '../../styles';
+import { Dimensions } from 'react-native';
+import { Card, Button, Input, } from 'react-native-elements';
+
 import IP from '../../IP';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //==================================================== 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: '',
       email: '',
@@ -37,77 +39,136 @@ class Signup extends React.Component {
         name: this.state.name,
       })
         .then(() => {
-          //Redirect to home page
-          this.props.screenProps.switchToLogin();
+          this.props.toggleLoading()
+          this.props.logIn(this.state.email, this.state.password)
         }).catch(error => {
-          console.log('Error in creating new user:', error);
+          this.props.toggleLoading()
+          alert('Error in creating new user')
         });
     }
   }
   //====================================================
   render() {
     return (
-      <View style={[styles.container, { backgroundColor: 'white', justifyContent: 'center' }]}>
-        <Text>Sign up for CookBook:</Text>
-        <TextInput
-          style={{ height: 40, width: 250 }}
+      <Card
+        containerStyle={{
+          width: 265,
+          borderRadius: 20,
+        }}>
+        <Input
           placeholder='Name'
           onChangeText={text => this.setState({
             name: text
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-person',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
-        {this.state.noEmail ?
-          <Text style={styles.warningText}>Please enter a valid email address.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Email'
           onChangeText={text => this.setState({
             email: text,
             noEmail: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-mail',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
-        {this.state.tooShort ?
-          <Text style={styles.warningText}>Password must be at least 6 characters.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
             password: text,
             tooShort: false,
           })}
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-lock',
+            type: 'ionicon',
+            color: 'lightgray'
+          }}
         />
-        {this.state.notMatching ?
-          <Text style={styles.warningText}>Passwords do not match.</Text>
-          : (null)}
-        <TextInput
-          style={{ height: 40, width: 250 }}
+        <Input
           placeholder='Confirm Password'
           secureTextEntry={true}
           onChangeText={text => this.setState({
             confirmedPassword: text,
             notMatching: false,
           })}
-        />
-        <Button
-          title="Sign Up"
-          onPress={() => {
-            this.submitSignup();
+          inputStyle={{
+            fontSize: 12
+          }}
+          inputContainerStyle={{
+            borderWidth: 1,
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginTop: 5,
+            marginBottom: 5,
+            marginLeft: 15
+          }}
+          leftIcon={{
+            name: 'ios-lock',
+            type: 'ionicon',
+            color: 'lightgray'
           }}
         />
-        <Text
-          style={styles.signUpText}
-        >Already have an account?</Text>
         <Button
-          title="Go Back"
-          onPress={() => {
-            this.props.screenProps.switchToLogin();
+          title='Sign Up'
+          buttonStyle={{
+            backgroundColor: 'red',
+            borderRadius: 20,
+            height: 35,
+            width: 200,
+            marginLeft: 15,
+            marginTop: 5,
           }}
-          color="red"
+          loading={this.props.loading}
+          onPress={() => {
+            this.props.toggleLoading()
+            this.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
+          }}
         />
-      </View>
+      </Card>
     )
   }
 }

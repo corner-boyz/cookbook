@@ -18,7 +18,7 @@ class RecipeListEntry extends React.Component {
     Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
-        duration: 2000,
+        duration: 1000,
       }
     ).start();
   }
@@ -34,20 +34,20 @@ class RecipeListEntry extends React.Component {
       <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
         <Tile
           imageSrc={{ uri: this.props.recipe.image }}
-          imageContainerStyle={{ paddingVertical: 10 }}
+          imageContainerStyle={{ paddingVertical: 10, borderRadius: 20 }}
           title={this.props.recipe.title}
           titleStyle={{
             fontSize: 16
           }}
           featured={true}
-          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}\nNeed: ${this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name))}`}
+          caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length ? '\nNeed:' + this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)) : ''}`}
           captionStyle={{
             fontSize: 12,
             fontWeight: 'bold',
             color: 'white',
             justifyContent: 'flex-start'
           }}
-          width={Dimensions.get('window').width / 2}
+          width={Dimensions.get('window').width / 2.1}
           onPress={() => this.retrieveRecipe(this.props.recipe.id)}
         />
       </Animated.View>
