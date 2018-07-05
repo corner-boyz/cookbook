@@ -32,10 +32,10 @@ class Recipe extends React.Component {
   compareIngredients() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
     // console.log('ingredients', this.props.ingredients)
-    axios.post(`http://${IP}/api/comparetorecipe`, {recipe: this.state.recipeDetails.nutrition.ingredients, ingredients: this.props.ingredients}).then((results) => {
+    axios.post(`http://${IP}/api/comparetorecipe`, {recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients}).then((results) => {
       console.log('COMPARED', results.data);
     }).catch((err) => {
-      console.log('ERROR COMPARING INGREDIENTS', err);
+      console.log('ERROR comparing ingredients to recipe', err);
     });
   }
 
