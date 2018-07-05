@@ -14,7 +14,8 @@ class RecipeList extends React.Component {
       recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0),
-      showRecipe: false
+      showRecipe: false,
+      rows: 2
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -64,19 +65,23 @@ class RecipeList extends React.Component {
           }]}
           source={require('../media/creme.jpg')}
           blurRadius={0}
+          onLayout={() => {
+            // console.log('Rotated');
+            this.forceUpdate();
+          }}
         >
           <FlatList style={styles.list}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
             renderItem={
               ({ item }) => (
-                <View style={{ padding: 5 }}>
+                <View style={{ padding: 5, }}>
                   <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
                 </View>
               )
             }
             keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
+            numColumns={this.state.rows}
             horizontal={false}
           />
           <Modal
@@ -96,8 +101,6 @@ class RecipeList extends React.Component {
         <ImageBackground
           style={[styles.container, {
             backgroundColor: 'white',
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
             justifyContent: 'center'
           }]}
           source={require('../media/creme.jpg')}
@@ -112,8 +115,6 @@ class RecipeList extends React.Component {
         <ImageBackground
           style={[styles.container, {
             backgroundColor: 'white',
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
             justifyContent: 'center'
           }]}
           source={require('../media/creme.jpg')}

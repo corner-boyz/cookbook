@@ -61,6 +61,10 @@ class LandingPage extends React.Component {
         }}
         source={require('../media/creme.jpg')}
         blurRadius={0}
+        onLayout={() => {
+          // console.log('Rotated');
+          this.forceUpdate();
+        }}
       >
 
         <Text style={{

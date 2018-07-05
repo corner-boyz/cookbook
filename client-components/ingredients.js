@@ -148,6 +148,10 @@ class Ingredients extends React.Component {
         }]}
         source={require('../media/creme.jpg')}
         blurRadius={0}
+        onLayout={() => {
+          // console.log('Rotated');
+          this.forceUpdate();
+        }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>

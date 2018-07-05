@@ -41,12 +41,17 @@ class Home extends React.Component {
         }]}
         source={require('../media/creme.jpg')}
         blurRadius={0}
+        onLayout={() => {
+          // console.log('Rotated');
+          this.forceUpdate();
+        }}
       >
+
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
           <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name},</Text>
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
           <FlatList
-            style={[styles.list, { width: Dimensions.get('window').width / 1.5 }]}
+            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userRecipes}
             extraData={this.state.index}
             renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} />}

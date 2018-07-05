@@ -200,11 +200,15 @@ class GroceryList extends React.Component {
         }]}
         source={require('../media/creme.jpg')}
         blurRadius={0}
+        onLayout={() => {
+          // console.log('Rotated');
+          this.forceUpdate();
+        }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
           <FlatList
-            style={[styles.list, { width: 350 }]}
+            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
             // extraData={this.state.index}
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} />}
