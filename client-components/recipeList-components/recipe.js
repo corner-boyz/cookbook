@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, SectionList } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Alert, SectionList } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -25,7 +25,10 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
-      console.log(results.data.image)
+    }).catch((err) => {
+      if (err.response.request.status = 404) {
+        Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      }
     });
   }
 

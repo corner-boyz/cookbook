@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import axios from 'axios';
 
@@ -127,7 +127,10 @@ export default class App extends React.Component {
       });
       return results.data;
     }).catch((err) => {
-      console.error('ERROR in searching recipes', err);
+      if (err.response.request.status = 404) {
+        Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      }
+      console.log('ERROR in searching recipes', err);
     });
   }
 
