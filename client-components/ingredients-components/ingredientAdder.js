@@ -28,9 +28,7 @@ class IngredientAdder extends React.Component {
               marginTop: 10,
               marginBottom: 10,
               height: 40,
-
             }}
-
             value={this.state.text}
             onChangeText={(text) => this.setState({ text })}
             onSubmitEditing={() => {
