@@ -23,12 +23,16 @@ class GroceryList extends React.Component {
       unit: '',
       units: [
         {
-          name: '',
+          name: 'Count',
           abrv: null
         },
         {
-          name: 'Tablespoon',
+          name: 'Teaspoon',
           abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
         },
         {
           name: 'Fluid ounce',

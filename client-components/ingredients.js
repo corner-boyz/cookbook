@@ -19,12 +19,16 @@ class Ingredients extends React.Component {
       index: 0,
       units: [
         {
-          name: '',
+          name: 'Count',
           abrv: null
         },
         {
-          name: 'Tablespoon',
+          name: 'Teaspoon',
           abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
         },
         {
           name: 'Fluid ounce',
