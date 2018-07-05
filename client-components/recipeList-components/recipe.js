@@ -29,6 +29,16 @@ class Recipe extends React.Component {
     });
   }
 
+  compareIngredients() {
+    // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
+    // console.log('ingredients', this.props.ingredients)
+    axios.post(`http://${IP}/api/comparetorecipe`, {recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients}).then((results) => {
+      console.log('COMPARED', results.data);
+    }).catch((err) => {
+      console.log('ERROR comparing ingredients to recipe', err);
+    });
+  }
+
   saveRecipe() {
     // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
     axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
@@ -92,6 +102,16 @@ class Recipe extends React.Component {
       return (
         <ScrollView >
           <View style={styles.container}>
+            <Button
+                  title="Compare"
+                  rounded={true}
+                  buttonStyle={{
+                    backgroundColor: 'blue'
+                  }}
+                  onPress={() => {
+                    this.compareIngredients();
+                  }}
+                />
             {this.props.email && !this.state.isSaved ?
               <Button
                 title="Save Recipe"
