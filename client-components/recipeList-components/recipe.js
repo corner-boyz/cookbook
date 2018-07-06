@@ -37,7 +37,7 @@ class Recipe extends React.Component {
         recipeDetails: results.data
       });
     }).catch((err) => {
-      if (err.response.request.status = 404) {
+      if (err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later')
       }
     });

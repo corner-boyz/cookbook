@@ -113,7 +113,10 @@ export default class App extends React.Component {
         });
         return results;
       }).catch((err) => {
-        console.error('ERROR in retrieving ingredients:', err);
+        console.log('ERROR in retrieving ingredients:', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
   }
 
@@ -127,7 +130,7 @@ export default class App extends React.Component {
       });
       return results.data;
     }).catch((err) => {
-      if (err.response.request.status = 404) {
+      if (err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later')
       }
       console.log('ERROR in searching recipes', err);
@@ -141,8 +144,11 @@ export default class App extends React.Component {
           userRecipes: response.data,
         })
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log("ERROR getting user's recipes", err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
   }
 
@@ -151,10 +157,13 @@ export default class App extends React.Component {
       .then((response) => {
         this.setState({
           userGroceries: response.data
-        })
+        });
       })
       .catch((err) => {
-        console.error(err);
+        console.log("ERROR getting user's recipes", err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
   }
   //====================================================
