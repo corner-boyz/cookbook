@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -91,13 +91,14 @@ class Complete extends React.Component {
         this.props.getIngredients().then(() => {
           this.props.searchRecipes();
         });
+        alert('Removed items from Pantry!')
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
         Alert.alert('Invalid unit conversion', err.response.request.response);
       });
   }
-  render() {
+  render() { //recipeIngredients
     return (
       <ScrollView
         width={Dimensions.get('window').width / 1.2}
@@ -107,11 +108,56 @@ class Complete extends React.Component {
       >
         <Text
           style={{
-            fontSize: 17
+            fontSize: 17,
+            paddingBottom: 10
           }}
-        >Remove following from your Pantry?</Text>
-        {this.props.ingredients.map((item, i) =>
-          <Text key={i}>{item.original}</Text>
+        >Remove following from your Pantry?
+        </Text>
+        {this.props.recipeIngredients.map((item, i) =>
+          <View
+            flexDirection='row'
+            key={i}
+          >
+            <TextInput
+              placeholder={item.quantity}
+              value={this.state.quantity}
+              width={Dimensions.get('window').width / 10}
+              onChangeText={(quantity) => {
+                item.quantity = quantity
+              }}
+              paddingLeft={10}
+            />
+            <Picker
+              selectedValue={item.unit}
+              style={{
+                height: 35,
+                width: 100,
+                backgroundColor: 'transparent',
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => {
+                item.unit = itemValue
+                this.forceUpdate();
+              }}
+            >
+              {this.state.units.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.name}
+                  value={item.abrv}
+                />
+              )}
+            </Picker>
+            <TextInput
+              width={Dimensions.get('window').width / 3}
+              placeholder={item.ingredient}
+              value={this.state.ingredient}
+              onChangeText={(ingredient) => {
+                item.ingredient = ingredient
+              }}
+              paddingLeft={10}
+            />
+          </View>
         )}
         <View
           flexDirection='row'
@@ -129,7 +175,7 @@ class Complete extends React.Component {
               backgroundColor: 'red',
             }}
             onPress={() => {
-              this.props.closeMissing();
+              this.props.closeCompleted();
             }}
           />
         </View>
