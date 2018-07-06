@@ -45,7 +45,7 @@ class Recipe extends React.Component {
 
   compareIngredients() {
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
-      console.log('COMPARED', results.data);
+      // console.log('COMPARED', results.data);
       this.setState({
         missing: results.data
       })
@@ -57,7 +57,7 @@ class Recipe extends React.Component {
 
   parseIngredients() {
     axios.post(`http://${IP}/api/parse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
-      console.log('COMPARED', results.data);
+      // console.log('COMPARED', results.data);
       this.setState({
         recipeIngredients: results.data
       });

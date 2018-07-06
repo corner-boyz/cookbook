@@ -101,7 +101,7 @@ class AddMissing extends React.Component {
             fontSize: 17,
             paddingBottom: 10
           }}
-        >Add the following to your Grocery List?
+        >You are missing the following from your pantry.
           </Text>
         {this.props.missing.map((item, i) =>
           <View
@@ -115,20 +115,21 @@ class AddMissing extends React.Component {
               onChangeText={(quantity) => {
                 item.quantity = quantity
               }}
+              paddingLeft={10}
             />
             <Picker
               selectedValue={item.unit}
               style={{
                 height: 35,
                 width: 100,
-                backgroundColor: 'lightgray',
-                paddingStart: 10
+                backgroundColor: 'transparent',
               }}
               mode='dropdown'
               onValueChange={(itemValue) => {
                 item.unit = itemValue
                 this.forceUpdate();
-              }}>
+              }}
+            >
               {this.state.units.map((item, index) =>
                 <Picker.Item
                   key={index}
@@ -144,6 +145,7 @@ class AddMissing extends React.Component {
               onChangeText={(ingredient) => {
                 item.ingredient = ingredient
               }}
+              paddingLeft={10}
             />
           </View>
         )}
@@ -151,13 +153,13 @@ class AddMissing extends React.Component {
           flexDirection='row'
         >
           <Button
-            title="Yes"
+            title="Add to Grocery List"
             onPress={() => {
               this.addMissingToCart();
             }}
           />
           <Button
-            title="No"
+            title="Go Back"
             buttonStyle={{
               backgroundColor: 'red'
             }}

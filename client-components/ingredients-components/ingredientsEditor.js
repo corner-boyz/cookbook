@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Picker, TextInput } from 'react-native';
+import { Text, View, Picker, TextInput, Dimensions } from 'react-native';
 import { Button, } from 'react-native-elements';
 //====================================================
 class IngredientsEditor extends React.Component {
@@ -14,7 +14,7 @@ class IngredientsEditor extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <TextInput
-          width={30}
+          width={Dimensions.get('window').width / 10}
           placeholder={(this.props.item.quantity).toString()}
           keyboardType='phone-pad'
           onChangeText={(text) => {
@@ -22,13 +22,14 @@ class IngredientsEditor extends React.Component {
             this.props.item.quantity = Number(text)
           }}
           value={this.state.text}
+          paddingLeft={10}
         />
         <Picker
           selectedValue={this.props.item.unit}
           style={{
             height: 35,
             width: 100,
-            backgroundColor: 'lightgray'
+            backgroundColor: 'transparent',
           }}
           mode='dropdown'
           onValueChange={(itemValue) => {
@@ -44,7 +45,13 @@ class IngredientsEditor extends React.Component {
           )}
         </Picker>
         <Text
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold', fontSize: 17, justifyContent: 'center' }}
+          style={{
+            // backgroundColor: 'lightgray',
+            fontSize: 17,
+            textAlignVertical: 'center',
+            // paddingTop: 5,
+            // paddingLeft: 10
+          }}
         >{this.props.item.ingredient}
         </Text>
       </View>
