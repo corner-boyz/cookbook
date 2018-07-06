@@ -18,6 +18,7 @@ class Recipe extends React.Component {
       addMissing: false,
       completed: false,
     };
+    this.closeMissing = this.closeMissing.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -25,24 +26,41 @@ class Recipe extends React.Component {
     this.selectUserRecipe();
   }
   //====================================================
+  closeMissing() {
+    this.setState({
+      addMissing: false
+    });
+  }
   findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
       this.setState({
         recipeDetails: results.data
       });
-      console.log(results.data.image)
+    }).catch((err) => {
+      if (err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      }
     });
   }
 
   compareIngredients() {
-    // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
-    // console.log('ingredients', this.props.ingredients)
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       console.log('COMPARED', results.data);
       this.setState({
         missing: results.data
       })
 
+    }).catch((err) => {
+      console.log('ERROR comparing ingredients to recipe', err);
+    });
+  }
+
+  parseIngredients() {
+    axios.post(`http://${IP}/api/parse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
+      console.log('COMPARED', results.data);
+      this.setState({
+        recipeIngredients: results.data
+      });
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -205,6 +223,7 @@ class Recipe extends React.Component {
                 }}
                 onPress={() => {
                   console.log('Completed');
+                  this.parseIngredients();
                   this.setState({
                     completed: true
                   })
@@ -214,9 +233,9 @@ class Recipe extends React.Component {
                 animationType='slide'
                 visible={this.state.addMissing}
                 onRequestClose={() => {
-                  this.setState({ addMissing: false })
+                  this.setState({ addMissing: false });
                 }}
-              ><AddMissing missing={this.state.missing} />
+              ><AddMissing missing={this.state.missing} email={this.props.email} getUserGroceries={this.props.getUserGroceries} closeMissing={this.closeMissing} />
               </Modal>
               <Modal
                 animationType='slide'
@@ -224,7 +243,7 @@ class Recipe extends React.Component {
                 onRequestClose={() => {
                   this.setState({ completed: false })
                 }}
-              ><Completed ingredients={this.state.recipeDetails.extendedIngredients} />
+              ><Completed ingredients={this.state.recipeIngredients} email={this.props.email} getUserGroceries={this.props.getUserGroceries} />
               </Modal>
             </View>
           </View>

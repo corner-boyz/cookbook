@@ -37,6 +37,7 @@ class RecipeList extends React.Component {
   //====================================================
   componentDidMount() {
     // Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000, }).start();
+    console.log('hey', this.props.screenProps.getUserRecipes);
   }
 
   //====================================================
@@ -97,7 +98,7 @@ class RecipeList extends React.Component {
                 showRecipe: false
               })
             }}>
-            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} />
+            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} />
           </Modal>
         </ImageBackground>
       );

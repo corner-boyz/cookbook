@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Animated, View } from 'react-native';
+import { Dimensions, Animated, View, Alert } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 
@@ -26,6 +26,10 @@ class RecipeListEntry extends React.Component {
   retrieveRecipe = (recipeId) => {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
       this.props.selectRecipe(results.data);
+    }).catch((err) => {
+      if (err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      }
     });
   }
   //====================================================
