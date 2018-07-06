@@ -187,9 +187,6 @@ export default class App extends React.Component {
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
-        if (err.request._hasError || err.response.request.status === 404) {
-          Alert.alert('Trouble connecting to server', 'Please try again later');
-        }
       });
   }
 
@@ -203,9 +200,6 @@ export default class App extends React.Component {
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
-        if (err.request._hasError || err.response.request.status === 404) {
-          Alert.alert('Trouble connecting to server', 'Please try again later');
-        }
       });
   }
   //====================================================

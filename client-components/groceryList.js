@@ -168,7 +168,7 @@ class GroceryList extends React.Component {
       .then((response) => {
       })
       .catch((err) => {
-        console.error(err);
+        console.log('ERROR saving ispurchased', err);
       });
   }
 

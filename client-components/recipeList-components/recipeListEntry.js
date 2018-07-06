@@ -30,6 +30,9 @@ class RecipeListEntry extends React.Component {
       if (err.response && err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later')
       }
+      else if (err.request._hasError || err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to server', 'Please try again later');
+      }
     });
   }
   //====================================================
