@@ -37,8 +37,8 @@ class Recipe extends React.Component {
         recipeDetails: results.data
       });
     }).catch((err) => {
-      if (err.response.request.status === 404) {
-        Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      if (err.response && err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to recipe database', 'Please try again later');
       }
     });
   }
@@ -85,7 +85,10 @@ class Recipe extends React.Component {
       });
       this.props.getUserRecipes();
     }).catch((err) => {
-      console.error('ERROR DELETING RECIPE', err);
+      console.log('ERROR deleting recipe', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
     });
   }
 

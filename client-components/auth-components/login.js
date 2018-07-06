@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { Dimensions } from 'react-native';
-import { Card, Button, Input, } from 'react-native-elements';
+import { Card, Button, Input, Alert } from 'react-native-elements';
 
 import IP from '../../IP';
 
@@ -33,7 +33,10 @@ class Login extends React.Component {
           this.props.logIn(email, name);
         }
       }).catch(err => {
-        console.error('Error in validating user login:', err);
+        console.log('Error in validating user login:', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
     }
   }

@@ -4,7 +4,7 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, ImageBackground, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, Alert, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements'
 
 
@@ -39,8 +39,13 @@ class LandingPage extends React.Component {
           this.props.logIn(email, name);
         }
       }).catch(err => {
-        console.error('Error in validating user login:', err);
+        console.log('Error in validating user login:', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
+    } else {
+      Alert.alert('Email cannot be empty', 'Please enter your email');
     }
   }
   toggleLoading() {
