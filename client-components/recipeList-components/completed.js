@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 class Complete extends React.Component {
   constructor(props) {
@@ -8,10 +8,18 @@ class Complete extends React.Component {
     };
   }
   render() {
-    console.log(`Render Complete`, this.props);
     return (
-      <View>
-        <Text>Remove following from your Pantry?</Text>
+      <ScrollView
+        width={Dimensions.get('window').width / 1.2}
+        alignSelf='center'
+        flex={0.8}
+        onLayout={() => { this.forceUpdate() }}
+      >
+        <Text
+          style={{
+            fontSize: 17
+          }}
+        >Remove following from your Pantry?</Text>
         {this.props.ingredients.map((item, i) =>
           <Text key={i}>{item.original}</Text>
         )}
@@ -27,15 +35,14 @@ class Complete extends React.Component {
           <Button
             title="No"
             buttonStyle={{
-              backgroundColor: 'red'
+              backgroundColor: 'red',
             }}
             onPress={() => {
               console.log('No');
             }}
           />
-
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

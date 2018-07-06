@@ -104,16 +104,13 @@ class Recipe extends React.Component {
   }
   //====================================================
   render() {
-    const ingredientRender = ({ item, index }) => <Text key={index}>{item.original}</Text>
-    const stepsRender = ({ item, index }) => <Text key={index}>{item.number}. {item.step} </Text>
-
     if (this.state.recipeDetails) {
       return (
         <ScrollView
           width={Dimensions.get('window').width}
           alignSelf='center'
+          flex={0.8}
           onLayout={() => { this.forceUpdate() }}
-          paddingTop={25}
         >
           <View
             // style={styles.container}
@@ -122,7 +119,6 @@ class Recipe extends React.Component {
               alignItems: 'center'
             }}
           >
-
             {this.props.email && !this.state.isSaved ?
               <Button
                 title="Save Recipe"
@@ -145,7 +141,7 @@ class Recipe extends React.Component {
                 }}
               />
             }
-            <Text style={{ fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
+            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
             <Image
               style={styles.recipeImage}
               source={{ uri: this.state.recipeDetails.image }}
@@ -204,6 +200,9 @@ class Recipe extends React.Component {
                 </View> : undefined}
               <Button
                 title='Complete!'
+                buttonStyle={{
+                  backgroundColor: 'green'
+                }}
                 onPress={() => {
                   console.log('Completed');
                   this.setState({

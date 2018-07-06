@@ -73,7 +73,8 @@ class RecipeList extends React.Component {
 
           }}
         >
-          <FlatList style={styles.list}
+          <FlatList
+
             key={this.state.rows}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
