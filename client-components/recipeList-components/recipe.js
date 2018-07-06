@@ -44,14 +44,23 @@ class Recipe extends React.Component {
   }
 
   compareIngredients() {
-    // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
-    // console.log('ingredients', this.props.ingredients)
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       console.log('COMPARED', results.data);
       this.setState({
         missing: results.data
       })
 
+    }).catch((err) => {
+      console.log('ERROR comparing ingredients to recipe', err);
+    });
+  }
+
+  parseIngredients() {
+    axios.post(`http://${IP}/api/parse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
+      console.log('COMPARED', results.data);
+      this.setState({
+        recipeIngredients: results.data
+      });
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -215,6 +224,7 @@ class Recipe extends React.Component {
                 title='Complete!'
                 onPress={() => {
                   console.log('Completed');
+                  this.parseIngredients();
                   this.setState({
                     completed: true
                   })
@@ -234,7 +244,7 @@ class Recipe extends React.Component {
                 onRequestClose={() => {
                   this.setState({ completed: false })
                 }}
-              ><Completed ingredients={this.state.recipeDetails.extendedIngredients} />
+              ><Completed ingredients={this.state.recipeIngredients} email={this.props.email} getUserGroceries={this.props.getUserGroceries} />
               </Modal>
             </View>
           </View>
