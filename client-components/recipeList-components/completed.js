@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -9,22 +9,29 @@ class Complete extends React.Component {
     super(props);
     this.state = {
     };
-    console.log(props.recipeIngredients);
   }
-  removeIngredientsFromCart() {
-    this.props.ingredients.forEach((ingredient) => {
-      ingredient.quantity = -ingredient.quantity;
-    })
-    axios.post(`http://${IP}/api/groceryList`, {
+  removeIngredientsFromPantry() {
+    let negativeRecipeIngredients = [];
+    this.props.recipeIngredients.forEach((ingredient) => {
+      let negativeIngredient = {
+        ingredient: ingredient.ingredient,
+        quantity: -ingredient.quantity,
+        unit: ingredient.unit
+      };
+      negativeRecipeIngredients.push(negativeIngredient);
+    });
+    axios.post(`http://${IP}/api/ingredients`, {
       email: this.props.email,
       shouldReplace: false,
-      ingredients: this.props.ingredients
+      ingredients: negativeRecipeIngredients
     })
       .then(() => {
-        // this.props.closeMissing();
-        this.props.getUserGroceries();
+        this.props.closeCompleted();
+        this.props.getIngredients().then(() => {
+          this.props.searchRecipes();
+        });
       })
-      .catch((err, a) => {
+      .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
         Alert.alert('Invalid unit conversion', err.response.request.response);
       });
@@ -34,8 +41,8 @@ class Complete extends React.Component {
     return (
       <View>
         <Text>Remove following from your Pantry?</Text>
-        {this.props.ingredients.map((item, i) =>
-          <Text key={i}>{item.original}</Text>
+        {this.props.recipeIngredients.map((item, i) =>
+          <Text key={i}>{item.quantity}{item.unit} {item.ingredient}</Text>
         )}
         <View
           flexDirection='row'
@@ -44,7 +51,7 @@ class Complete extends React.Component {
             title="Yes"
             onPress={() => {
               console.log('Yes');
-              this.removeIngredientsFromCart();
+              this.removeIngredientsFromPantry();
             }}
           />
           <Button
@@ -53,7 +60,7 @@ class Complete extends React.Component {
               backgroundColor: 'red'
             }}
             onPress={() => {
-              console.log('No');
+              this.props.closeMissing();
             }}
           />
 
