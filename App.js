@@ -228,6 +228,7 @@ export default class App extends React.Component {
       name: ''
     });
     this.removeLogin();
+    this.removeFood();
   }
 
   switchToSignUp() {

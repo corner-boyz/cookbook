@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import { Dimensions, Alert } from 'react-native';
-import { Card, Button, Input, } from 'react-native-elements';
+import { Card, Button, Input } from 'react-native-elements';
 
 import IP from '../../IP';
 
@@ -40,9 +40,13 @@ class Signup extends React.Component {
         .then(() => {
           this.props.toggleLoading()
           this.props.logIn(this.state.email, this.state.password)
-        }).catch(error => {
+        }).catch(err => {
           this.props.toggleLoading()
-          alert('Error in creating new user')
+          if (err.request._hasError || err.response.request.status === 404) {
+            Alert.alert('Trouble connecting to server', 'Please try again later');
+          } else {
+            Alert.alert('Email already in use', 'Please enter a different email');
+          }
         });
     }
   }
