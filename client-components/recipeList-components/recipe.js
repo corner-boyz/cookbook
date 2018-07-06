@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, Alert, SectionList } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import AddMissing from './addMissing.js';
@@ -18,6 +18,7 @@ class Recipe extends React.Component {
       addMissing: false,
       completed: false,
     };
+    this.closeMissing = this.closeMissing.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -25,6 +26,11 @@ class Recipe extends React.Component {
     this.selectUserRecipe();
   }
   //====================================================
+  closeMissing() {
+    this.setState({
+      addMissing: false
+    });
+  }
   findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
       this.setState({
@@ -218,9 +224,9 @@ class Recipe extends React.Component {
                 animationType='slide'
                 visible={this.state.addMissing}
                 onRequestClose={() => {
-                  this.setState({ addMissing: false })
+                  this.setState({ addMissing: false });
                 }}
-              ><AddMissing missing={this.state.missing} />
+              ><AddMissing missing={this.state.missing} email={this.props.email} getUserGroceries={this.props.getUserGroceries} closeMissing={this.closeMissing} />
               </Modal>
               <Modal
                 animationType='slide'
