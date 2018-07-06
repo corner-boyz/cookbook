@@ -1,11 +1,29 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import axios from 'axios';
+
+import IP from '../../IP.js';
 class AddMissing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+  addMissingToCart() {
+    axios.post(`http://${IP}/api/groceryList`, {
+      email: this.props.email,
+      shouldReplace: false,
+      ingredients: this.props.missing
+    })
+      .then(() => {
+        this.props.closeMissing();
+        this.props.getUserGroceries();
+      })
+      .catch((err, a) => {
+        console.log('ERROR converting units', err.response.request.response);
+        Alert.alert('Invalid unit conversion', err.response.request.response);
+      });
   }
   render() {
     return (
@@ -20,7 +38,7 @@ class AddMissing extends React.Component {
           <Button
             title="Yes"
             onPress={() => {
-              console.log('Yes');
+              this.addMissingToCart();
             }}
           />
           <Button
@@ -29,7 +47,7 @@ class AddMissing extends React.Component {
               backgroundColor: 'red'
             }}
             onPress={() => {
-              console.log('No');
+              this.props.closeMissing();
             }}
           />
 
