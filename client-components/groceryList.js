@@ -118,9 +118,15 @@ class GroceryList extends React.Component {
         this.props.screenProps.getUserGroceries();
       })
       .catch((err) => {
-        console.log('ERROR converting units', err.response.request.response);
-        Alert.alert('Invalid unit conversion', err.response.request.response);
-      })
+        if (err.request._hasError || err.response.request.status === 404) {
+          console.log('ERROR purchasing ingredients', err);
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
+        else if (err.response) {
+          console.log('ERROR converting units', err.response.request.response);
+          Alert.alert('Invalid unit conversion', err.response.request.response);
+        }
+      });
   }
 
   editIngredients() {
@@ -133,6 +139,11 @@ class GroceryList extends React.Component {
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
+      }).catch((err) => {
+        console.log('ERROR editing cart', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       })
   }
 
@@ -154,7 +165,15 @@ class GroceryList extends React.Component {
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
-      })
+      }).catch((err) => {
+        if (err.request._hasError || err.response.request.status === 404) {
+          console.log('ERROR purchasing ingredients', err);
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
+        else {
+          Alert.alert('Error deleting groceries');
+        }
+      });
   }
 
   saveCheckboxes() {
@@ -185,13 +204,16 @@ class GroceryList extends React.Component {
           .then(() => {
             this.props.screenProps.getUserGroceries();
           })
-          .catch((err, a) => {
+          .catch((err) => {
             console.log('ERROR converting units', err.response.request.response);
             Alert.alert('Invalid unit conversion', err.response.request.response);
           })
       })
       .catch((err) => {
-        console.error(err);
+        console.log('ERROR adding to cart', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       });
   }
 
@@ -206,8 +228,11 @@ class GroceryList extends React.Component {
       .then(() => {
         this.props.screenProps.getUserGroceries();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log('ERROR removing from cart', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       })
   }
   //====================================================

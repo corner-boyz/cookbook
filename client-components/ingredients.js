@@ -116,7 +116,10 @@ class Ingredients extends React.Component {
           })
       })
       .catch((err) => {
-        console.error(err);
+        console.log('ERROR submitting ingredients', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       })
   }
 
@@ -147,7 +150,10 @@ class Ingredients extends React.Component {
         // this.props.screenProps.recipeListIndex++;
       })
       .catch((err) => {
-        console.error(err);
+        console.log('ERROR editing ingredients', err);
+        if (err.request._hasError || err.response.request.status === 404) {
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
       })
   }
 
