@@ -98,7 +98,7 @@ class RecipeList extends React.Component {
                 showRecipe: false
               })
             }}>
-            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} />
+            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} getIngredients={this.props.screenProps.getIngredients} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} searchRecipes = {this.props.screenProps.searchRecipes} />
           </Modal>
         </ImageBackground>
       );

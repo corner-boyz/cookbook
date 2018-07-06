@@ -15,10 +15,12 @@ class Recipe extends React.Component {
     this.state = {
       isSaved: false,
       missing: [],
+      recipeIngredients: [],
       addMissing: false,
       completed: false,
     };
     this.closeMissing = this.closeMissing.bind(this);
+    this.closeCompleted = this.closeCompleted.bind(this);
   }
   //====================================================
   componentDidMount() {
@@ -29,6 +31,11 @@ class Recipe extends React.Component {
   closeMissing() {
     this.setState({
       addMissing: false
+    });
+  }
+  closeCompleted() {
+    this.setState({
+      completed: false
     });
   }
   findRecipe() {
@@ -56,13 +63,13 @@ class Recipe extends React.Component {
   }
 
   parseIngredients() {
-    axios.post(`http://${IP}/api/parse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
-      // console.log('COMPARED', results.data);
+    axios.post(`http://${IP}/api/formatparse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
+      console.log('parsed', results.data);
       this.setState({
         recipeIngredients: results.data
       });
     }).catch((err) => {
-      console.log('ERROR comparing ingredients to recipe', err);
+      console.log('ERROR parsing ingredients', err);
     });
   }
 
@@ -209,7 +216,7 @@ class Recipe extends React.Component {
                   this.compareIngredients();
                   this.setState({
                     addMissing: true
-                  })
+                  });
                 }}
               />
               {this.state.recipeDetails.analyzedInstructions.length ?
@@ -246,7 +253,7 @@ class Recipe extends React.Component {
                 onRequestClose={() => {
                   this.setState({ completed: false })
                 }}
-              ><Completed ingredients={this.state.recipeIngredients} email={this.props.email} getUserGroceries={this.props.getUserGroceries} />
+              ><Completed recipeIngredients={this.state.recipeIngredients} email={this.props.email} getIngredients={this.props.getIngredients} searchRecipes = {this.props.searchRecipes} closeCompleted={this.closeCompleted} />
               </Modal>
             </View>
           </View>
