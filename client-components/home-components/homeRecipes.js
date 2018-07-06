@@ -53,7 +53,7 @@ class HomeRecipes extends React.Component {
             })
             this.props.getUserRecipes();
           }}>
-          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} getUserRecipes={this.props.getUserRecipes} ingredients={this.props.ingredients} getUserGroceries={this.props.getUserGroceries} />
+          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} getUserRecipes={this.props.getUserRecipes} ingredients={this.props.ingredients} getUserGroceries={this.props.getUserGroceries} getIngredients={this.props.getIngredients} searchRecipes = {this.props.searchRecipes} />
         </Modal>
 
       </View >
