@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -37,9 +37,19 @@ class AddMissing extends React.Component {
           style={{
             fontSize: 17
           }}>Add the following to your Grocery List?</Text>
-        {this.props.missing.map((item, i) =>
+        {/* {this.props.missing.map((item, i) =>
           <Text key={i}>{item.quantity}{item.unit} {item.ingredient}</Text>
-        )}
+        )} */}
+        {this.props.missing.map((item, i) => {
+          <TextInput
+            placeholder={item.quantity.toString() + item.unit + ' ' + item.ingredient}
+            value={item.ingredient}
+            onChangeText={(text) => this.setState({ text })}
+          />
+        })}
+
+
+
         <View
           flexDirection='row'
         >
