@@ -8,6 +8,67 @@ class Complete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      units: [
+        {
+          name: 'Count',
+          abrv: null
+        },
+        {
+          name: 'Teaspoon',
+          abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
+        },
+        {
+          name: 'Fluid ounce',
+          abrv: 'fl-oz',
+        },
+        {
+          name: 'Cup',
+          abrv: 'cup',
+        },
+        {
+          name: 'Pint',
+          abrv: 'pnt',
+        },
+        {
+          name: 'Quart',
+          abrv: 'qt',
+        },
+        {
+          name: 'Gallon',
+          abrv: 'gal',
+        },
+        {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        }, {
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
+          name: 'Ounce',
+          abrv: 'oz',
+        },
+        {
+          name: 'Pound',
+          abrv: 'lb',
+        },
+        {
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
+        }
+      ],
     };
     console.log(props.recipeIngredients);
   }

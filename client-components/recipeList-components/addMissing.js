@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert, TextInput } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -8,6 +8,69 @@ class AddMissing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      units: [
+        {
+          name: 'Count',
+          abrv: null
+        },
+        {
+          name: 'Teaspoon',
+          abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
+        },
+        {
+          name: 'Fluid ounce',
+          abrv: 'fl-oz',
+        },
+        {
+          name: 'Cup',
+          abrv: 'cup',
+        },
+        {
+          name: 'Pint',
+          abrv: 'pnt',
+        },
+        {
+          name: 'Quart',
+          abrv: 'qt',
+        },
+        {
+          name: 'Gallon',
+          abrv: 'gal',
+        },
+        {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        }, {
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
+          name: 'Ounce',
+          abrv: 'oz',
+        },
+        {
+          name: 'Pound',
+          abrv: 'lb',
+        },
+        {
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
+        }
+      ],
+      quantity: this.props.missing.quantity,
+      ingredient: this.props.missing.ingredient
     };
   }
   addMissingToCart() {
@@ -35,21 +98,55 @@ class AddMissing extends React.Component {
       >
         <Text
           style={{
-            fontSize: 17
-          }}>Add the following to your Grocery List?</Text>
-        {/* {this.props.missing.map((item, i) =>
-          <Text key={i}>{item.quantity}{item.unit} {item.ingredient}</Text>
-        )} */}
-        {this.props.missing.map((item, i) => {
-          <TextInput
-            placeholder={item.quantity.toString() + item.unit + ' ' + item.ingredient}
-            value={item.ingredient}
-            onChangeText={(text) => this.setState({ text })}
-          />
-        })}
-
-
-
+            fontSize: 17,
+            paddingBottom: 10
+          }}
+        >Add the following to your Grocery List?
+          </Text>
+        {this.props.missing.map((item, i) =>
+          <View
+            flexDirection='row'
+            key={i}
+          >
+            <TextInput
+              placeholder={item.quantity}
+              value={this.state.quantity}
+              width={Dimensions.get('window').width / 10}
+              onChangeText={(quantity) => {
+                item.quantity = quantity
+              }}
+            />
+            <Picker
+              selectedValue={item.unit}
+              style={{
+                height: 35,
+                width: 100,
+                backgroundColor: 'lightgray',
+                paddingStart: 10
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => {
+                item.unit = itemValue
+                this.forceUpdate();
+              }}>
+              {this.state.units.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.name}
+                  value={item.abrv}
+                />
+              )}
+            </Picker>
+            <TextInput
+              width={Dimensions.get('window').width / 3}
+              placeholder={item.ingredient}
+              value={this.state.ingredient}
+              onChangeText={(ingredient) => {
+                item.ingredient = ingredient
+              }}
+            />
+          </View>
+        )}
         <View
           flexDirection='row'
         >
@@ -68,7 +165,6 @@ class AddMissing extends React.Component {
               this.props.closeMissing();
             }}
           />
-
         </View>
       </ScrollView>
     )
