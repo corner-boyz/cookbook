@@ -62,8 +62,11 @@ export default class App extends React.Component {
   componentDidMount() {
     this.retrieveLogin().then(() => {
       if (this.state.isLoggedIn) {
+        this.retrieveIngredients();
         this.getIngredients();
+        this.retrieveUserRecipes();
         this.getUserRecipes();
+        this.retrieveUserGroceries();
         this.getUserGroceries();
       }
     });
@@ -83,6 +86,39 @@ export default class App extends React.Component {
     AsyncStorage.multiRemove(loginKeys, (err) => {
       if (err) {
         console.error('ERROR removing login', err);
+      }
+    });
+  }
+
+  removeFood = async () => {
+    const foodKeys = ['cbIngredients', 'cbUserGroceries', 'cbUserRecipes'];
+    AsyncStorage.multiRemove(foodKeys, (err) => {
+      if (err) {
+        console.error('ERROR removing ingredient keys', err);
+      }
+    });
+  }
+
+  retrieveIngredients = async () => {
+    return await AsyncStorage.getItem('cbIngredients').then((ingredients) => {
+      if (ingredients) {
+        this.setState({ingredients: JSON.parse(ingredients)});
+      }
+    });
+  }
+
+  retrieveUserGroceries = async () => {
+    return await AsyncStorage.getItem('cbUserGroceries').then((groceryList) => {
+      if (groceryList) {
+        this.setState({userGroceries: JSON.parse(groceryList)});
+      }
+    });
+  }
+
+  retrieveUserRecipes = async () => {
+    return await AsyncStorage.getItem('cbUserRecipes').then((recipes) => {
+      if (recipes) {
+        this.setState({userRecipes: JSON.parse(recipes)});
       }
     });
   }
@@ -111,6 +147,7 @@ export default class App extends React.Component {
           ingredients: results.data,
           recipes: undefined
         });
+        AsyncStorage.setItem('cbIngredients', JSON.stringify(results.data));
         return results;
       }).catch((err) => {
         console.log('ERROR in retrieving ingredients:', err);
@@ -130,10 +167,13 @@ export default class App extends React.Component {
       });
       return results.data;
     }).catch((err) => {
-      if (err.response.request.status === 404) {
+      console.log('ERROR in searching recipes', err);
+      if (err.response && err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later')
       }
-      console.log('ERROR in searching recipes', err);
+      if (err.request._hasError) {
+        Alert.alert('Trouble connecting to server', 'Please try again later');
+      }
     });
   }
 
@@ -142,7 +182,8 @@ export default class App extends React.Component {
       .then((response) => {
         this.setState({
           userRecipes: response.data,
-        })
+        });
+        AsyncStorage.setItem('cbUserRecipes', JSON.stringify(response.data));
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
@@ -158,6 +199,7 @@ export default class App extends React.Component {
         this.setState({
           userGroceries: response.data
         });
+        AsyncStorage.setItem('cbUserGroceries', JSON.stringify(response.data));
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
