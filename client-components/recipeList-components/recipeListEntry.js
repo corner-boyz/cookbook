@@ -27,8 +27,11 @@ class RecipeListEntry extends React.Component {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
       this.props.selectRecipe(results.data);
     }).catch((err) => {
-      if (err.response.request.status === 404) {
+      if (err.response && err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later')
+      }
+      else if (err.request._hasError || err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to server', 'Please try again later');
       }
     });
   }
