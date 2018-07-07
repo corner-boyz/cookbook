@@ -20,11 +20,11 @@ class Recipe extends React.Component {
       recipeIngredients: [],
       addMissing: false,
       completed: false,
-      showNutrition: true,
-      timeCollapsed: true,
-      dietCollapsed: true,
-      nutritionCollapsed: true,
-      instructionsCollapsed: true,
+      timeCollapsed: false,
+      dietCollapsed: false,
+      nutritionCollapsed: false,
+      ingredientsCollapsed: false,
+      instructionsCollapsed: false,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -117,12 +117,6 @@ class Recipe extends React.Component {
     });
   }
   //====================================================
-  toggleNutrition() {
-    this.setState({
-      showNutrition: !this.state.showNutrition
-    });
-  }
-  //====================================================
   convertMinutes(time) {
     let hours = time / 60;
     let rhours = Math.floor(time / 60);
@@ -164,7 +158,6 @@ class Recipe extends React.Component {
             onLayout={() => { this.forceUpdate() }}
           >
             <View
-              // style={styles.container}
               style={{
                 flex: 1,
                 alignItems: 'center'
@@ -204,7 +197,7 @@ class Recipe extends React.Component {
                   alignItems: 'flex-start'
                 }}
               >
-                {this.state.recipeDetails.preparationMinutes ?
+                {this.state.recipeDetails.preparationMinutes || this.state.recipeDetails.cookingMinutes || this.state.recipeDetails.readyInMinutes ?
                   <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ timeCollapsed: !this.state.timeCollapsed }) }}>Time</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.timeCollapsed}>
@@ -212,41 +205,45 @@ class Recipe extends React.Component {
                     {this.state.recipeDetails.preparationMinutes ?
                       <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
                       : undefined}
-                    {this.state.recipeDetails.preparationMinutes ?
+                    {this.state.recipeDetails.cookingMinutes ?
                       <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
                       : undefined}
-                    {this.state.recipeDetails.preparationMinutes ?
+                    {this.state.recipeDetails.readyInMinutes ?
                       <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
                       : undefined}
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.diets.length ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ dietCollapsed: !this.state.dietCollapsed }) }}>Diet</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.dietCollapsed}>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>Diet</Text>
                     {this.state.recipeDetails.diets.map((diet, i) => (
                       <Text key={i}>{diet}</Text>
                     ))}
-                  </View> : undefined}
+                  </View>
+                </Collapsible>
                 {this.state.recipeDetails.nutrition.nutrients.length ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ nutritionCollapsed: !this.state.nutritionCollapsed }) }}>Nutrition Facts</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.nutritionCollapsed}>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }} onPress={() => { this.toggleNutrition() }}>Nutrition Facts</Text>
-                    {this.state.showNutrition ?
-                      <View>
-                        <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
-                        {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
-                          wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
-                        ))}
-                      </View>
-                      :
-                      undefined}
-                  </View> : undefined}
+                    <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
+                    {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
+                      wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
+                    ))}
+                  </View>
+                </Collapsible>
                 {this.state.recipeDetails.extendedIngredients.length ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ ingredientsCollapsed: !this.state.ingredientsCollapsed }) }}>Ingredients</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.ingredientsCollapsed}>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
                     {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
                       <Text key={i}>{ingredient.original}</Text>
                     ))}
-                  </View> : undefined}
+                  </View>
+                </Collapsible>
                 <Button
                   title="Compare"
                   buttonStyle={{
@@ -259,12 +256,15 @@ class Recipe extends React.Component {
                   }}
                 />
                 {this.state.recipeDetails.analyzedInstructions.length ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ instructionsCollapsed: !this.state.instructionsCollapsed }) }}>Instructions</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.instructionsCollapsed}>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
                     {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
                       <Text key={i}>{step.number}. {step.step}</Text>
                     ))}
-                  </View> : undefined}
+                  </View>
+                </Collapsible>
                 <Button
                   title='Complete!'
                   buttonStyle={{
