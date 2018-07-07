@@ -3,7 +3,6 @@ import { View, Modal } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Recipe from '../recipeList-components/recipe.js'
 
-
 class HomeRecipes extends React.Component {
   constructor(props) {
     super(props);

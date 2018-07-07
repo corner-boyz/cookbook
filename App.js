@@ -56,6 +56,7 @@ export default class App extends React.Component {
     this.switchToLogin = this.switchToLogin.bind(this);
     this.searchRecipes = this.searchRecipes.bind(this);
     this.getUserRecipes = this.getUserRecipes.bind(this);
+    this.getUserExtensionRecipes = this.getUserExtensionRecipes.bind(this);
     this.getUserGroceries = this.getUserGroceries.bind(this);
   }
   //====================================================
@@ -66,6 +67,7 @@ export default class App extends React.Component {
         this.getIngredients();
         this.retrieveUserRecipes();
         this.getUserRecipes();
+        this.getUserExtensionRecipes();
         this.retrieveUserGroceries();
         this.getUserGroceries();
       }
@@ -178,7 +180,7 @@ export default class App extends React.Component {
   }
 
   getUserRecipes() {
-    return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
+    return axios.get(`http://${IP}/api/userrecipes/${this.state.email}`, {})
       .then((response) => {
         this.setState({
           userRecipes: response.data,
@@ -187,6 +189,20 @@ export default class App extends React.Component {
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
+      });
+  }
+
+  getUserExtensionRecipes() {
+    return axios.get(`http://${IP}/api/userextensionrecipes/${this.state.email}`)
+      .then((response) => {
+        this.setState({
+          userExtensionRecipes: response.data,
+        });
+        console.log('extension', response.data);
+        AsyncStorage.setItem('cbUserExtensionRecipes', JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.log("ERROR getting user's extension recipes", err);
       });
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HomeRecipes from './home-components/homeRecipes.js'
-import { Text, View, Animated, FlatList, Dimensions, ImageBackground } from 'react-native';
+import { Text, View, Animated, FlatList, SectionList, Dimensions, ImageBackground, Linking } from 'react-native';
 import { Button, } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -50,11 +50,25 @@ class Home extends React.Component {
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
           <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name},</Text>
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
-          <FlatList
+          <SectionList
+            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
+            renderSectionHeader={({section: {title}}) => (
+              <Text style={{fontWeight: 'bold'}}>{title}</Text>
+            )}
+            renderItem={({ item, index }) => (
+              <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />
+            )}
+            sections={[
+              {title: 'Saved Recipes', data: this.props.screenProps.userRecipes},
+            ]}
+          />
+          {/* <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userRecipes}
             extraData={this.state.index}
-            renderItem={({ item, index }) => <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />}
+            renderItem={({ item, index }) => (
+              <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />}
+            );
             keyExtractor={(item) => item.title}
           />
           <Button
@@ -68,6 +82,19 @@ class Home extends React.Component {
               this.props.screenProps.logOut();
             }}
           />
+          <Button
+            title="Link"
+            buttonStyle={{
+              alignSelf: 'center',
+              width: 100,
+              backgroundColor: 'red',
+            }}
+            onPress={() => {
+              Linking.openURL('https://www.google.com')
+              console.log(Linking)
+            }}
+          /> */}
+
         </Animated.View>
       </ImageBackground >
     );
