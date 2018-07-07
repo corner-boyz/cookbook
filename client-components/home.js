@@ -6,7 +6,7 @@ import { Text, View, Animated, FlatList, SectionList, Dimensions, ImageBackgroun
 import { Button, } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { styles } from '../styles';
+import { styles } from '../styles.js';
 //====================================================
 class Home extends React.Component {
   constructor(props) {

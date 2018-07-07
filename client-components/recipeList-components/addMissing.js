@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
 import IP from '../../IP.js';
+
+import { styles } from '../../styles.js'
+//====================================================
 class AddMissing extends React.Component {
   constructor(props) {
     super(props);
@@ -91,85 +94,95 @@ class AddMissing extends React.Component {
   }
   render() {
     return (
-      <ScrollView
-        width={Dimensions.get('window').width / 1.2}
-        alignSelf='center'
-        flex={0.8}
-        onLayout={() => { this.forceUpdate() }}
+      <ImageBackground
+        style={[styles.container, {
+        }]}
+        source={require('../../media/4.jpg')}
+        blurRadius={0}
+        onLayout={() => {
+          this.forceUpdate();
+        }}
       >
-        <Text
-          style={{
-            fontSize: 17,
-            paddingBottom: 10
-          }}
-        >You are missing the following from your pantry.
+        <ScrollView
+          width={Dimensions.get('window').width / 1.2}
+          alignSelf='center'
+          flex={0.8}
+          onLayout={() => { this.forceUpdate() }}
+        >
+          <Text
+            style={{
+              fontSize: 17,
+              paddingBottom: 10
+            }}
+          >You are missing the following from your pantry.
           </Text>
-        {this.props.missing.map((item, i) =>
+          {this.props.missing.map((item, i) =>
+            <View
+              flexDirection='row'
+              key={i}
+            >
+              <TextInput
+                placeholder={item.quantity}
+                value={this.state.quantity}
+                width={Dimensions.get('window').width / 10}
+                onChangeText={(quantity) => {
+                  item.quantity = quantity
+                }}
+                paddingLeft={10}
+              />
+              <Picker
+                selectedValue={item.unit}
+                style={{
+                  height: 35,
+                  width: 100,
+                  backgroundColor: 'transparent',
+                }}
+                mode='dropdown'
+                onValueChange={(itemValue) => {
+                  item.unit = itemValue
+                  this.forceUpdate();
+                }}
+              >
+                {this.state.units.map((item, index) =>
+                  <Picker.Item
+                    key={index}
+                    label={item.name}
+                    value={item.abrv}
+                  />
+                )}
+              </Picker>
+              <TextInput
+                width={Dimensions.get('window').width / 3}
+                placeholder={item.ingredient}
+                value={this.state.ingredient}
+                onChangeText={(ingredient) => {
+                  item.ingredient = ingredient
+                }}
+                paddingLeft={10}
+              />
+            </View>
+          )}
           <View
             flexDirection='row'
-            key={i}
           >
-            <TextInput
-              placeholder={item.quantity}
-              value={this.state.quantity}
-              width={Dimensions.get('window').width / 10}
-              onChangeText={(quantity) => {
-                item.quantity = quantity
+            <Button
+              title="Add to Grocery List"
+              onPress={() => {
+                this.addMissingToCart();
               }}
-              paddingLeft={10}
             />
-            <Picker
-              selectedValue={item.unit}
-              style={{
-                height: 35,
-                width: 100,
-                backgroundColor: 'transparent',
+            <Button
+              title="Go Back"
+              buttonStyle={{
+                backgroundColor: 'red'
               }}
-              mode='dropdown'
-              onValueChange={(itemValue) => {
-                item.unit = itemValue
-                this.forceUpdate();
+              onPress={() => {
+                this.props.closeMissing();
               }}
-            >
-              {this.state.units.map((item, index) =>
-                <Picker.Item
-                  key={index}
-                  label={item.name}
-                  value={item.abrv}
-                />
-              )}
-            </Picker>
-            <TextInput
-              width={Dimensions.get('window').width / 3}
-              placeholder={item.ingredient}
-              value={this.state.ingredient}
-              onChangeText={(ingredient) => {
-                item.ingredient = ingredient
-              }}
-              paddingLeft={10}
             />
           </View>
-        )}
-        <View
-          flexDirection='row'
-        >
-          <Button
-            title="Add to Grocery List"
-            onPress={() => {
-              this.addMissingToCart();
-            }}
-          />
-          <Button
-            title="Go Back"
-            buttonStyle={{
-              backgroundColor: 'red'
-            }}
-            onPress={() => {
-              this.props.closeMissing();
-            }}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     )
   }
 }

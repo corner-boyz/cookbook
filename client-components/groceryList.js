@@ -62,7 +62,7 @@ class GroceryList extends React.Component {
         {
           name: 'Liter',
           abrv: 'l',
-        },{
+        }, {
           name: 'Kiloliter',
           abrv: 'kl',
         },
@@ -273,26 +273,36 @@ class GroceryList extends React.Component {
               editMode: false
             })
           }}>
-          <View style={[styles.container, { backgroundColor: 'white', }]}>
-            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
-            <FlatList
-              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-              data={this.props.screenProps.userGroceries}
-              extraData={this.state.index}
-              renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
-              keyExtractor={(item) => item.ingredient}
-            />
-            <Button
-              title='Confirm'
-              backgroundColor='limegreen'
-              rounded={true}
-              onPress={() => {
-                this.editIngredients();
-                this.setState({
-                  editMode: false,
-                })
-              }} />
-          </View>
+          <ImageBackground
+            style={[styles.container, {
+            }]}
+            source={require('../media/4.jpg')}
+            blurRadius={0}
+            onLayout={() => {
+              this.forceUpdate();
+            }}
+          >
+            {/* <View style={[styles.container, { backgroundColor: 'transparent', }]}> */}
+              <Text style={{ fontSize: 17 }}>Editing Mode</Text>
+              <FlatList
+                style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
+                data={this.props.screenProps.userGroceries}
+                extraData={this.state.index}
+                renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
+                keyExtractor={(item) => item.ingredient}
+              />
+              <Button
+                title='Confirm'
+                backgroundColor='limegreen'
+                rounded={true}
+                onPress={() => {
+                  this.editIngredients();
+                  this.setState({
+                    editMode: false,
+                  })
+                }} />
+            {/* </View> */}
+          </ImageBackground>
         </Modal>
       </ImageBackground>
     )

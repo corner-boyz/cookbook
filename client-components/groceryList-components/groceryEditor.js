@@ -14,7 +14,7 @@ class GroceryEditor extends React.Component {
     return (
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <TextInput
-          width={30}
+          width={Dimensions.get('window').width / 10}
           placeholder={(this.props.item.quantity).toString()}
           keyboardType='phone-pad'
           onChangeText={(text) => {
@@ -22,13 +22,14 @@ class GroceryEditor extends React.Component {
             this.props.item.quantity = Number(text)
           }}
           value={this.state.text}
+          paddingLeft={10}
         />
         <Picker
           selectedValue={this.props.item.unit}
           style={{
             height: 35,
             width: 100,
-            backgroundColor: 'lightgray'
+            backgroundColor: 'transparent'
           }}
           mode='dropdown'
           onValueChange={(itemValue) => {
