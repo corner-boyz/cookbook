@@ -179,7 +179,8 @@ class Ingredients extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>
+          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Ingredients</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}

@@ -251,7 +251,8 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
+          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Grocery List</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
@@ -283,24 +284,24 @@ class GroceryList extends React.Component {
             }}
           >
             {/* <View style={[styles.container, { backgroundColor: 'transparent', }]}> */}
-              <Text style={{ fontSize: 17 }}>Editing Mode</Text>
-              <FlatList
-                style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-                data={this.props.screenProps.userGroceries}
-                extraData={this.state.index}
-                renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
-                keyExtractor={(item) => item.ingredient}
-              />
-              <Button
-                title='Confirm'
-                backgroundColor='limegreen'
-                rounded={true}
-                onPress={() => {
-                  this.editIngredients();
-                  this.setState({
-                    editMode: false,
-                  })
-                }} />
+            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
+            <FlatList
+              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
+              data={this.props.screenProps.userGroceries}
+              extraData={this.state.index}
+              renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
+              keyExtractor={(item) => item.ingredient}
+            />
+            <Button
+              title='Confirm'
+              backgroundColor='limegreen'
+              rounded={true}
+              onPress={() => {
+                this.editIngredients();
+                this.setState({
+                  editMode: false,
+                })
+              }} />
             {/* </View> */}
           </ImageBackground>
         </Modal>

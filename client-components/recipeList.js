@@ -69,13 +69,10 @@ class RecipeList extends React.Component {
           onLayout={() => {
             // console.log('Rotated');
             Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({ rows: 2 }) : this.setState({ rows: 4 })
-
             this.forceUpdate();
-
           }}
         >
           <FlatList
-
             key={this.state.rows}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}

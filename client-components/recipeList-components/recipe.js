@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal, ImageBackground } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import AddMissing from './addMissing.js';
@@ -156,7 +156,7 @@ class Recipe extends React.Component {
                 alignItems: 'center'
               }}
             >
-              
+
               <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
               <Image
                 style={styles.recipeImage}
