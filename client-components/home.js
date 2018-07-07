@@ -1,7 +1,8 @@
 import React from 'react';
 
 import HomeRecipes from './home-components/homeRecipes.js'
-import { Text, View, Animated, FlatList, SectionList, Dimensions, ImageBackground, Linking } from 'react-native';
+import HomeExtensionRecipes from './home-components/homeExtensionRecipes.js'
+import { Text, View, Animated, FlatList, SectionList, Dimensions, ImageBackground } from 'react-native';
 import { Button, } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -15,9 +16,7 @@ class Home extends React.Component {
       ingredients: [],
       text: '',
       fadeAnim: new Animated.Value(0),
-      // yPosition: new Animated.Value(0),
     }
-    // console.log(this.props.screenProps.email)
   }
   //====================================================
   static navigationOptions = {
@@ -33,6 +32,13 @@ class Home extends React.Component {
   //====================================================
   render() {
     let { fadeAnim } = this.state;
+    const savedRecipes = ({ item, index }) => (
+      <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />
+    );
+    const savedExtensionRecipes = ({ item, index }) => (
+      <HomeExtensionRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />
+    );
+
     return (
       <ImageBackground
         style={[styles.container, {
@@ -46,29 +52,19 @@ class Home extends React.Component {
           this.forceUpdate();
         }}
       >
-
+        
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
           <Text style={{ fontSize: 18 }}>Welcome {this.props.screenProps.name},</Text>
           <Text style={{ fontSize: 16 }}>Here are your saved recipes:</Text>
           <SectionList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             renderSectionHeader={({section: {title}}) => (
-              <Text style={{fontWeight: 'bold'}}>{title}</Text>
-            )}
-            renderItem={({ item, index }) => (
-              <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />
+              <Text style={{fontWeight: 'bold', fontSize: 16}}>{title}</Text>
             )}
             sections={[
-              {title: 'Saved Recipes', data: this.props.screenProps.userRecipes},
+              {title: 'Saved Recipes', data: this.props.screenProps.userRecipes, renderItem: savedRecipes},
+              {title: 'Bookmarked Recipes', data: this.props.screenProps.userExtensionRecipes, renderItem: savedExtensionRecipes}
             ]}
-          />
-          {/* <FlatList
-            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-            data={this.props.screenProps.userRecipes}
-            extraData={this.state.index}
-            renderItem={({ item, index }) => (
-              <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes = {this.props.screenProps.searchRecipes} />}
-            );
             keyExtractor={(item) => item.title}
           />
           <Button
@@ -82,19 +78,6 @@ class Home extends React.Component {
               this.props.screenProps.logOut();
             }}
           />
-          <Button
-            title="Link"
-            buttonStyle={{
-              alignSelf: 'center',
-              width: 100,
-              backgroundColor: 'red',
-            }}
-            onPress={() => {
-              Linking.openURL('https://www.google.com')
-              console.log(Linking)
-            }}
-          /> */}
-
         </Animated.View>
       </ImageBackground >
     );

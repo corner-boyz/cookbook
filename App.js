@@ -43,6 +43,7 @@ export default class App extends React.Component {
       signUp: false,
       name: '',
       userRecipes: [],
+      userExtensionRecipes: [],
       userGroceries: [],
       //Initially set to true so doesn't render login page briefly when stored logged in is true
       //If stored logged in is false it will still redirect to login page
@@ -180,7 +181,7 @@ export default class App extends React.Component {
   }
 
   getUserRecipes() {
-    return axios.get(`http://${IP}/api/userrecipes/${this.state.email}`, {})
+    return axios.get(`http://${IP}/api/userrecipes/${this.state.email}`)
       .then((response) => {
         this.setState({
           userRecipes: response.data,
@@ -198,7 +199,6 @@ export default class App extends React.Component {
         this.setState({
           userExtensionRecipes: response.data,
         });
-        console.log('extension', response.data);
         AsyncStorage.setItem('cbUserExtensionRecipes', JSON.stringify(response.data));
       })
       .catch((err) => {
@@ -266,6 +266,7 @@ export default class App extends React.Component {
             getIngredients: this.getIngredients,
             recipes: this.state.recipes,
             userRecipes: this.state.userRecipes,
+            userExtensionRecipes: this.state.userExtensionRecipes,
             getUserRecipes: this.getUserRecipes,
             userGroceries: this.state.userGroceries,
             getUserGroceries: this.getUserGroceries,
