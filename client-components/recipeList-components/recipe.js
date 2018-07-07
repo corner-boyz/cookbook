@@ -18,6 +18,7 @@ class Recipe extends React.Component {
       recipeIngredients: [],
       addMissing: false,
       completed: false,
+      showNutrition: true,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -110,6 +111,12 @@ class Recipe extends React.Component {
     });
   }
   //====================================================
+  toggleNutrition() {
+    this.setState({
+      showNutrition: !this.state.showNutrition
+    });
+  }
+  //====================================================
   convertMinutes(time) {
     let hours = time / 60;
     let rhours = Math.floor(time / 60);
@@ -133,6 +140,7 @@ class Recipe extends React.Component {
   //====================================================
   render() {
     if (this.state.recipeDetails) {
+      const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
       return (
         <ScrollView
           width={Dimensions.get('window').width}
@@ -196,10 +204,16 @@ class Recipe extends React.Component {
                 : undefined}
               {this.state.recipeDetails.nutrition.nutrients.length ?
                 <View>
-                  <Text style={{ fontWeight: 'bold' }}>Nutrition Facts</Text>
-                  {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
-                    <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text>
-                  ))}
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => {this.toggleNutrition()}}>Nutrition Facts</Text>
+                  {this.state.showNutrition ?
+                  <View>
+                    <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
+                    {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
+                      wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
+                    ))}
+                  </View>
+                  :
+                  undefined}
                 </View> : undefined}
               {this.state.recipeDetails.extendedIngredients.length ?
                 <View>
