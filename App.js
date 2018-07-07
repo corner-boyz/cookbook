@@ -102,7 +102,7 @@ export default class App extends React.Component {
   retrieveIngredients = async () => {
     return await AsyncStorage.getItem('cbIngredients').then((ingredients) => {
       if (ingredients) {
-        this.setState({ingredients: JSON.parse(ingredients)});
+        this.setState({ ingredients: JSON.parse(ingredients) });
       }
     });
   }
@@ -110,7 +110,7 @@ export default class App extends React.Component {
   retrieveUserGroceries = async () => {
     return await AsyncStorage.getItem('cbUserGroceries').then((groceryList) => {
       if (groceryList) {
-        this.setState({userGroceries: JSON.parse(groceryList)});
+        this.setState({ userGroceries: JSON.parse(groceryList) });
       }
     });
   }
@@ -118,7 +118,7 @@ export default class App extends React.Component {
   retrieveUserRecipes = async () => {
     return await AsyncStorage.getItem('cbUserRecipes').then((recipes) => {
       if (recipes) {
-        this.setState({userRecipes: JSON.parse(recipes)});
+        this.setState({ userRecipes: JSON.parse(recipes) });
       }
     });
   }

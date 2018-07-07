@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -8,6 +8,69 @@ class AddMissing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      units: [
+        {
+          name: 'Count',
+          abrv: null
+        },
+        {
+          name: 'Teaspoon',
+          abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
+        },
+        {
+          name: 'Fluid ounce',
+          abrv: 'fl-oz',
+        },
+        {
+          name: 'Cup',
+          abrv: 'cup',
+        },
+        {
+          name: 'Pint',
+          abrv: 'pnt',
+        },
+        {
+          name: 'Quart',
+          abrv: 'qt',
+        },
+        {
+          name: 'Gallon',
+          abrv: 'gal',
+        },
+        {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        }, {
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
+          name: 'Ounce',
+          abrv: 'oz',
+        },
+        {
+          name: 'Pound',
+          abrv: 'lb',
+        },
+        {
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
+        }
+      ],
+      quantity: this.props.missing.quantity,
+      ingredient: this.props.missing.ingredient
     };
   }
   addMissingToCart() {
@@ -27,22 +90,76 @@ class AddMissing extends React.Component {
   }
   render() {
     return (
-      <View>
-        <Text style={{ fontSize: 17 }}>Add the following to your Grocery List?</Text>
+      <ScrollView
+        width={Dimensions.get('window').width / 1.2}
+        alignSelf='center'
+        flex={0.8}
+        onLayout={() => { this.forceUpdate() }}
+      >
+        <Text
+          style={{
+            fontSize: 17,
+            paddingBottom: 10
+          }}
+        >You are missing the following from your pantry.
+          </Text>
         {this.props.missing.map((item, i) =>
-          <Text key={i}>{item.quantity}{item.unit} {item.ingredient}</Text>
+          <View
+            flexDirection='row'
+            key={i}
+          >
+            <TextInput
+              placeholder={item.quantity}
+              value={this.state.quantity}
+              width={Dimensions.get('window').width / 10}
+              onChangeText={(quantity) => {
+                item.quantity = quantity
+              }}
+              paddingLeft={10}
+            />
+            <Picker
+              selectedValue={item.unit}
+              style={{
+                height: 35,
+                width: 100,
+                backgroundColor: 'transparent',
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => {
+                item.unit = itemValue
+                this.forceUpdate();
+              }}
+            >
+              {this.state.units.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.name}
+                  value={item.abrv}
+                />
+              )}
+            </Picker>
+            <TextInput
+              width={Dimensions.get('window').width / 3}
+              placeholder={item.ingredient}
+              value={this.state.ingredient}
+              onChangeText={(ingredient) => {
+                item.ingredient = ingredient
+              }}
+              paddingLeft={10}
+            />
+          </View>
         )}
         <View
           flexDirection='row'
         >
           <Button
-            title="Yes"
+            title="Add to Grocery List"
             onPress={() => {
               this.addMissingToCart();
             }}
           />
           <Button
-            title="No"
+            title="Go Back"
             buttonStyle={{
               backgroundColor: 'red'
             }}
@@ -50,9 +167,8 @@ class AddMissing extends React.Component {
               this.props.closeMissing();
             }}
           />
-
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
@@ -8,6 +8,67 @@ class Complete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      units: [
+        {
+          name: 'Count',
+          abrv: null
+        },
+        {
+          name: 'Teaspoon',
+          abrv: 'tsp',
+        },
+        {
+          name: 'Tablespoon',
+          abrv: 'Tbs',
+        },
+        {
+          name: 'Fluid ounce',
+          abrv: 'fl-oz',
+        },
+        {
+          name: 'Cup',
+          abrv: 'cup',
+        },
+        {
+          name: 'Pint',
+          abrv: 'pnt',
+        },
+        {
+          name: 'Quart',
+          abrv: 'qt',
+        },
+        {
+          name: 'Gallon',
+          abrv: 'gal',
+        },
+        {
+          name: 'Milliliter',
+          abrv: 'ml',
+        },
+        {
+          name: 'Liter',
+          abrv: 'l',
+        }, {
+          name: 'Kiloliter',
+          abrv: 'kl',
+        },
+        {
+          name: 'Ounce',
+          abrv: 'oz',
+        },
+        {
+          name: 'Pound',
+          abrv: 'lb',
+        },
+        {
+          name: 'Gram',
+          abrv: 'g',
+        },
+        {
+          name: 'Kilogram',
+          abrv: 'kg',
+        }
+      ],
     };
   }
   removeIngredientsFromPantry() {
@@ -30,19 +91,73 @@ class Complete extends React.Component {
         this.props.getIngredients().then(() => {
           this.props.searchRecipes();
         });
+        alert('Removed items from Pantry!')
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
         Alert.alert('Invalid unit conversion', err.response.request.response);
       });
   }
-  render() {
-    console.log(`Render Complete`, this.props);
+  render() { //recipeIngredients
     return (
-      <View>
-        <Text>Remove following from your Pantry?</Text>
+      <ScrollView
+        width={Dimensions.get('window').width / 1.2}
+        alignSelf='center'
+        flex={0.8}
+        onLayout={() => { this.forceUpdate() }}
+      >
+        <Text
+          style={{
+            fontSize: 17,
+            paddingBottom: 10
+          }}
+        >Remove following from your Pantry?
+        </Text>
         {this.props.recipeIngredients.map((item, i) =>
-          <Text key={i}>{item.quantity}{item.unit} {item.ingredient}</Text>
+          <View
+            flexDirection='row'
+            key={i}
+          >
+            <TextInput
+              placeholder={item.quantity}
+              value={this.state.quantity}
+              width={Dimensions.get('window').width / 10}
+              onChangeText={(quantity) => {
+                item.quantity = quantity
+              }}
+              paddingLeft={10}
+            />
+            <Picker
+              selectedValue={item.unit}
+              style={{
+                height: 35,
+                width: 100,
+                backgroundColor: 'transparent',
+              }}
+              mode='dropdown'
+              onValueChange={(itemValue) => {
+                item.unit = itemValue
+                this.forceUpdate();
+              }}
+            >
+              {this.state.units.map((item, index) =>
+                <Picker.Item
+                  key={index}
+                  label={item.name}
+                  value={item.abrv}
+                />
+              )}
+            </Picker>
+            <TextInput
+              width={Dimensions.get('window').width / 3}
+              placeholder={item.ingredient}
+              value={this.state.ingredient}
+              onChangeText={(ingredient) => {
+                item.ingredient = ingredient
+              }}
+              paddingLeft={10}
+            />
+          </View>
         )}
         <View
           flexDirection='row'
@@ -57,15 +172,14 @@ class Complete extends React.Component {
           <Button
             title="No"
             buttonStyle={{
-              backgroundColor: 'red'
+              backgroundColor: 'red',
             }}
             onPress={() => {
-              this.props.closeMissing();
+              this.props.closeCompleted();
             }}
           />
-
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

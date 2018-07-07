@@ -44,7 +44,10 @@ class GroceryEditor extends React.Component {
           )}
         </Picker>
         <Text
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'gold', fontSize: 17, justifyContent: 'center' }}
+          style={{
+            fontSize: 17,
+            textAlignVertical: 'center',
+          }}
         >{this.props.item.ingredient}
         </Text>
       </View>
