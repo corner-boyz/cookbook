@@ -43,6 +43,7 @@ export default class App extends React.Component {
       signUp: false,
       name: '',
       userRecipes: [],
+      userExtensionRecipes: [],
       userGroceries: [],
       //Initially set to true so doesn't render login page briefly when stored logged in is true
       //If stored logged in is false it will still redirect to login page
@@ -56,6 +57,7 @@ export default class App extends React.Component {
     this.switchToLogin = this.switchToLogin.bind(this);
     this.searchRecipes = this.searchRecipes.bind(this);
     this.getUserRecipes = this.getUserRecipes.bind(this);
+    this.getUserExtensionRecipes = this.getUserExtensionRecipes.bind(this);
     this.getUserGroceries = this.getUserGroceries.bind(this);
   }
   //====================================================
@@ -91,7 +93,7 @@ export default class App extends React.Component {
   }
 
   removeFood = async () => {
-    const foodKeys = ['cbIngredients', 'cbUserGroceries', 'cbUserRecipes'];
+    const foodKeys = ['cbIngredients', 'cbUserGroceries', 'cbUserRecipes', 'cbUserExtensionRecipes'];
     AsyncStorage.multiRemove(foodKeys, (err) => {
       if (err) {
         console.error('ERROR removing ingredient keys', err);
@@ -119,6 +121,17 @@ export default class App extends React.Component {
     return await AsyncStorage.getItem('cbUserRecipes').then((recipes) => {
       if (recipes) {
         this.setState({ userRecipes: JSON.parse(recipes) });
+      }
+      return recipes;
+    }).then(() => {
+      this.retrieveUserExtensionRecipes();
+    });
+  }
+
+  retrieveUserExtensionRecipes = async () => {
+    return await AsyncStorage.getItem('cbUserExtensionRecipes').then((recipes) => {
+      if (recipes) {
+        this.setState({ userExtensionRecipes: JSON.parse(recipes) });
       }
     });
   }
@@ -178,7 +191,7 @@ export default class App extends React.Component {
   }
 
   getUserRecipes() {
-    return axios.get(`http://${IP}/api/userRecipes/${this.state.email}`, {})
+    return axios.get(`http://${IP}/api/userrecipes/${this.state.email}`)
       .then((response) => {
         this.setState({
           userRecipes: response.data,
@@ -190,6 +203,19 @@ export default class App extends React.Component {
       });
   }
 
+  getUserExtensionRecipes() {
+    return axios.get(`http://${IP}/api/userextensionrecipes/${this.state.email}`)
+      .then((response) => {
+        this.setState({
+          userExtensionRecipes: response.data,
+        });
+        AsyncStorage.setItem('cbUserExtensionRecipes', JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.log("ERROR getting user's extension recipes", err);
+      });
+  }
+
   getUserGroceries() {
     return axios.get(`http://${IP}/api/grocerylist/${this.state.email}`, {})
       .then((response) => {
@@ -197,6 +223,9 @@ export default class App extends React.Component {
           userGroceries: response.data
         });
         AsyncStorage.setItem('cbUserGroceries', JSON.stringify(response.data));
+      })
+      .then(() => {
+        this.getUserExtensionRecipes();
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
@@ -250,6 +279,7 @@ export default class App extends React.Component {
             getIngredients: this.getIngredients,
             recipes: this.state.recipes,
             userRecipes: this.state.userRecipes,
+            userExtensionRecipes: this.state.userExtensionRecipes,
             getUserRecipes: this.getUserRecipes,
             userGroceries: this.state.userGroceries,
             getUserGroceries: this.getUserGroceries,
