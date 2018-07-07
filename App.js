@@ -68,7 +68,6 @@ export default class App extends React.Component {
         this.getIngredients();
         this.retrieveUserRecipes();
         this.getUserRecipes();
-        this.getUserExtensionRecipes();
         this.retrieveUserGroceries();
         this.getUserGroceries();
       }
@@ -94,7 +93,7 @@ export default class App extends React.Component {
   }
 
   removeFood = async () => {
-    const foodKeys = ['cbIngredients', 'cbUserGroceries', 'cbUserRecipes'];
+    const foodKeys = ['cbIngredients', 'cbUserGroceries', 'cbUserRecipes', 'cbUserExtensionRecipes'];
     AsyncStorage.multiRemove(foodKeys, (err) => {
       if (err) {
         console.error('ERROR removing ingredient keys', err);
@@ -122,6 +121,17 @@ export default class App extends React.Component {
     return await AsyncStorage.getItem('cbUserRecipes').then((recipes) => {
       if (recipes) {
         this.setState({ userRecipes: JSON.parse(recipes) });
+      }
+      return recipes;
+    }).then(() => {
+      this.retrieveUserExtensionRecipes();
+    });
+  }
+
+  retrieveUserExtensionRecipes = async () => {
+    return await AsyncStorage.getItem('cbUserExtensionRecipes').then((recipes) => {
+      if (recipes) {
+        this.setState({ userExtensionRecipes: JSON.parse(recipes) });
       }
     });
   }
@@ -213,6 +223,9 @@ export default class App extends React.Component {
           userGroceries: response.data
         });
         AsyncStorage.setItem('cbUserGroceries', JSON.stringify(response.data));
+      })
+      .then(() => {
+        this.getUserExtensionRecipes();
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);

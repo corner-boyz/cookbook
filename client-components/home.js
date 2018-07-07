@@ -48,7 +48,6 @@ class Home extends React.Component {
         source={require('../media/4.jpg')}
         blurRadius={0}
         onLayout={() => {
-          // console.log('Rotated');
           this.forceUpdate();
         }}
       >
