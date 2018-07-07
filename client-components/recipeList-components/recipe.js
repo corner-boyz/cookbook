@@ -194,11 +194,11 @@ class Recipe extends React.Component {
               {this.state.recipeDetails.preparationMinutes ?
                 <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
                 : undefined}
-              {this.state.recipeDetails.diets.length ?
+              {this.state.recipeDetails.nutrition.nutrients.length ?
                 <View>
-                  <Text style={{ fontWeight: 'bold' }}>Diet</Text>
-                  {this.state.recipeDetails.diets.map((diet, i) => (
-                    <Text key={i}>{diet}</Text>
+                  <Text style={{ fontWeight: 'bold' }}>Nutrition Facts</Text>
+                  {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
+                    <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text>
                   ))}
                 </View> : undefined}
               {this.state.recipeDetails.extendedIngredients.length ?
@@ -206,6 +206,13 @@ class Recipe extends React.Component {
                   <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
                   {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
                     <Text key={i}>{ingredient.original}</Text>
+                  ))}
+                </View> : undefined}
+              {this.state.recipeDetails.diets.length ?
+                <View>
+                  <Text style={{ fontWeight: 'bold' }}>Diets</Text>
+                  {this.state.recipeDetails.diets.map((diet, i) => (
+                    <Text key={i}>{diet}</Text>
                   ))}
                 </View> : undefined}
               <Button
