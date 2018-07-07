@@ -261,7 +261,6 @@ class GroceryList extends React.Component {
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
-
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
         </Animated.View>
@@ -283,7 +282,6 @@ class GroceryList extends React.Component {
               this.forceUpdate();
             }}
           >
-            {/* <View style={[styles.container, { backgroundColor: 'transparent', }]}> */}
             <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
@@ -302,7 +300,6 @@ class GroceryList extends React.Component {
                   editMode: false,
                 })
               }} />
-            {/* </View> */}
           </ImageBackground>
         </Modal>
       </ImageBackground>

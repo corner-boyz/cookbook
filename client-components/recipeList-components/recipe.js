@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Collapsible from 'react-native-collapsible';
+import Accordion from 'react-native-collapsible/Accordion';
 import axios from 'axios';
 import AddMissing from './addMissing.js';
 import Completed from './completed.js';
@@ -18,6 +20,7 @@ class Recipe extends React.Component {
       recipeIngredients: [],
       addMissing: false,
       completed: false,
+      isCollapsed: true,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -156,7 +159,6 @@ class Recipe extends React.Component {
                 alignItems: 'center'
               }}
             >
-
               <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
               <Image
                 style={styles.recipeImage}
@@ -192,17 +194,21 @@ class Recipe extends React.Component {
                 }}
               >
                 {this.state.recipeDetails.preparationMinutes ?
-                  <Text style={{ fontWeight: 'bold' }}>Time</Text>
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ isCollapsed: !this.state.isCollapsed }) }}>Time</Text>
                   : undefined}
-                {this.state.recipeDetails.preparationMinutes ?
-                  <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
-                  : undefined}
-                {this.state.recipeDetails.preparationMinutes ?
-                  <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
-                  : undefined}
-                {this.state.recipeDetails.preparationMinutes ?
-                  <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
-                  : undefined}
+                <Collapsible collapsed={this.state.isCollapsed}>
+                  <View>
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
+                      : undefined}
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
+                      : undefined}
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
+                      : undefined}
+                  </View>
+                </Collapsible>
                 {this.state.recipeDetails.diets.length ?
                   <View>
                     <Text style={{ fontWeight: 'bold' }}>Diet</Text>
