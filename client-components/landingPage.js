@@ -78,7 +78,7 @@ class LandingPage extends React.Component {
           fontWeight: 'bold'
         }}>CookBook
         </Text>
-        <View flexDirection='row'>
+        <View flexDirection='row' elevation={0}>
           <Button
             title='Login'
             titleStyle={{ color: 'black' }}

@@ -91,7 +91,7 @@ class Complete extends React.Component {
         this.props.getIngredients().then(() => {
           this.props.searchRecipes();
         });
-        alert('Removed items from Pantry!')
+        alert('Ingredients removed from Pantry!')
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);

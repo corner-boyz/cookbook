@@ -82,6 +82,7 @@ class AddMissing extends React.Component {
       .then(() => {
         this.props.closeMissing();
         this.props.getUserGroceries();
+        alert('Ingredients added your Grocery List!')
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);

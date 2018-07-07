@@ -18,8 +18,8 @@ class Signup extends React.Component {
       password: '',
       confirmedPassword: '',
     }
-    //====================================================
   }
+  //====================================================
   componentDidMount() {
   }
 
@@ -166,7 +166,7 @@ class Signup extends React.Component {
           }}
           loading={this.props.loading}
           onPress={() => {
-            
+
             this.submitSignup(this.state.name, this.state.email, this.state.password, this.state.confirmedPassword)
           }}
         />
