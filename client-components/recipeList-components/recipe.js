@@ -25,6 +25,7 @@ class Recipe extends React.Component {
       nutritionCollapsed: false,
       ingredientsCollapsed: false,
       instructionsCollapsed: false,
+      equipmentCollapsed: false,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -141,6 +142,15 @@ class Recipe extends React.Component {
   render() {
     if (this.state.recipeDetails) {
       const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
+      let equipment = [];
+      if (this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length) {
+          this.state.recipeDetails.analyzedInstructions[0].steps.forEach((step) => {
+            step.equipment.forEach((item) => {
+              equipment.push(item.name);
+            });
+          });
+      }
+
       return (
         <ImageBackground
           style={[styles.container, {
@@ -262,6 +272,16 @@ class Recipe extends React.Component {
                   <View>
                     {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
                       <Text key={i}>{step.number}. {step.step}</Text>
+                    ))}
+                  </View>
+                </Collapsible>
+                {this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ equipmentCollapsed: !this.state.equipmentCollapsed }) }}>Equipment Used</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.equipmentCollapsed}>
+                  <View>
+                    {equipment.map((item, i) => (
+                      <Text key={i}>{item}</Text>
                     ))}
                   </View>
                 </Collapsible>
