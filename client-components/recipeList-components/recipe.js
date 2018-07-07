@@ -20,7 +20,11 @@ class Recipe extends React.Component {
       recipeIngredients: [],
       addMissing: false,
       completed: false,
-      isCollapsed: true,
+      showNutrition: true,
+      timeCollapsed: true,
+      dietCollapsed: true,
+      nutritionCollapsed: true,
+      instructionsCollapsed: true,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -113,6 +117,12 @@ class Recipe extends React.Component {
     });
   }
   //====================================================
+  toggleNutrition() {
+    this.setState({
+      showNutrition: !this.state.showNutrition
+    });
+  }
+  //====================================================
   convertMinutes(time) {
     let hours = time / 60;
     let rhours = Math.floor(time / 60);
@@ -136,6 +146,7 @@ class Recipe extends React.Component {
   //====================================================
   render() {
     if (this.state.recipeDetails) {
+      const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
       return (
         <ImageBackground
           style={[styles.container, {
@@ -194,9 +205,9 @@ class Recipe extends React.Component {
                 }}
               >
                 {this.state.recipeDetails.preparationMinutes ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ isCollapsed: !this.state.isCollapsed }) }}>Time</Text>
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ timeCollapsed: !this.state.timeCollapsed }) }}>Time</Text>
                   : undefined}
-                <Collapsible collapsed={this.state.isCollapsed}>
+                <Collapsible collapsed={this.state.timeCollapsed}>
                   <View>
                     {this.state.recipeDetails.preparationMinutes ?
                       <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
@@ -215,6 +226,19 @@ class Recipe extends React.Component {
                     {this.state.recipeDetails.diets.map((diet, i) => (
                       <Text key={i}>{diet}</Text>
                     ))}
+                  </View> : undefined}
+                {this.state.recipeDetails.nutrition.nutrients.length ?
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }} onPress={() => { this.toggleNutrition() }}>Nutrition Facts</Text>
+                    {this.state.showNutrition ?
+                      <View>
+                        <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
+                        {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
+                          wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
+                        ))}
+                      </View>
+                      :
+                      undefined}
                   </View> : undefined}
                 {this.state.recipeDetails.extendedIngredients.length ?
                   <View>
