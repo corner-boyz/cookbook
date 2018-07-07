@@ -62,7 +62,7 @@ class GroceryList extends React.Component {
         {
           name: 'Liter',
           abrv: 'l',
-        },{
+        }, {
           name: 'Kiloliter',
           abrv: 'kl',
         },
@@ -251,7 +251,8 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here is your Grocery List</Text>
+          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Grocery List</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
@@ -260,7 +261,6 @@ class GroceryList extends React.Component {
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
-
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
         </Animated.View>
@@ -273,7 +273,15 @@ class GroceryList extends React.Component {
               editMode: false
             })
           }}>
-          <View style={[styles.container, { backgroundColor: 'white', }]}>
+          <ImageBackground
+            style={[styles.container, {
+            }]}
+            source={require('../media/4.jpg')}
+            blurRadius={0}
+            onLayout={() => {
+              this.forceUpdate();
+            }}
+          >
             <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
@@ -292,7 +300,7 @@ class GroceryList extends React.Component {
                   editMode: false,
                 })
               }} />
-          </View>
+          </ImageBackground>
         </Modal>
       </ImageBackground>
     )

@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 
 import IP from '../../IP.js';
+
+import { styles } from '../../styles.js'
+//====================================================
 class Complete extends React.Component {
   constructor(props) {
     super(props);
@@ -91,7 +94,7 @@ class Complete extends React.Component {
         this.props.getIngredients().then(() => {
           this.props.searchRecipes();
         });
-        alert('Removed items from Pantry!')
+        alert('Ingredients removed from Pantry!')
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
@@ -100,86 +103,96 @@ class Complete extends React.Component {
   }
   render() { //recipeIngredients
     return (
-      <ScrollView
-        width={Dimensions.get('window').width / 1.2}
-        alignSelf='center'
-        flex={0.8}
-        onLayout={() => { this.forceUpdate() }}
+      <ImageBackground
+        style={[styles.container, {
+        }]}
+        source={require('../../media/4.jpg')}
+        blurRadius={0}
+        onLayout={() => {
+          this.forceUpdate();
+        }}
       >
-        <Text
-          style={{
-            fontSize: 17,
-            paddingBottom: 10
-          }}
-        >Remove following from your Pantry?
+        <ScrollView
+          width={Dimensions.get('window').width / 1.2}
+          alignSelf='center'
+          flex={0.8}
+          onLayout={() => { this.forceUpdate() }}
+        >
+          <Text
+            style={{
+              fontSize: 17,
+              paddingBottom: 10
+            }}
+          >Remove following from your Pantry?
         </Text>
-        {this.props.recipeIngredients.map((item, i) =>
+          {this.props.recipeIngredients.map((item, i) =>
+            <View
+              flexDirection='row'
+              key={i}
+            >
+              <TextInput
+                placeholder={item.quantity}
+                value={this.state.quantity}
+                width={Dimensions.get('window').width / 10}
+                onChangeText={(quantity) => {
+                  item.quantity = quantity
+                }}
+                paddingLeft={10}
+              />
+              <Picker
+                selectedValue={item.unit}
+                style={{
+                  height: 35,
+                  width: 100,
+                  backgroundColor: 'transparent',
+                }}
+                mode='dropdown'
+                onValueChange={(itemValue) => {
+                  item.unit = itemValue
+                  this.forceUpdate();
+                }}
+              >
+                {this.state.units.map((item, index) =>
+                  <Picker.Item
+                    key={index}
+                    label={item.name}
+                    value={item.abrv}
+                  />
+                )}
+              </Picker>
+              <TextInput
+                width={Dimensions.get('window').width / 3}
+                placeholder={item.ingredient}
+                value={this.state.ingredient}
+                onChangeText={(ingredient) => {
+                  item.ingredient = ingredient
+                }}
+                paddingLeft={10}
+              />
+            </View>
+          )}
           <View
             flexDirection='row'
-            key={i}
           >
-            <TextInput
-              placeholder={item.quantity}
-              value={this.state.quantity}
-              width={Dimensions.get('window').width / 10}
-              onChangeText={(quantity) => {
-                item.quantity = quantity
+            <Button
+              title="Yes"
+              onPress={() => {
+                console.log('Yes');
+                this.removeIngredientsFromPantry();
               }}
-              paddingLeft={10}
             />
-            <Picker
-              selectedValue={item.unit}
-              style={{
-                height: 35,
-                width: 100,
-                backgroundColor: 'transparent',
+            <Button
+              title="No"
+              buttonStyle={{
+                backgroundColor: 'red',
               }}
-              mode='dropdown'
-              onValueChange={(itemValue) => {
-                item.unit = itemValue
-                this.forceUpdate();
+              onPress={() => {
+                this.props.closeCompleted();
               }}
-            >
-              {this.state.units.map((item, index) =>
-                <Picker.Item
-                  key={index}
-                  label={item.name}
-                  value={item.abrv}
-                />
-              )}
-            </Picker>
-            <TextInput
-              width={Dimensions.get('window').width / 3}
-              placeholder={item.ingredient}
-              value={this.state.ingredient}
-              onChangeText={(ingredient) => {
-                item.ingredient = ingredient
-              }}
-              paddingLeft={10}
             />
           </View>
-        )}
-        <View
-          flexDirection='row'
-        >
-          <Button
-            title="Yes"
-            onPress={() => {
-              console.log('Yes');
-              this.removeIngredientsFromPantry();
-            }}
-          />
-          <Button
-            title="No"
-            buttonStyle={{
-              backgroundColor: 'red',
-            }}
-            onPress={() => {
-              this.props.closeCompleted();
-            }}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     )
   }
 }

@@ -24,7 +24,7 @@ class RecipeList extends React.Component {
   static navigationOptions = {
     tabBarColor: 'mediumblue',
     tabBarIcon: () => {
-      return <Ionicons name='ios-list' size={25} color='white' />;
+      return <Ionicons name='ios-restaurant' size={25} color='white' />;
     },
     tabBarOnPress: ({ navigation }) => {
       navigation.navigate('Recipes');
@@ -37,7 +37,7 @@ class RecipeList extends React.Component {
   //====================================================
   componentDidMount() {
     // Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000, }).start();
-    console.log('hey', this.props.screenProps.getUserRecipes);
+    // console.log('hey', this.props.screenProps.getUserRecipes);
   }
 
   //====================================================
@@ -69,13 +69,10 @@ class RecipeList extends React.Component {
           onLayout={() => {
             // console.log('Rotated');
             Dimensions.get('window').width < Dimensions.get('window').height ? this.setState({ rows: 2 }) : this.setState({ rows: 4 })
-
             this.forceUpdate();
-
           }}
         >
           <FlatList
-
             key={this.state.rows}
             data={this.props.screenProps.recipes}
             extraData={this.state.recipeListIndex}
@@ -98,7 +95,7 @@ class RecipeList extends React.Component {
                 showRecipe: false
               })
             }}>
-            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} getIngredients={this.props.screenProps.getIngredients} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} searchRecipes = {this.props.screenProps.searchRecipes} />
+            <Recipe selectedRecipe={this.state.selectedRecipe} email={this.props.screenProps.email} recipeBack={this.recipeBack} getUserRecipes={this.props.screenProps.getUserRecipes} getIngredients={this.props.screenProps.getIngredients} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} searchRecipes={this.props.screenProps.searchRecipes} />
           </Modal>
         </ImageBackground>
       );

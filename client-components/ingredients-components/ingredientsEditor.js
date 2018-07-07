@@ -46,11 +46,8 @@ class IngredientsEditor extends React.Component {
         </Picker>
         <Text
           style={{
-            // backgroundColor: 'lightgray',
             fontSize: 17,
             textAlignVertical: 'center',
-            // paddingTop: 5,
-            // paddingLeft: 10
           }}
         >{this.props.item.ingredient}
         </Text>

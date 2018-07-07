@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal } from 'react-native';
+import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Collapsible from 'react-native-collapsible';
+import Accordion from 'react-native-collapsible/Accordion';
 import axios from 'axios';
 import AddMissing from './addMissing.js';
 import Completed from './completed.js';
@@ -19,6 +21,10 @@ class Recipe extends React.Component {
       addMissing: false,
       completed: false,
       showNutrition: true,
+      timeCollapsed: true,
+      dietCollapsed: true,
+      nutritionCollapsed: true,
+      instructionsCollapsed: true,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -94,9 +100,9 @@ class Recipe extends React.Component {
       this.props.getUserRecipes();
     }).catch((err) => {
       console.log('ERROR deleting recipe', err);
-        if (err.request._hasError || err.response.request.status === 404) {
-          Alert.alert('Trouble connecting to server', 'Please try again later');
-        }
+      if (err.request._hasError || err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to server', 'Please try again later');
+      }
     });
   }
 
@@ -142,143 +148,156 @@ class Recipe extends React.Component {
     if (this.state.recipeDetails) {
       const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
       return (
-        <ScrollView
-          width={Dimensions.get('window').width}
-          alignSelf='center'
-          flex={0.8}
-          onLayout={() => { this.forceUpdate() }}
+        <ImageBackground
+          style={[styles.container, {
+          }]}
+          source={require('../../media/4.jpg')}
+          blurRadius={0}
+          onLayout={() => {
+            this.forceUpdate();
+          }}
         >
-          <View
-            // style={styles.container}
-            style={{
-              flex: 1,
-              alignItems: 'center'
-            }}
+          <ScrollView
+            width={Dimensions.get('window').width}
+            alignSelf='center'
+            flex={0.8}
+            onLayout={() => { this.forceUpdate() }}
           >
-            {this.props.email && !this.state.isSaved ?
-              <Button
-                title="Save Recipe"
-                rounded={true}
-                buttonStyle={{
-                  backgroundColor: 'green'
-                }}
-                onPress={() => {
-                  this.saveRecipe();
-                }}
-              /> :
-              <Button
-                title="Remove Recipe"
-                rounded={true}
-                buttonStyle={{
-                  backgroundColor: 'red'
-                }}
-                onPress={() => {
-                  this.deleteRecipe();
-                }}
-              />
-            }
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
-            <Image
-              style={styles.recipeImage}
-              source={{ uri: this.state.recipeDetails.image }}
-            />
-
             <View
+              // style={styles.container}
               style={{
                 flex: 1,
-                width: Dimensions.get('window').width / 1.2,
-                alignItems: 'flex-start'
+                alignItems: 'center'
               }}
             >
-              {this.state.recipeDetails.preparationMinutes ?
-                <Text style={{ fontWeight: 'bold' }}>Time</Text>
-                : undefined}
-              {this.state.recipeDetails.preparationMinutes ?
-                <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
-                : undefined}
-              {this.state.recipeDetails.preparationMinutes ?
-                <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
-                : undefined}
-              {this.state.recipeDetails.preparationMinutes ?
-                <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
-                : undefined}
-              {this.state.recipeDetails.nutrition.nutrients.length ?
-                <View>
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => {this.toggleNutrition()}}>Nutrition Facts</Text>
-                  {this.state.showNutrition ?
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
+              <Image
+                style={styles.recipeImage}
+                source={{ uri: this.state.recipeDetails.image }}
+              />
+              {this.props.email && !this.state.isSaved ?
+                <Button
+                  title="Save Recipe"
+                  rounded={true}
+                  buttonStyle={{
+                    backgroundColor: 'green'
+                  }}
+                  onPress={() => {
+                    this.saveRecipe();
+                  }}
+                /> :
+                <Button
+                  title="Remove Recipe"
+                  rounded={true}
+                  buttonStyle={{
+                    backgroundColor: 'red'
+                  }}
+                  onPress={() => {
+                    this.deleteRecipe();
+                  }}
+                />
+              }
+              <View
+                style={{
+                  flex: 1,
+                  width: Dimensions.get('window').width / 1.2,
+                  alignItems: 'flex-start'
+                }}
+              >
+                {this.state.recipeDetails.preparationMinutes ?
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ timeCollapsed: !this.state.timeCollapsed }) }}>Time</Text>
+                  : undefined}
+                <Collapsible collapsed={this.state.timeCollapsed}>
                   <View>
-                    <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
-                    {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
-                      wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
-                    ))}
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
+                      : undefined}
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Cooking: {this.convertMinutes(this.state.recipeDetails.cookingMinutes)}</Text>
+                      : undefined}
+                    {this.state.recipeDetails.preparationMinutes ?
+                      <Text>Ready In: {this.convertMinutes(this.state.recipeDetails.readyInMinutes)}</Text>
+                      : undefined}
                   </View>
-                  :
-                  undefined}
-                </View> : undefined}
-              {this.state.recipeDetails.extendedIngredients.length ?
-                <View>
-                  <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
-                  {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
-                    <Text key={i}>{ingredient.original}</Text>
-                  ))}
-                </View> : undefined}
-              {this.state.recipeDetails.diets.length ?
-                <View>
-                  <Text style={{ fontWeight: 'bold' }}>Diets</Text>
-                  {this.state.recipeDetails.diets.map((diet, i) => (
-                    <Text key={i}>{diet}</Text>
-                  ))}
-                </View> : undefined}
-              <Button
-                title="Compare"
-                buttonStyle={{
-                }}
-                onPress={() => {
-                  this.compareIngredients();
-                  this.setState({
-                    addMissing: true
-                  });
-                }}
-              />
-              {this.state.recipeDetails.analyzedInstructions.length ?
-                <View>
-                  <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
-                  {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
-                    <Text key={i}>{step.number}. {step.step}</Text>
-                  ))}
-                </View> : undefined}
-              <Button
-                title='Complete!'
-                buttonStyle={{
-                  backgroundColor: 'green'
-                }}
-                onPress={() => {
-                  console.log('Completed');
-                  this.parseIngredients();
-                  this.setState({
-                    completed: true
-                  })
-                }}
-              />
-              <Modal
-                animationType='slide'
-                visible={this.state.addMissing}
-                onRequestClose={() => {
-                  this.setState({ addMissing: false });
-                }}
-              ><AddMissing missing={this.state.missing} email={this.props.email} getUserGroceries={this.props.getUserGroceries} closeMissing={this.closeMissing} />
-              </Modal>
-              <Modal
-                animationType='slide'
-                visible={this.state.completed}
-                onRequestClose={() => {
-                  this.setState({ completed: false })
-                }}
-              ><Completed recipeIngredients={this.state.recipeIngredients} email={this.props.email} getIngredients={this.props.getIngredients} searchRecipes = {this.props.searchRecipes} closeCompleted={this.closeCompleted} />
-              </Modal>
+                </Collapsible>
+                {this.state.recipeDetails.diets.length ?
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }}>Diet</Text>
+                    {this.state.recipeDetails.diets.map((diet, i) => (
+                      <Text key={i}>{diet}</Text>
+                    ))}
+                  </View> : undefined}
+                {this.state.recipeDetails.nutrition.nutrients.length ?
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }} onPress={() => { this.toggleNutrition() }}>Nutrition Facts</Text>
+                    {this.state.showNutrition ?
+                      <View>
+                        <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
+                        {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
+                          wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
+                        ))}
+                      </View>
+                      :
+                      undefined}
+                  </View> : undefined}
+                {this.state.recipeDetails.extendedIngredients.length ?
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }}>Ingredients</Text>
+                    {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
+                      <Text key={i}>{ingredient.original}</Text>
+                    ))}
+                  </View> : undefined}
+                <Button
+                  title="Compare"
+                  buttonStyle={{
+                  }}
+                  onPress={() => {
+                    this.compareIngredients();
+                    this.setState({
+                      addMissing: true
+                    });
+                  }}
+                />
+                {this.state.recipeDetails.analyzedInstructions.length ?
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }}>Instructions</Text>
+                    {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                      <Text key={i}>{step.number}. {step.step}</Text>
+                    ))}
+                  </View> : undefined}
+                <Button
+                  title='Complete!'
+                  buttonStyle={{
+                    backgroundColor: 'green'
+                  }}
+                  onPress={() => {
+                    console.log('Completed');
+                    this.parseIngredients();
+                    this.setState({
+                      completed: true
+                    })
+                  }}
+                />
+                <Modal
+                  animationType='slide'
+                  visible={this.state.addMissing}
+                  onRequestClose={() => {
+                    this.setState({ addMissing: false });
+                  }}
+                ><AddMissing missing={this.state.missing} email={this.props.email} getUserGroceries={this.props.getUserGroceries} closeMissing={this.closeMissing} />
+                </Modal>
+                <Modal
+                  animationType='slide'
+                  visible={this.state.completed}
+                  onRequestClose={() => {
+                    this.setState({ completed: false })
+                  }}
+                ><Completed recipeIngredients={this.state.recipeIngredients} email={this.props.email} getIngredients={this.props.getIngredients} searchRecipes={this.props.searchRecipes} closeCompleted={this.closeCompleted} />
+                </Modal>
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </ImageBackground>
       );
     } else {
       return (

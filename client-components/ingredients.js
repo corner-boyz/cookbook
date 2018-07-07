@@ -57,7 +57,7 @@ class Ingredients extends React.Component {
         {
           name: 'Liter',
           abrv: 'l',
-        },{
+        }, {
           name: 'Kiloliter',
           abrv: 'kl',
         },
@@ -179,7 +179,8 @@ class Ingredients extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 18 }}>Here are your Ingredients</Text>
+          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Ingredients</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
@@ -202,7 +203,16 @@ class Ingredients extends React.Component {
               editMode: false
             })
           }}>
-          <View style={[styles.container, { backgroundColor: 'white', }]}>
+          <ImageBackground
+            style={[styles.container, {
+            }]}
+            source={require('../media/4.jpg')}
+            blurRadius={0}
+            onLayout={() => {
+              this.forceUpdate();
+            }}
+          >
+            {/* <View style={[styles.container, { backgroundColor: 'white', }]}> */}
             <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: 350 }]}
@@ -221,7 +231,8 @@ class Ingredients extends React.Component {
                   editMode: false,
                 })
               }} />
-          </View>
+            {/* </View> */}
+          </ImageBackground>
         </Modal>
       </ImageBackground>
     )

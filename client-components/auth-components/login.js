@@ -74,6 +74,7 @@ class Login extends React.Component {
             type: 'ionicon',
             color: 'lightgray'
           }}
+          autoFocus={true}
         />
         <Input
           placeholder='Password'
