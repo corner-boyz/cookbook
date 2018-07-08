@@ -75,10 +75,13 @@ class RecipeList extends React.Component {
           }}
         >
           <SearchBar
-            platform="android"
-            onClear={() => {this.props.screenProps.searchRecipes()}}
-            onChangeText={(text) => {this.setState({searchText: text})}}
-            onSubmitEditing={() => {this.props.screenProps.searchRecipes({ingredients: this.state.searchText})}}
+            // platform="android"
+            round={true}
+            lightTheme={true}
+            containerStyle={{ width: Dimensions.get('window').width }}
+            onClear={() => { this.props.screenProps.searchRecipes() }}
+            onChangeText={(text) => { this.setState({ searchText: text }) }}
+            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
             placeholder='Search recipes by ingredients' />
           <FlatList
             key={this.state.rows}

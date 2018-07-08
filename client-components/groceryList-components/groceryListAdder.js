@@ -15,7 +15,7 @@ class GroceryListAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-        <Switch
+        {/* <Switch
           onValueChange={() => {
             this.setState({
               switcher: !this.state.switcher
@@ -25,7 +25,7 @@ class GroceryListAdder extends React.Component {
           value={this.state.switcher}
           tintColor='red'
           
-        />
+        /> */}
         {this.state.switcher === true ?
           <Button
             title='Selected => Pantry'
@@ -33,6 +33,9 @@ class GroceryListAdder extends React.Component {
             backgroundColor='orange'
             onPress={() => {
               this.props.purchaseIngredients();
+            }}
+            onLongPress={() => {
+              this.setState({ switcher: false })
             }}
           />
           :
@@ -42,6 +45,9 @@ class GroceryListAdder extends React.Component {
             buttonStyle={{ backgroundColor: 'red' }}
             onPress={() => {
               this.props.deleteIngredients();
+            }}
+            onLongPress={() => {
+              this.setState({ switcher: true })
             }}
           />
         }
