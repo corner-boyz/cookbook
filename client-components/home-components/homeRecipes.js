@@ -43,7 +43,7 @@ class HomeRecipes extends React.Component {
           containerStyle={{ backgroundColor: 'transparent' }}
         />
         <Modal
-          animationType="fade"
+          animationType="slide"
           transparent={false}
           visible={this.state.showRecipe}
           onRequestClose={() => {
@@ -52,7 +52,7 @@ class HomeRecipes extends React.Component {
             })
             this.props.getUserRecipes();
           }}>
-          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} getUserRecipes={this.props.getUserRecipes} ingredients={this.props.ingredients} getUserGroceries={this.props.getUserGroceries} getIngredients={this.props.getIngredients} searchRecipes = {this.props.searchRecipes} />
+          <Recipe selectedRecipe={selectedRecipe} email={this.props.email} recipeBack={this.recipeBack} getUserRecipes={this.props.getUserRecipes} ingredients={this.props.ingredients} getUserGroceries={this.props.getUserGroceries} getIngredients={this.props.getIngredients} searchRecipes={this.props.searchRecipes} />
         </Modal>
 
       </View >
