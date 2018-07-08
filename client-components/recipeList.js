@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions } from 'react-native';
+import { SearchBar } from 'react-native-elements'
 
 import { styles } from '../styles'
 import RecipeListEntry from './recipeList-components/recipeListEntry'
@@ -11,6 +12,7 @@ class RecipeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchText: '',
       recipeListIndex: this.props.screenProps.recipeListIndex,
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0),
@@ -72,6 +74,12 @@ class RecipeList extends React.Component {
             this.forceUpdate();
           }}
         >
+          <SearchBar
+            platform="android"
+            onClear={() => {this.props.screenProps.searchRecipes()}}
+            onChangeText={(text) => {this.setState({searchText: text})}}
+            onSubmitEditing={() => {this.props.screenProps.searchRecipes({ingredients: this.state.searchText})}}
+            placeholder='Search recipes by ingredients' />
           <FlatList
             key={this.state.rows}
             data={this.props.screenProps.recipes}

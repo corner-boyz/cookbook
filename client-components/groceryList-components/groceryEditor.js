@@ -15,7 +15,7 @@ class GroceryEditor extends React.Component {
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <TextInput
           width={Dimensions.get('window').width / 10}
-          placeholder={(this.props.item.quantity).toString()}
+          placeholder={(this.props.item.quantity ? this.props.item.quantity.toString() : '0')}
           keyboardType='phone-pad'
           onChangeText={(text) => {
             this.setState({ text })

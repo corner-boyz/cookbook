@@ -26,7 +26,7 @@ class IngredientEntry extends React.Component {
           key={this.props.item.index}
           title={this.props.item.ingredient}
 
-          subtitle={this.props.item.quantity.toString() + (this.props.item.unit || '')}
+          subtitle={(this.props.item.quantity ? this.props.item.quantity.toString() : '0') + (this.props.item.unit || '')}
           leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
           roundAvatar={true}
           onLongPress={() => {
