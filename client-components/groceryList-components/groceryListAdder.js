@@ -37,6 +37,9 @@ class GroceryListAdder extends React.Component {
             onLongPress={() => {
               this.setState({ switcher: false })
             }}
+            buttonStyle={{
+              marginBottom: 10
+            }}
           />
           :
           <Button
@@ -49,13 +52,15 @@ class GroceryListAdder extends React.Component {
             onLongPress={() => {
               this.setState({ switcher: true })
             }}
+            buttonStyle={{
+              marginBottom: 10
+            }}
           />
         }
         <View style={{ flexDirection: 'row' }}>
           <Input
             label='Add to Grocery List'
             placeholder='Ex. "2 pound salmon"'
-
             shake={true}
             inputContainerStyle={{
               borderWidth: 2,  // size/width of the border
@@ -64,7 +69,6 @@ class GroceryListAdder extends React.Component {
               marginTop: 10,
               marginBottom: 10,
               height: 40
-
             }}
             style={{ backgroundColor: 'white' }}
             value={this.state.text}

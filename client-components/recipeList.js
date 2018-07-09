@@ -81,16 +81,6 @@ class RecipeList extends React.Component {
             onChangeText={(text) => { this.setState({ searchText: text }) }}
             onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
             placeholder='Search recipes by ingredients' />
-          {/* <SearchBar
-            // platform="android"
-            round={true}
-            lightTheme={true}
-            containerStyle={{ width: Dimensions.get('window').width }}
-            onClear={() => { this.props.screenProps.searchRecipes() }}
-            onCancel={() => { this.props.screenProps.searchRecipes() }}
-            onChangeText={(text) => { this.setState({ searchText: text }) }}
-            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
-            placeholder='Search recipes by ingredients' /> */}
           <FlatList
             key={this.state.rows}
             data={this.props.screenProps.recipes}
@@ -128,15 +118,6 @@ class RecipeList extends React.Component {
           source={require('../media/4.jpg')}
           blurRadius={0}
         >
-          {/* <SearchBar
-            platform="android"
-            round={true}
-            lightTheme={true}
-            containerStyle={{ width: Dimensions.get('window').width }}
-            onClear={() => { this.props.screenProps.searchRecipes() }}
-            onChangeText={(text) => { this.setState({ searchText: text }) }}
-            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
-            placeholder='Search recipes by ingredients' /> */}
           <SearchBar
             platform="android"
             containerStyle={{ width: Dimensions.get('window').width }}
@@ -145,16 +126,14 @@ class RecipeList extends React.Component {
             onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
             placeholder='Search recipes by ingredients' />
           <Text
-            style={{ 
+            style={{
               paddingTop: 15,
               flex: 1,
               justifyContent: 'center'
-            
             }}
           >Add ingredients to pantry or search to generate recipes</Text>
         </ImageBackground>
       );
-
     } else {
       return (
         <ImageBackground

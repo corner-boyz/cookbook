@@ -197,6 +197,9 @@ class Recipe extends React.Component {
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
               <Image
                 style={styles.recipeImage}
+                borderWidth={5}
+                borderColor='lightgray'
+                borderRadius={5}
                 source={{ uri: this.state.recipeDetails.image }}
               />
               {this.props.email && !this.state.isSaved ?
@@ -363,6 +366,7 @@ class Recipe extends React.Component {
                   title='Complete'
                   buttonStyle={{
                     backgroundColor: 'green',
+                    marginTop: 10
                   }}
                   onPress={() => {
                     console.log('Completed');
