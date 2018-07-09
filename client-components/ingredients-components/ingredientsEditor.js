@@ -23,11 +23,14 @@ class IngredientsEditor extends React.Component {
           }}
           value={this.state.text}
           paddingLeft={10}
+          style={{
+            fontSize: 18
+          }}
         />
         <Picker
           selectedValue={this.props.item.unit}
           style={{
-            height: 35,
+            height: 45,
             width: 100,
             backgroundColor: 'transparent',
           }}
@@ -46,7 +49,7 @@ class IngredientsEditor extends React.Component {
         </Picker>
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 18,
             textAlignVertical: 'center',
           }}
         >{this.props.item.ingredient}

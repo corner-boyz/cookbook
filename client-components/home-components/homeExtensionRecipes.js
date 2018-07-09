@@ -17,6 +17,9 @@ class HomeExtensionRecipes extends React.Component {
           onPress={() => {
             Linking.openURL(this.props.item.sourceurl);
           }}
+          titleStyle={{
+            fontSize: 20
+          }}
           chevron={true}
           topDivider={true}
           containerStyle={{ backgroundColor: 'transparent' }}

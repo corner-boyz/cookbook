@@ -31,7 +31,7 @@ class RecipeListEntry extends React.Component {
   //====================================================
   categorizeIngredients = () => {
     const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'ground', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves'];
-    
+
     let recipeObj = [];
     let pantryObj = {};
     let ownedIngredients = [];
@@ -105,12 +105,12 @@ class RecipeListEntry extends React.Component {
             imageContainerStyle={{ paddingVertical: 5, borderWidth: 5, borderColor: 'lightgray', borderRadius: 5 }}
             title={this.props.recipe.title}
             titleStyle={{
-              fontSize: 16
+              fontSize: 18
             }}
             featured={true}
             caption={`${this.state.ownedIngredients.length ? '\nHave:' + this.state.ownedIngredients.map((ingredient) => (' ' + ingredient)) : ''}${this.state.missedIngredients.length ? '\nNeed:' + this.state.missedIngredients.map((ingredient) => (' ' + ingredient)) : ''}`}
             captionStyle={{
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: 'bold',
               color: 'white',
               justifyContent: 'flex-start'

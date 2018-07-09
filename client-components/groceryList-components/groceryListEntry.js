@@ -23,6 +23,12 @@ class GroceryListEntry extends React.Component {
           leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
           roundAvatar={true}
           topDivider={true}
+          titleStyle={{
+            fontSize: 20
+          }}
+          subtitleStyle={{
+            fontSize: 18
+          }}
           checkBox={{
             checked: this.props.item.ispurchased,
             checkmark: this.props.item.ispurchased,
@@ -69,7 +75,7 @@ class GroceryListEntry extends React.Component {
             }}
           >
             <Text
-              style={{ fontSize: 18 }}
+              style={{ fontSize: 20 }}
             >Delete {this.props.item.ingredient} from Grocery List?
             </Text>
             <Button
