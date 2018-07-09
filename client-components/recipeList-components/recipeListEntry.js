@@ -29,7 +29,7 @@ class RecipeListEntry extends React.Component {
   }
   //====================================================
   categorizeIngredients = () => {
-    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'ground', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned'];
+    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'ground', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves'];
     
     let recipeObj = [];
     let pantryObj = {};
