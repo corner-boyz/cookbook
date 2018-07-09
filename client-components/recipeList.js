@@ -87,7 +87,7 @@ class RecipeList extends React.Component {
             renderItem={
               ({ item }) => (
                 <View style={{ padding: 5, }}>
-                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} />
+                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} ingredients={this.props.screenProps.ingredients}/>
                 </View>
               )
             }

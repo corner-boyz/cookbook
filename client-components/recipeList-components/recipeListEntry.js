@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, Animated, View, Alert } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
-
+import pluralize from '../../pluralize'
 import { styles } from '../../styles';
 import IP from '../../IP';
 
@@ -12,10 +12,14 @@ class RecipeListEntry extends React.Component {
     super(props);
     this.state = {
       fadeAnim: new Animated.Value(0),
-      size: Dimensions.get('window').width < Dimensions.get('window').height ? 2.1 : 4.3
+      size: Dimensions.get('window').width < Dimensions.get('window').height ? 2.1 : 4.3,
+      ownedIngredients: [],
+      missedIngredients: []
     };
   }
+  //====================================================
   componentDidMount() {
+    this.categorizeIngredients();
     Animated.timing(this.state.fadeAnim,
       {
         toValue: 1,
@@ -23,6 +27,52 @@ class RecipeListEntry extends React.Component {
       }
     ).start();
   }
+  //====================================================
+  categorizeIngredients = () => {
+    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'ground', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned'];
+    
+    let recipeObj = [];
+    let pantryObj = {};
+    let ownedIngredients = [];
+    let missedIngredients = [];
+
+    this.props.recipe.usedIngredients.forEach((ingredient) => {
+      let string = pluralize.singular(ingredient.name.toLowerCase());
+      if (string.length > 1) {
+        string = string.split(' ').filter((word) => {
+          return !filteredOutWords.includes(word);
+        }).join(' ');
+      }
+      recipeObj[string] = true;
+    });
+    this.props.recipe.missedIngredients.forEach((ingredient) => {
+      let string = pluralize.singular(ingredient.name.toLowerCase());
+      if (string.length > 1) {
+        string = string.split(' ').filter((word) => {
+          return !filteredOutWords.includes(word);
+        }).join(' ');
+      }
+      recipeObj[string] = true;
+    });
+
+    this.props.ingredients.forEach((ingredient) => {
+      pantryObj[ingredient.ingredient] = true;
+    });
+
+    for (let ingredient in recipeObj) {
+      if (pantryObj.hasOwnProperty(ingredient)) {
+        ownedIngredients.push(ingredient);
+      } else {
+        missedIngredients.push(ingredient);
+      }
+    }
+
+    this.setState({
+      ownedIngredients: ownedIngredients,
+      missedIngredients: missedIngredients
+    });
+  }
+
   retrieveRecipe = (recipeId) => {
     axios.get(`http://${IP}/api/recipe/${recipeId}`).then((results) => {
       this.props.selectRecipe(results.data);
@@ -53,7 +103,7 @@ class RecipeListEntry extends React.Component {
               fontSize: 16
             }}
             featured={true}
-            caption={`Have: ${this.props.recipe.usedIngredients.map((ingredient) => (' ' + ingredient.name))}${this.props.recipe.missedIngredients.length ? '\nNeed:' + this.props.recipe.missedIngredients.map((ingredient) => (' ' + ingredient.name)) : ''}`}
+            caption={`${this.state.ownedIngredients.length ? '\nHave:' + this.state.ownedIngredients.map((ingredient) => (' ' + ingredient)) : ''}${this.state.missedIngredients.length ? '\nNeed:' + this.state.missedIngredients.map((ingredient) => (' ' + ingredient)) : ''}`}
             captionStyle={{
               fontSize: 12,
               fontWeight: 'bold',
