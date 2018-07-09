@@ -28,6 +28,7 @@ class Recipe extends React.Component {
       instructionsCollapsed: false,
       equipmentCollapsed: true,
       checked: false,
+      index: 0,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -37,6 +38,7 @@ class Recipe extends React.Component {
     this.findRecipe();
     this.selectUserRecipe();
     // this.compareIngredients();
+    // console.log('Mounting');
   }
   //====================================================
   closeMissing() {
@@ -69,19 +71,22 @@ class Recipe extends React.Component {
   // this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map
   compareIngredients() {
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
-      // console.log('COMPARED', results.data);
       this.setState({
         missing: results.data
       })
-      console.log('Missing: ', this.state.missing);
       this.state.recipeDetails.extendedIngredients.map((item) => {
-        console.log('Ingredient: ', item);
         item.checked = true;
+        console.log('Firing');
         this.state.missing.forEach((item2) => {
           if (item.name.includes(item2.ingredient)) {
             item.checked = false;
+            // this.forceUpdate();
+            // this.setState({
+            //   index: this.state.index + 1
+            // })
           }
         })
+        this.forceUpdate();
       })
       // this.state.missing.map((item2) => {
       //   console.log('test2', item2.ingredient);
@@ -93,7 +98,7 @@ class Recipe extends React.Component {
 
   parseIngredients() {
     axios.post(`http://${IP}/api/formatparse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
-      console.log('parsed', results.data);
+      // console.log('parsed', results.data);
       this.setState({
         recipeIngredients: results.data
       });
