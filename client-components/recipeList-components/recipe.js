@@ -272,9 +272,9 @@ class Recipe extends React.Component {
                   : undefined}
                 <Collapsible collapsed={this.state.instructionsCollapsed}>
                   <View>
-                    {this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
+                    {this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
                       <Text key={i}>{step.number}. {step.step}</Text>
-                    ))}
+                    )) : undefined}
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length ?
