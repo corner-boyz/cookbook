@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "Flex Chef",
+    "icon": "./client-components/Food-Dome-512.png",
+    "sdkVersion": "27.0.0",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "org.cornerboyz.flexchef"
+    },
+    "android": {
+      "package": "org.cornerboyz.flexchef"
+    }
   }
 }
