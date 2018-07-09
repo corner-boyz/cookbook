@@ -286,10 +286,10 @@ class Recipe extends React.Component {
                       paddingLeft: 15
                     }}
                   >
-                    <Text
+                    {this.state.missing.length > 0 ? <Text
                       style={{
                         fontStyle: 'italic',
-                        fontSize: 15
+                        fontSize: 16
                       }}
                       onLongPress={() => {
                         // this.compareIngredients();
@@ -297,16 +297,8 @@ class Recipe extends React.Component {
                           addMissing: true
                         });
                       }}
-                    >Hold to compare with pantry</Text>
+                    >Hold to compare with pantry</Text> : null}
                     {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
-                      // <Text
-                      //   onLongPress={() => {
-                      //     this.compareIngredients();
-                      //     this.setState({
-                      //       addMissing: true
-                      //     });
-                      //   }}
-                      //   key={i}>{ingredient.original}</Text>
                       <CheckBox
                         key={i}
                         title={ingredient.original}
@@ -316,6 +308,12 @@ class Recipe extends React.Component {
                         checked={ingredient.checked}
                         uncheckedIcon='exclamation-circle'
                         uncheckedColor='red'
+                        onLongPress={() => {
+                          // this.compareIngredients();
+                          this.setState({
+                            addMissing: true
+                          });
+                        }}
                       />
                     ))}
                   </View>
@@ -397,9 +395,21 @@ class Recipe extends React.Component {
       );
     } else {
       return (
-        <View style={styles.spinner}>
+        <ImageBackground
+          style={[styles.container, styles.spinner, {
+            backgroundColor: 'white',
+            justifyContent: 'center'
+          }]}
+          source={require('../../media/4.jpg')}
+          blurRadius={0}
+          onLayout={() => {
+            this.forceUpdate();
+          }}
+        >
+          {/* <View style={styles.spinner}> */}
           <ActivityIndicator size="large" color="orange" />
-        </View>
+          {/* </View> */}
+        </ImageBackground>
       );
     }
   }

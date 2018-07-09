@@ -129,6 +129,7 @@ class AddMissing extends React.Component {
                   item.quantity = quantity
                 }}
                 paddingLeft={10}
+                placeholderTextColor='black'
               />
               <Picker
                 selectedValue={item.unit}
@@ -159,6 +160,7 @@ class AddMissing extends React.Component {
                   item.ingredient = ingredient
                 }}
                 paddingLeft={10}
+                placeholderTextColor='black'
               />
             </View>
           )}
