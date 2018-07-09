@@ -179,8 +179,8 @@ class Ingredients extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Ingredients</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Ingredients</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
@@ -213,7 +213,7 @@ class Ingredients extends React.Component {
             }}
           >
             {/* <View style={[styles.container, { backgroundColor: 'white', }]}> */}
-            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
+            <Text style={{ fontSize: 20 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.props.screenProps.ingredients}

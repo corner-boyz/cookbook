@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Dimensions } from 'react-native';
+import { Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Card, Button, Input, Alert } from 'react-native-elements';
 
 import IP from '../../IP';
@@ -43,79 +43,88 @@ class Login extends React.Component {
   //====================================================
   render() {
     return (
-      <Card
-        containerStyle={{
-          width: Dimensions.get('window').width / 2,
-          borderRadius: 20,
-        }}
-        wrapperStyle={{
-          alignItems: 'center',
-        }}
-      >
-        <Input
-          placeholder='Email'
-          onChangeText={text => this.setState({
-            email: text,
-            wrongEmailOrPass: false,
-          })}
-          inputStyle={{
-            fontSize: 12
-          }}
-          inputContainerStyle={{
-            borderWidth: 1,
+      <KeyboardAvoidingView behavior="padding">
+        <Card
+          containerStyle={{
+            width: Dimensions.get('window').width / 1.5,
             borderRadius: 20,
-            height: 35,
-            width: Dimensions.get('window').width / 2.5,
-            marginTop: 5,
-            marginBottom: 5,
+            alignItems: 'center'
           }}
-          leftIcon={{
-            name: 'ios-mail',
-            type: 'ionicon',
-            color: 'lightgray'
+          wrapperStyle={{
+            alignItems: 'center',
           }}
-          autoFocus={true}
-        />
-        <Input
-          placeholder='Password'
-          secureTextEntry={true}
-          onChangeText={text => this.setState({
-            password: text,
-            wrongEmailOrPass: false,
-          })}
-          inputStyle={{
-            fontSize: 12
-          }}
-          inputContainerStyle={{
-            borderWidth: 1,
-            borderRadius: 20,
-            height: 35,
-            width: Dimensions.get('window').width / 2.5,
-            marginTop: 5,
-            marginBottom: 5,
-          }}
-          leftIcon={{
-            name: 'ios-lock',
-            type: 'ionicon',
-            color: 'lightgrey'
-          }}
-        />
-        <Button
-          title='Log In'
-          buttonStyle={{
-            backgroundColor: 'dodgerblue',
-            marginTop: 5,
-            borderRadius: 20,
-            height: 35,
-            width: Dimensions.get('window').width / 2.5,
-          }}
-          loading={this.props.loading}
-          onPress={() => {
-            this.props.toggleLoading()
-            this.props.submitLogin(this.state.email, this.state.password);
-          }}
-        />
-      </Card>
+        >
+          <Input
+            placeholder='Email'
+            onChangeText={text => this.setState({
+              email: text,
+              wrongEmailOrPass: false,
+            })}
+            inputStyle={{
+              fontSize: 14
+            }}
+            inputContainerStyle={{
+              borderWidth: 1,
+              borderRadius: 20,
+              height: 45,
+              width: Dimensions.get('window').width / 2,
+              marginTop: 5,
+              marginBottom: 5,
+            }}
+            // containerStyle={{
+
+            // }}
+            leftIcon={{
+              name: 'ios-mail',
+              type: 'ionicon',
+              color: 'lightgray'
+            }}
+            autoFocus={true}
+          />
+          <Input
+            placeholder='Password'
+            secureTextEntry={true}
+            onChangeText={text => this.setState({
+              password: text,
+              wrongEmailOrPass: false,
+            })}
+            inputStyle={{
+              fontSize: 14
+            }}
+            inputContainerStyle={{
+              borderWidth: 1,
+              borderRadius: 20,
+              height: 45,
+              width: Dimensions.get('window').width / 2,
+              marginTop: 5,
+              marginBottom: 5,
+
+            }}
+
+            leftIcon={{
+              name: 'ios-lock',
+              type: 'ionicon',
+              color: 'lightgrey'
+            }}
+
+          />
+          <Button
+            title='Log In'
+            buttonStyle={{
+              backgroundColor: 'dodgerblue',
+              marginTop: 5,
+              borderRadius: 20,
+              height: 45,
+              width: Dimensions.get('window').width / 2,
+            }}
+            loading={this.props.loading}
+            onPress={() => {
+              this.props.toggleLoading()
+              this.props.submitLogin(this.state.email, this.state.password);
+            }}
+          />
+        </Card>
+      </KeyboardAvoidingView>
     )
   }
 }

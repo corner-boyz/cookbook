@@ -33,6 +33,9 @@ class HomeRecipes extends React.Component {
         <ListItem
           key={this.props.index}
           title={this.props.item.title}
+          titleStyle={{
+            fontSize: 20
+          }}
           leftAvatar={{ source: { uri: this.props.item.imageurl } }}
           roundAvatar={true}
           onPress={() => {
