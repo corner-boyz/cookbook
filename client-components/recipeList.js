@@ -75,14 +75,22 @@ class RecipeList extends React.Component {
           }}
         >
           <SearchBar
-            // platform="android"
-            round={true}
-            lightTheme={true}
+            platform="android"
             containerStyle={{ width: Dimensions.get('window').width }}
             onClear={() => { this.props.screenProps.searchRecipes() }}
             onChangeText={(text) => { this.setState({ searchText: text }) }}
             onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
             placeholder='Search recipes by ingredients' />
+          {/* <SearchBar
+            // platform="android"
+            round={true}
+            lightTheme={true}
+            containerStyle={{ width: Dimensions.get('window').width }}
+            onClear={() => { this.props.screenProps.searchRecipes() }}
+            onCancel={() => { this.props.screenProps.searchRecipes() }}
+            onChangeText={(text) => { this.setState({ searchText: text }) }}
+            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
+            placeholder='Search recipes by ingredients' /> */}
           <FlatList
             key={this.state.rows}
             data={this.props.screenProps.recipes}
@@ -90,7 +98,7 @@ class RecipeList extends React.Component {
             renderItem={
               ({ item }) => (
                 <View style={{ padding: 5, }}>
-                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} ingredients={this.props.screenProps.ingredients}/>
+                  <RecipeListEntry recipe={item} selectRecipe={this.selectRecipe} ingredients={this.props.screenProps.ingredients} />
                 </View>
               )
             }
@@ -120,11 +128,21 @@ class RecipeList extends React.Component {
           source={require('../media/4.jpg')}
           blurRadius={0}
         >
+          {/* <SearchBar
+            platform="android"
+            round={true}
+            lightTheme={true}
+            containerStyle={{ width: Dimensions.get('window').width }}
+            onClear={() => { this.props.screenProps.searchRecipes() }}
+            onChangeText={(text) => { this.setState({ searchText: text }) }}
+            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
+            placeholder='Search recipes by ingredients' /> */}
           <SearchBar
             platform="android"
-            onClear={() => {this.props.screenProps.searchRecipes()}}
-            onChangeText={(text) => {this.setState({searchText: text})}}
-            onSubmitEditing={() => {this.props.screenProps.searchRecipes({ingredients: this.state.searchText})}}
+            containerStyle={{ width: Dimensions.get('window').width }}
+            onClear={() => { this.props.screenProps.searchRecipes() }}
+            onChangeText={(text) => { this.setState({ searchText: text }) }}
+            onSubmitEditing={() => { this.props.screenProps.searchRecipes({ ingredients: this.state.searchText }) }}
             placeholder='Search recipes by ingredients' />
           <Text style={styles.spinner}>Add ingredients to pantry or search to generate recipes</Text>
         </ImageBackground>

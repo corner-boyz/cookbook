@@ -1,8 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView, Image, ActivityIndicator, Dimensions, Modal, ImageBackground, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
 import Collapsible from 'react-native-collapsible';
-import Accordion from 'react-native-collapsible/Accordion';
 import axios from 'axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -24,10 +23,11 @@ class Recipe extends React.Component {
       completed: false,
       timeCollapsed: false,
       dietCollapsed: true,
-      nutritionCollapsed: false,
+      nutritionCollapsed: true,
       ingredientsCollapsed: false,
       instructionsCollapsed: false,
       equipmentCollapsed: true,
+      checked: false,
     };
     this.closeMissing = this.closeMissing.bind(this);
     this.closeCompleted = this.closeCompleted.bind(this);
@@ -50,6 +50,11 @@ class Recipe extends React.Component {
   }
   findRecipe() {
     axios.get(`http://${IP}/api/recipe/${this.props.selectedRecipe.id}`).then((results) => {
+      if (results.data.analyzedInstructions.length) {
+        results.data.analyzedInstructions[0].steps.map((step) => {
+          step.checked = false
+        })
+      }
       this.setState({
         recipeDetails: results.data
       });
@@ -59,7 +64,7 @@ class Recipe extends React.Component {
       }
     });
   }
-
+  // this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map
   compareIngredients() {
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       // console.log('COMPARED', results.data);
@@ -146,11 +151,11 @@ class Recipe extends React.Component {
       const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
       let equipment = [];
       if (this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length) {
-          this.state.recipeDetails.analyzedInstructions[0].steps.forEach((step) => {
-            step.equipment.forEach((item) => {
-              equipment.push(item.name);
-            });
+        this.state.recipeDetails.analyzedInstructions[0].steps.forEach((step) => {
+          step.equipment.forEach((item) => {
+            equipment.push(item.name);
           });
+        });
       }
 
       return (
@@ -166,7 +171,7 @@ class Recipe extends React.Component {
           <ScrollView
             width={Dimensions.get('window').width}
             alignSelf='center'
-            flex={0.8}
+            flex={0.9}
             onLayout={() => { this.forceUpdate() }}
           >
             <View
@@ -175,7 +180,7 @@ class Recipe extends React.Component {
                 alignItems: 'center'
               }}
             >
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{this.state.recipeDetails.title}</Text>
               <Image
                 style={styles.recipeImage}
                 source={{ uri: this.state.recipeDetails.image }}
@@ -210,10 +215,14 @@ class Recipe extends React.Component {
                 }}
               >
                 {this.state.recipeDetails.preparationMinutes || this.state.recipeDetails.cookingMinutes || this.state.recipeDetails.readyInMinutes ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ timeCollapsed: !this.state.timeCollapsed }) }}>Time {this.state.timeCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ timeCollapsed: !this.state.timeCollapsed }) }}>Time {this.state.timeCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.timeCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
                     {this.state.recipeDetails.preparationMinutes ?
                       <Text>Preparation: {this.convertMinutes(this.state.recipeDetails.preparationMinutes)}</Text>
                       : undefined}
@@ -226,20 +235,28 @@ class Recipe extends React.Component {
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.diets.length ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ dietCollapsed: !this.state.dietCollapsed }) }}>Diet {this.state.dietCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ dietCollapsed: !this.state.dietCollapsed }) }}>Diet {this.state.dietCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.dietCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
                     {this.state.recipeDetails.diets.map((diet, i) => (
                       <Text key={i}>{diet}</Text>
                     ))}
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.nutrition.nutrients.length ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ nutritionCollapsed: !this.state.nutritionCollapsed }) }}>Nutrition Facts {this.state.nutritionCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ nutritionCollapsed: !this.state.nutritionCollapsed }) }}>Nutrition Facts {this.state.nutritionCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.nutritionCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
                     <Text>{`Servings: ${this.state.recipeDetails.servings}`}</Text>
                     {this.state.recipeDetails.nutrition.nutrients.map((nutrient, i) => (
                       wantedNutrients.includes(nutrient.title) ? <Text key={i}>{`${nutrient.title}: ${nutrient.amount} ${nutrient.unit}`}</Text> : undefined
@@ -247,41 +264,85 @@ class Recipe extends React.Component {
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.extendedIngredients.length ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ ingredientsCollapsed: !this.state.ingredientsCollapsed }) }}>Ingredients {this.state.ingredientsCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ ingredientsCollapsed: !this.state.ingredientsCollapsed }) }}>Ingredients {this.state.ingredientsCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.ingredientsCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontStyle: 'italic',
+                        fontSize: 15
+                      }}
+                      onLongPress={() => {
+                        this.compareIngredients();
+                        this.setState({
+                          addMissing: true
+                        });
+                      }}
+                    >Hold to compare with pantry</Text>
                     {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
-                      <Text key={i}>{ingredient.original}</Text>
+                      <Text
+                        onLongPress={() => {
+                          this.compareIngredients();
+                          this.setState({
+                            addMissing: true
+                          });
+                        }}
+                        key={i}>{ingredient.original}</Text>
                     ))}
                   </View>
+                  {/* <Button
+                    title="Compare"
+                    buttonStyle={{
+                    }}
+                    onPress={() => {
+                      this.compareIngredients();
+                      this.setState({
+                        addMissing: true
+                      });
+                    }}
+                  /> */}
                 </Collapsible>
-                <Button
-                  title="Compare"
-                  buttonStyle={{
-                  }}
-                  onPress={() => {
-                    this.compareIngredients();
-                    this.setState({
-                      addMissing: true
-                    });
-                  }}
-                />
                 {this.state.recipeDetails.analyzedInstructions.length ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ instructionsCollapsed: !this.state.instructionsCollapsed }) }}>Instructions {this.state.instructionsCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ instructionsCollapsed: !this.state.instructionsCollapsed }) }}>Instructions {this.state.instructionsCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.instructionsCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
                     {this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map((step, i) => (
-                      <Text key={i}>{step.number}. {step.step}</Text>
+                      <CheckBox
+                        key={i}
+                        title={step.step}
+                        containerStyle={{
+                          backgroundColor: 'transparent',
+                        }}
+                        checked={step.checked}
+                        checkedColor='green'
+                        onPress={() => {
+                          step.checked = !step.checked
+                          this.forceUpdate();
+                          // console.log(step);
+                        }}
+                      />
                     )) : undefined}
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length ?
-                  <Text style={{ fontWeight: 'bold' }} onPress={() => { this.setState({ equipmentCollapsed: !this.state.equipmentCollapsed }) }}>Equipment Used {this.state.equipmentCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ equipmentCollapsed: !this.state.equipmentCollapsed }) }}>Equipment Used {this.state.equipmentCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.equipmentCollapsed}>
-                  <View>
+                  <View
+                    style={{
+                      paddingLeft: 15
+                    }}
+                  >
                     {equipment.map((item, i) => (
                       <Text key={i}>{item}</Text>
                     ))}
