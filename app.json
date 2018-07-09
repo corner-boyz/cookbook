@@ -2,9 +2,9 @@
   "expo": {
     "name": "Flex Chef",
     "icon": "./client-components/Food-Dome-512.png",
-    "slug": "FlexChef",
     "sdkVersion": "27.0.0",
     "version": "1.0.0",
+    "description": "thesis",
     "ios": {
       "bundleIdentifier": "org.cornerboyz.flexchef"
     },

@@ -73,13 +73,14 @@ class Recipe extends React.Component {
       this.setState({
         missing: results.data
       })
-      console.log('Missing: ', this.state.missing);
+      // console.log('Missing: ', this.state.missing);
       this.state.recipeDetails.extendedIngredients.map((item) => {
         console.log('Ingredient: ', item);
         item.checked = true;
         this.state.missing.forEach((item2) => {
           if (item.name.includes(item2.ingredient)) {
             item.checked = false;
+            this.forceUpdate();
           }
         })
       })
