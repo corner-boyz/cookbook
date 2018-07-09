@@ -39,7 +39,7 @@ class Signup extends React.Component {
       })
         .then(() => {
           this.props.toggleLoading()
-          this.props.logIn(this.state.email, this.state.password)
+          this.props.logIn(this.state.email, this.state.name)
         }).catch(err => {
           this.props.toggleLoading()
           if (err.request._hasError || err.response.request.status === 404) {
