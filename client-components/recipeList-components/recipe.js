@@ -36,6 +36,7 @@ class Recipe extends React.Component {
   componentDidMount() {
     this.findRecipe();
     this.selectUserRecipe();
+    // this.compareIngredients();
   }
   //====================================================
   closeMissing() {
@@ -58,6 +59,7 @@ class Recipe extends React.Component {
       this.setState({
         recipeDetails: results.data
       });
+      this.compareIngredients();
     }).catch((err) => {
       if (err.response && err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later');
@@ -71,7 +73,19 @@ class Recipe extends React.Component {
       this.setState({
         missing: results.data
       })
-
+      console.log('Missing: ', this.state.missing);
+      this.state.recipeDetails.extendedIngredients.map((item) => {
+        console.log('Ingredient: ', item);
+        item.checked = true;
+        this.state.missing.forEach((item2) => {
+          if (item.name.includes(item2.ingredient)) {
+            item.checked = false;
+          }
+        })
+      })
+      // this.state.missing.map((item2) => {
+      //   console.log('test2', item2.ingredient);
+      // })
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -278,34 +292,33 @@ class Recipe extends React.Component {
                         fontSize: 15
                       }}
                       onLongPress={() => {
-                        this.compareIngredients();
+                        // this.compareIngredients();
                         this.setState({
                           addMissing: true
                         });
                       }}
                     >Hold to compare with pantry</Text>
                     {this.state.recipeDetails.extendedIngredients.map((ingredient, i) => (
-                      <Text
-                        onLongPress={() => {
-                          this.compareIngredients();
-                          this.setState({
-                            addMissing: true
-                          });
+                      // <Text
+                      //   onLongPress={() => {
+                      //     this.compareIngredients();
+                      //     this.setState({
+                      //       addMissing: true
+                      //     });
+                      //   }}
+                      //   key={i}>{ingredient.original}</Text>
+                      <CheckBox
+                        key={i}
+                        title={ingredient.original}
+                        containerStyle={{
+                          backgroundColor: 'transparent',
                         }}
-                        key={i}>{ingredient.original}</Text>
+                        checked={ingredient.checked}
+                        uncheckedIcon='exclamation-circle'
+                        uncheckedColor='red'
+                      />
                     ))}
                   </View>
-                  {/* <Button
-                    title="Compare"
-                    buttonStyle={{
-                    }}
-                    onPress={() => {
-                      this.compareIngredients();
-                      this.setState({
-                        addMissing: true
-                      });
-                    }}
-                  /> */}
                 </Collapsible>
                 {this.state.recipeDetails.analyzedInstructions.length ?
                   <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ instructionsCollapsed: !this.state.instructionsCollapsed }) }}>Instructions {this.state.instructionsCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
@@ -335,7 +348,7 @@ class Recipe extends React.Component {
                   </View>
                 </Collapsible>
                 {this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length ?
-                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ equipmentCollapsed: !this.state.equipmentCollapsed }) }}>Equipment Used {this.state.equipmentCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 16 }} onPress={() => { this.setState({ equipmentCollapsed: !this.state.equipmentCollapsed }) }}>Equipment Needed {this.state.equipmentCollapsed ? <Ionicons name='ios-arrow-dropdown' size={20} color='black' /> : <Ionicons name='ios-arrow-dropright' size={20} color='black' />}</Text>
                   : undefined}
                 <Collapsible collapsed={this.state.equipmentCollapsed}>
                   <View
@@ -349,9 +362,9 @@ class Recipe extends React.Component {
                   </View>
                 </Collapsible>
                 <Button
-                  title='Complete!'
+                  title='Complete'
                   buttonStyle={{
-                    backgroundColor: 'green'
+                    backgroundColor: 'green',
                   }}
                   onPress={() => {
                     console.log('Completed');
