@@ -73,10 +73,10 @@ class LandingPage extends React.Component {
       >
 
         <Text style={{
-          fontSize: 20,
+          fontSize: 30,
           backgroundColor: 'transparent',
           fontWeight: 'bold'
-        }}>CookBook
+        }}>FlexBook
         </Text>
         <View flexDirection='row' elevation={0}>
           <Button
