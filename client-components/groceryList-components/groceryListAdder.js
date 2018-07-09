@@ -24,24 +24,34 @@ class GroceryListAdder extends React.Component {
           }}
           value={this.state.switcher}
           tintColor='red'
-          
+
         />
         {this.state.switcher === true ?
           <Button
             title='Selected => Pantry'
-            rounded={true}
             backgroundColor='orange'
             onPress={() => {
               this.props.purchaseIngredients();
+            }}
+            onLongPress={() => {
+              this.setState({ switcher: false })
+            }}
+            buttonStyle={{
+              marginBottom: 10
             }}
           />
           :
           <Button
             title='Delete Selected'
-            rounded={true}
-            buttonStyle={{ backgroundColor: 'red' }}
+            buttonStyle={{ backgroundColor: 'orange' }}
             onPress={() => {
               this.props.deleteIngredients();
+            }}
+            onLongPress={() => {
+              this.setState({ switcher: true })
+            }}
+            buttonStyle={{
+              marginBottom: 10
             }}
           />
         }
@@ -49,7 +59,6 @@ class GroceryListAdder extends React.Component {
           <Input
             label='Add to Grocery List'
             placeholder='Ex. "2 pound salmon"'
-
             shake={true}
             inputContainerStyle={{
               borderWidth: 2,  // size/width of the border
@@ -58,7 +67,6 @@ class GroceryListAdder extends React.Component {
               marginTop: 10,
               marginBottom: 10,
               height: 40
-
             }}
             style={{ backgroundColor: 'white' }}
             value={this.state.text}

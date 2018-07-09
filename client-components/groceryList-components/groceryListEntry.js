@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Modal } from 'react-native';
+import { View, Text, Modal, ImageBackground } from 'react-native';
 import { Button, CheckBox, ListItem } from 'react-native-elements';
 
 //====================================================
@@ -31,12 +31,16 @@ class GroceryListEntry extends React.Component {
               this.props.item.ispurchased = !this.props.item.ispurchased
               this.props.saveCheckboxes();
               this.forceUpdate();
-            }
+            },
+          }}
+          onPress={() => {
+            this.props.editMode();
           }}
           onLongPress={() => {
             this.setState({
               showDelete: true
             })
+            // this.props.editMode();
           }}
           containerStyle={{ backgroundColor: 'transparent' }}
         />
@@ -51,13 +55,19 @@ class GroceryListEntry extends React.Component {
             })
           }} a
         >
-          <View
+          <ImageBackground
             style={{
               flex: 1,
-              flexDirection: 'row',
+              flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center'
-            }}>
+            }}
+            source={require('../../media/4.jpg')}
+            blurRadius={0}
+            onLayout={() => {
+              this.forceUpdate();
+            }}
+          >
             <Text
               style={{ fontSize: 18 }}
             >Delete {this.props.item.ingredient} from Grocery List?
@@ -65,7 +75,8 @@ class GroceryListEntry extends React.Component {
             <Button
               title='Delete'
               buttonStyle={{
-                backgroundColor: 'red'
+                backgroundColor: 'red',
+                marginTop: 10
               }}
               rounded={true}
               onPress={() => {
@@ -76,7 +87,7 @@ class GroceryListEntry extends React.Component {
                 })
               }}
             />
-          </View>
+          </ImageBackground>
         </Modal>
       </View>
     )
