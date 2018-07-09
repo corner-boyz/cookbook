@@ -111,7 +111,7 @@ class AddMissing extends React.Component {
         >
           <Text
             style={{
-              fontSize: 17,
+              fontSize: 22,
               paddingBottom: 10
             }}
           >You are missing the following from your pantry.
@@ -134,7 +134,7 @@ class AddMissing extends React.Component {
               <Picker
                 selectedValue={item.unit}
                 style={{
-                  height: 35,
+                  height: 45,
                   width: 100,
                   backgroundColor: 'transparent',
                 }}

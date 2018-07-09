@@ -258,8 +258,8 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Grocery List</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Grocery List</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}

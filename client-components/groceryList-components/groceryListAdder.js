@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Picker, TextInput, Dimensions, Switch } from 'react-native'
+import { View, Switch } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 //====================================================
 class GroceryListAdder extends React.Component {
@@ -29,7 +29,6 @@ class GroceryListAdder extends React.Component {
         {this.state.switcher === true ?
           <Button
             title='Selected => Pantry'
-            backgroundColor='orange'
             onPress={() => {
               this.props.purchaseIngredients();
             }}
@@ -43,7 +42,7 @@ class GroceryListAdder extends React.Component {
           :
           <Button
             title='Delete Selected'
-            buttonStyle={{ backgroundColor: 'orange' }}
+            buttonStyle={{ backgroundColor: 'red' }}
             onPress={() => {
               this.props.deleteIngredients();
             }}

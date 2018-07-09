@@ -2,7 +2,7 @@ import React from 'react';
 
 import HomeRecipes from './home-components/homeRecipes.js'
 import HomeExtensionRecipes from './home-components/homeExtensionRecipes.js'
-import { Text, View, Animated, FlatList, SectionList, Dimensions, ImageBackground } from 'react-native';
+import { Text, Animated, SectionList, Dimensions, ImageBackground } from 'react-native';
 import { Button, } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -53,11 +53,11 @@ class Home extends React.Component {
       >
 
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
           <SectionList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             renderSectionHeader={({ section: { title } }) => (
-              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{title}</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{title}</Text>
             )}
             sections={[
               { title: 'Saved Recipes', data: this.props.screenProps.userRecipes, renderItem: savedRecipes },

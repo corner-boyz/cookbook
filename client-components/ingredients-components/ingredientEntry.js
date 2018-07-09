@@ -37,6 +37,12 @@ class IngredientEntry extends React.Component {
               })
             }
           }}
+          titleStyle={{
+            fontSize: 20
+          }}
+          subtitleStyle={{
+            fontSize: 18
+          }}
           onPress={() => {
             this.props.editMode()
           }}
@@ -72,7 +78,7 @@ class IngredientEntry extends React.Component {
             }}
           >
             <Text
-              style={{ fontSize: 18 }}
+              style={{ fontSize: 20 }}
             >Delete {this.props.item.quantity}{this.props.item.unit} {this.props.item.ingredient} from pantry?
             </Text>
             <Button
