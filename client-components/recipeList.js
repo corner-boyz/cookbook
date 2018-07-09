@@ -117,7 +117,13 @@ class RecipeList extends React.Component {
           source={require('../media/4.jpg')}
           blurRadius={0}
         >
-          <Text style={styles.spinner}>Add ingredients to pantry to generate recipes</Text>
+          <SearchBar
+            platform="android"
+            onClear={() => {this.props.screenProps.searchRecipes()}}
+            onChangeText={(text) => {this.setState({searchText: text})}}
+            onSubmitEditing={() => {this.props.screenProps.searchRecipes({ingredients: this.state.searchText})}}
+            placeholder='Search recipes by ingredients' />
+          <Text style={styles.spinner}>Add ingredients to pantry or search to generate recipes</Text>
         </ImageBackground>
       );
 
