@@ -31,12 +31,16 @@ class GroceryListEntry extends React.Component {
               this.props.item.ispurchased = !this.props.item.ispurchased
               this.props.saveCheckboxes();
               this.forceUpdate();
-            }
+            },
           }}
           onPress={() => {
+            this.props.editMode();
+          }}
+          onLongPress={() => {
             this.setState({
               showDelete: true
             })
+            // this.props.editMode();
           }}
           containerStyle={{ backgroundColor: 'transparent' }}
         />
@@ -71,7 +75,8 @@ class GroceryListEntry extends React.Component {
             <Button
               title='Delete'
               buttonStyle={{
-                backgroundColor: 'red'
+                backgroundColor: 'red',
+                marginTop: 10
               }}
               rounded={true}
               onPress={() => {

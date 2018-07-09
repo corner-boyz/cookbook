@@ -71,6 +71,7 @@ class Home extends React.Component {
               alignSelf: 'center',
               width: 100,
               backgroundColor: 'red',
+              marginBottom: 5
             }}
             onPress={() => {
               this.props.screenProps.logOut();

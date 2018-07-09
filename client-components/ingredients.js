@@ -185,7 +185,7 @@ class Ingredients extends React.Component {
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
             extraData={this.state.index}
-            renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} />}
+            renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} editMode={this.editMode} />}
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
@@ -215,7 +215,7 @@ class Ingredients extends React.Component {
             {/* <View style={[styles.container, { backgroundColor: 'white', }]}> */}
             <Text style={{ fontSize: 17 }}>Editing Mode</Text>
             <FlatList
-              style={[styles.list, { width: 350 }]}
+              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.props.screenProps.ingredients}
               extraData={this.state.index}
               renderItem={({ item }) => <IngredientsEditor item={item} units={this.state.units} />}

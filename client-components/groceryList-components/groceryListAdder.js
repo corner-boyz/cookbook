@@ -15,7 +15,7 @@ class GroceryListAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-        {/* <Switch
+        <Switch
           onValueChange={() => {
             this.setState({
               switcher: !this.state.switcher
@@ -24,12 +24,11 @@ class GroceryListAdder extends React.Component {
           }}
           value={this.state.switcher}
           tintColor='red'
-          
-        /> */}
+
+        />
         {this.state.switcher === true ?
           <Button
             title='Selected => Pantry'
-            rounded={true}
             backgroundColor='orange'
             onPress={() => {
               this.props.purchaseIngredients();
@@ -44,8 +43,7 @@ class GroceryListAdder extends React.Component {
           :
           <Button
             title='Delete Selected'
-            rounded={true}
-            buttonStyle={{ backgroundColor: 'red' }}
+            buttonStyle={{ backgroundColor: 'orange' }}
             onPress={() => {
               this.props.deleteIngredients();
             }}

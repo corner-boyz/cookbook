@@ -92,6 +92,7 @@ class GroceryList extends React.Component {
     this.deleteIngredients = this.deleteIngredients.bind(this);
     this.saveCheckboxes = this.saveCheckboxes.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
+    this.editMode = this.editMode.bind(this)
   }
   //====================================================
   static navigationOptions = {
@@ -235,6 +236,12 @@ class GroceryList extends React.Component {
         }
       })
   }
+
+  editMode() {
+    this.setState({
+      editMode: true
+    })
+  }
   //====================================================
   render() {
     return (
@@ -252,12 +259,11 @@ class GroceryList extends React.Component {
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text style={{ fontSize: 18, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Grocery List</Text>
+          <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 16, fontWeight: 'bold' }}>Saved Grocery List</Text>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
-            // extraData={this.state.index}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} />}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} />}
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>

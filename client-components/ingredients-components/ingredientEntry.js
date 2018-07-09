@@ -37,6 +37,14 @@ class IngredientEntry extends React.Component {
               })
             }
           }}
+          onPress={() => {
+            this.props.editMode()
+          }}
+          onLongPress={() => {
+            this.setState({
+              showOptions: true
+            })
+          }}
           topDivider={true}
           containerStyle={{ backgroundColor: 'transparent' }}
         />
@@ -69,7 +77,10 @@ class IngredientEntry extends React.Component {
             </Text>
             <Button
               title='Delete'
-              buttonStyle={{ backgroundColor: 'red' }}
+              buttonStyle={{
+                backgroundColor: 'red',
+                marginTop: 10
+              }}
               rounded={true}
               onPress={() => {
                 console.log('Firing');
