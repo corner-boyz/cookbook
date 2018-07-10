@@ -9,6 +9,7 @@ import AddMissing from './addMissing.js';
 import Completed from './completed.js';
 
 import { styles } from '../../styles';
+import pluralize from 'pluralize';
 
 import IP from '../../IP';
 //====================================================
@@ -73,10 +74,12 @@ class Recipe extends React.Component {
         missing: results.data
       })
       this.state.recipeDetails.extendedIngredients.map((item) => {
+        console.log('Ingredient', item);
         item.checked = true;
         // console.log('Firing');
         this.state.missing.forEach((item2) => {
-          if (item.name.includes(item2.ingredient)) {
+          console.log('Missing', item2);
+          if (pluralize.singular(item.name).includes(item2.ingredient)) {
             item.checked = false;
             // this.forceUpdate();
             // this.setState({
@@ -377,7 +380,12 @@ class Recipe extends React.Component {
                   title='Complete'
                   buttonStyle={{
                     backgroundColor: 'green',
-                    marginTop: 10
+                    marginTop: 10,
+                    alignSelf: 'center',
+                    marginBottom: 5
+                  }}
+                  containerStyle={{
+                    alignSelf: 'center'
                   }}
                   onPress={() => {
                     console.log('Completed');
