@@ -118,7 +118,7 @@ class Recipe extends React.Component {
   }
 
   deleteRecipe() {
-    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image } }).then((results) => {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id } }).then((results) => {
       this.setState({
         isSaved: false
       });

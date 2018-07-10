@@ -33,6 +33,8 @@
     "react-native-cli": "^2.0.1",
     "react-native-collapsible": "^0.12.0",
     "react-native-elements": "^1.0.0-beta",
+    "react-native-swipe-gestures": "^1.0.2",
+    "react-native-swipeout": "^2.3.3",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.4.1",
     "react-navigation-material-bottom-tabs": "^0.3.0"
