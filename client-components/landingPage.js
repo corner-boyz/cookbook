@@ -4,7 +4,7 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, ImageBackground, Alert, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements'
 
 
@@ -32,8 +32,8 @@ class LandingPage extends React.Component {
       }).then(results => {
         this.toggleLoading();
         if (results.data === 'Wrong email or password') {
-          alert(results.data)
-          console.log(results.data);
+          Alert.alert(results.data)
+          // console.log(results.data);
         } else {
           let { email, name } = results.data;
           this.props.logIn(email, name);

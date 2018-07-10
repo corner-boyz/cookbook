@@ -7,7 +7,7 @@ import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 import { styles } from '../styles.js';
 
@@ -86,6 +86,7 @@ class GroceryList extends React.Component {
       quantity: '',
       editMode: false,
       refreshing: false,
+      groceryCopy: []
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -105,6 +106,9 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
+    // this.setState({
+    //   groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
+    // })
   }
   //====================================================
   onRefresh() {
@@ -138,11 +142,11 @@ class GroceryList extends React.Component {
       });
   }
 
-  editIngredients() {
+  editIngredients(ingredients = this.props.screenProps.userGroceries) {
     let edited = {
       email: this.props.screenProps.email,
       shouldReplace: true,
-      ingredients: this.props.screenProps.userGroceries,
+      ingredients: ingredients,
     }
     axios.post(`http://${IP}/api/grocerylist`, edited)
       .then((response) => {
@@ -266,8 +270,11 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Grocery List</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          <View flexDirection='row' justifyContent='space-between'>
+            <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
+            <Icon name='ios-more' type='ionicon' onPress={() => { this.editMode() }} />
+          </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
@@ -292,7 +299,8 @@ class GroceryList extends React.Component {
           visible={this.state.editMode}
           onRequestClose={() => {
             this.setState({
-              editMode: false
+              editMode: false,
+              groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
             })
           }}>
           <ImageBackground
@@ -304,13 +312,16 @@ class GroceryList extends React.Component {
               this.forceUpdate();
             }}
           >
-            <Text style={{ 
+            <Text style={{
               fontSize: 22,
               paddingBottom: 10
-              }}>Grocery List Editing Mode</Text>
+            }}>Grocery List Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-              data={this.props.screenProps.userGroceries}
+              data={
+                // this.props.screenProps.userGroceries
+                this.state.groceryCopy
+              }
               extraData={this.state.index}
               renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
@@ -320,9 +331,10 @@ class GroceryList extends React.Component {
               backgroundColor='limegreen'
               rounded={true}
               onPress={() => {
-                this.editIngredients();
+                this.editIngredients(this.state.groceryCopy);
                 this.setState({
                   editMode: false,
+                  groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
                 })
               }} />
           </ImageBackground>

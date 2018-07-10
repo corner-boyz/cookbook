@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, Linking } from 'react-native';
+import { View, Linking } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';

@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-import { Dimensions, KeyboardAvoidingView } from 'react-native';
-import { Card, Button, Input, Alert } from 'react-native-elements';
+import { Dimensions, KeyboardAvoidingView, Alert } from 'react-native';
+import { Card, Button, Input } from 'react-native-elements';
 
 import IP from '../../IP';
 
@@ -71,9 +71,6 @@ class Login extends React.Component {
               marginTop: 5,
               marginBottom: 5,
             }}
-            // containerStyle={{
-
-            // }}
             leftIcon={{
               name: 'ios-mail',
               type: 'ionicon',
@@ -98,15 +95,16 @@ class Login extends React.Component {
               width: Dimensions.get('window').width / 2,
               marginTop: 5,
               marginBottom: 5,
-
             }}
-
             leftIcon={{
               name: 'ios-lock',
               type: 'ionicon',
               color: 'lightgrey'
             }}
-
+            onSubmitEditing={() => {
+              this.props.toggleLoading()
+              this.props.submitLogin(this.state.email, this.state.password)
+            }}
           />
           <Button
             title='Log In'

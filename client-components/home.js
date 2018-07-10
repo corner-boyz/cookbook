@@ -61,7 +61,7 @@ class Home extends React.Component {
       >
 
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <SectionList
             refreshControl={
               <RefreshControl
@@ -76,8 +76,8 @@ class Home extends React.Component {
               <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{title}</Text>
             )}
             sections={[
-              { title: 'Saved Recipes', data: this.props.screenProps.userRecipes, renderItem: savedRecipes },
-              { title: 'Bookmarked Recipes', data: this.props.screenProps.userExtensionRecipes, renderItem: savedExtensionRecipes }
+              { title: 'Your Saved Recipes', data: this.props.screenProps.userRecipes, renderItem: savedRecipes },
+              { title: 'Your Bookmarked Recipes', data: this.props.screenProps.userExtensionRecipes, renderItem: savedExtensionRecipes }
             ]}
             keyExtractor={(item) => item.title}
           />
