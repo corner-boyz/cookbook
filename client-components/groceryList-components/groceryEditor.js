@@ -25,6 +25,7 @@ class GroceryEditor extends React.Component {
           style={{
             fontSize: 18
           }}
+          placeholderTextColor='black'
         />
         <Picker
           selectedValue={this.props.item.unit}

@@ -291,7 +291,10 @@ class GroceryList extends React.Component {
               this.forceUpdate();
             }}
           >
-            <Text style={{ fontSize: 17 }}>Editing Mode</Text>
+            <Text style={{ 
+              fontSize: 22,
+              paddingBottom: 10
+              }}>Grocery List Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.props.screenProps.userGroceries}

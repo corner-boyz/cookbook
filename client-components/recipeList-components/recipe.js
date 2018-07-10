@@ -61,6 +61,7 @@ class Recipe extends React.Component {
         recipeDetails: results.data
       });
       this.compareIngredients();
+      this.parseIngredients();
     }).catch((err) => {
       if (err.response && err.response.request.status === 404) {
         Alert.alert('Trouble connecting to recipe database', 'Please try again later');
@@ -377,11 +378,9 @@ class Recipe extends React.Component {
                     alignSelf: 'center'
                   }}
                   onPress={() => {
-                    console.log('Completed');
-                    this.parseIngredients();
                     this.setState({
                       completed: true
-                    })
+                    });
                   }}
                 />
                 <Modal

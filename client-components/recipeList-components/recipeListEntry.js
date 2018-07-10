@@ -1,9 +1,9 @@
 import React from 'react';
 import { Dimensions, Animated, View, Alert } from 'react-native';
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
-import pluralize from '../../pluralize'
+import pluralize from 'pluralize';
 import IP from '../../IP';
 
 
@@ -29,7 +29,7 @@ class RecipeListEntry extends React.Component {
   }
   //====================================================
   categorizeIngredients = () => {
-    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'ground', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves'];
+    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves'];
 
     let recipeObj = [];
     let pantryObj = {};
