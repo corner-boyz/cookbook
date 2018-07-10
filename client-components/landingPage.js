@@ -33,7 +33,7 @@ class LandingPage extends React.Component {
         this.toggleLoading();
         if (results.data === 'Wrong email or password') {
           Alert.alert(results.data)
-          console.log(results.data);
+          // console.log(results.data);
         } else {
           let { email, name } = results.data;
           this.props.logIn(email, name);
