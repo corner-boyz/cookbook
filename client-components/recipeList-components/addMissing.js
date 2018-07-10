@@ -88,7 +88,7 @@ class AddMissing extends React.Component {
       .then(() => {
         this.props.closeMissing();
         this.props.getUserGroceries();
-        Alert.alert('Success!', 'Ingredients added your Grocery List!')
+        Alert.alert('Success!', 'Ingredients added your Grocery List!');
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
@@ -103,7 +103,6 @@ class AddMissing extends React.Component {
     this.setState({
       missingIngredients: filteredMissingIngredients
     });
-    console.log('state', this.state.missingIngredients);
   }
   //====================================================
   render() {
@@ -131,9 +130,9 @@ class AddMissing extends React.Component {
           >You are missing the following from your pantry.
           </Text>
           {this.state.missingIngredients.map((item, i) =>
-            <Swipeout key={item.ingredient}
-            right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]} 
-            backgroundColor='transparent'>
+            <Swipeout key={i+item.ingredient}
+              right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]} 
+              backgroundColor='transparent'>
               <View
                 flexDirection='row'
               >

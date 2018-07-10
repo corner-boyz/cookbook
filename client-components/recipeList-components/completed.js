@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, Dimensions, TextInput, Picker, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 
 import IP from '../../IP.js';
@@ -72,11 +73,13 @@ class Complete extends React.Component {
           abrv: 'kg',
         }
       ],
+      recipeIngredients: this.props.recipeIngredients
     };
   }
+  //====================================================
   removeIngredientsFromPantry() {
     let negativeRecipeIngredients = [];
-    this.props.recipeIngredients.forEach((ingredient) => {
+    this.state.recipeIngredients.forEach((ingredient) => {
       let negativeIngredient = {
         ingredient: ingredient.ingredient,
         quantity: -ingredient.quantity,
@@ -94,13 +97,24 @@ class Complete extends React.Component {
         this.props.getIngredients().then(() => {
           this.props.searchRecipes();
         });
-        alert('Ingredients removed from Pantry!')
+        Alert.alert('Success!', 'Ingredients removed from Pantry!');
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
         Alert.alert('Invalid unit conversion', err.response.request.response);
       });
   }
+
+  removeIngredientFromArray(index) {
+    let filteredRecipeIngredients = this.state.recipeIngredients.filter((item, i) => {
+      return !(i === index);
+    });
+    this.setState({
+      recipeIngredients: filteredRecipeIngredients
+    });
+    console.log('state', this.state.recipeIngredients);
+  }
+  //====================================================
   render() { //recipeIngredients
     return (
       <ImageBackground
@@ -123,66 +137,70 @@ class Complete extends React.Component {
               fontSize: 17,
               paddingBottom: 10
             }}
-          >Remove following from your Pantry?
+          >Delete following from your Pantry?
         </Text>
-          {this.props.recipeIngredients.map((item, i) =>
-            <View
-              flexDirection='row'
-              key={i}
-            >
-              <TextInput
-                placeholder={item.quantity}
-                value={this.state.quantity}
-                width={Dimensions.get('window').width / 10}
-                onChangeText={(quantity) => {
-                  item.quantity = quantity
-                }}
-                paddingLeft={10}
-              />
-              <Picker
-                selectedValue={item.unit}
-                style={{
-                  height: 35,
-                  width: 100,
-                  backgroundColor: 'transparent',
-                }}
-                mode='dropdown'
-                onValueChange={(itemValue) => {
-                  item.unit = itemValue
-                  this.forceUpdate();
-                }}
+          {this.state.recipeIngredients.map((item, i) =>
+            <Swipeout key={i+item.ingredient}
+            right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]} 
+            backgroundColor='transparent'>
+              <View
+                flexDirection='row'
               >
-                {this.state.units.map((item, index) =>
-                  <Picker.Item
-                    key={index}
-                    label={item.name}
-                    value={item.abrv}
-                  />
-                )}
-              </Picker>
-              <TextInput
-                width={Dimensions.get('window').width / 3}
-                placeholder={item.ingredient}
-                value={this.state.ingredient}
-                onChangeText={(ingredient) => {
-                  item.ingredient = ingredient
-                }}
-                paddingLeft={10}
-              />
-            </View>
+                <TextInput
+                  placeholder={item.quantity}
+                  value={this.state.quantity}
+                  width={Dimensions.get('window').width / 10}
+                  onChangeText={(quantity) => {
+                    item.quantity = quantity
+                  }}
+                  paddingLeft={10}
+                  placeholderTextColor='black'
+                />
+                <Picker
+                  selectedValue={item.unit}
+                  style={{
+                    height: 45,
+                    width: 100,
+                    backgroundColor: 'transparent',
+                  }}
+                  mode='dropdown'
+                  onValueChange={(itemValue) => {
+                    item.unit = itemValue
+                    this.forceUpdate();
+                  }}
+                >
+                  {this.state.units.map((item, index) =>
+                    <Picker.Item
+                      key={index}
+                      label={item.name}
+                      value={item.abrv}
+                    />
+                  )}
+                </Picker>
+                <TextInput
+                  width={Dimensions.get('window').width / 3}
+                  placeholder={item.ingredient}
+                  value={this.state.ingredient}
+                  onChangeText={(ingredient) => {
+                    item.ingredient = ingredient
+                  }}
+                  paddingLeft={10}
+                  placeholderTextColor='black'
+                />
+              </View>
+            </Swipeout>
           )}
           <View
             flexDirection='row'
           >
             <Button
-              title="Yes"
+              title="Delete From Pantry"
               onPress={() => {
-                console.log('Yes');
                 this.removeIngredientsFromPantry();
               }}
             />
             <Button
-              title="No"
+              title="Go Back"
               buttonStyle={{
                 backgroundColor: 'red',
               }}
@@ -196,4 +214,5 @@ class Complete extends React.Component {
     )
   }
 }
+
 export default Complete;
