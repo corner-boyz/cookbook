@@ -1,29 +1,52 @@
 import React from 'react';
 import { View, Linking } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
+import axios from 'axios';
+
+import IP from '../../IP';
+import Recipe from '../recipeList-components/recipe.js'
 
 class HomeExtensionRecipes extends React.Component {
   constructor(props) {
     super(props);
   }
   //====================================================
+  deleteRecipeFromHome() {
+    axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: {id: this.props.item.recipeid} }).then((results) => {
+      this.setState({
+        isSaved: false
+      });
+      this.props.getUserRecipes();
+    }).catch((err) => {
+      console.log('ERROR deleting recipe', err);
+      if (err.request._hasError || err.response.request.status === 404) {
+        Alert.alert('Trouble connecting to server', 'Please try again later');
+      }
+    });
+  }
+  //====================================================
   render() {
     return (
-      <View >
-        <ListItem
-          key={this.props.index}
-          title={this.props.item.title}
-          onPress={() => {
-            Linking.openURL(this.props.item.sourceurl);
-          }}
-          titleStyle={{
-            fontSize: 20
-          }}
-          chevron={true}
-          topDivider={true}
-          containerStyle={{ backgroundColor: 'transparent' }}
-        />
-      </View >
+      <Swipeout
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteRecipeFromHome()}}]} 
+        backgroundColor='transparent'>
+        <View >
+          <ListItem
+            key={this.props.index}
+            title={this.props.item.title}
+            onPress={() => {
+              Linking.openURL(this.props.item.sourceurl);
+            }}
+            titleStyle={{
+              fontSize: 20
+            }}
+            chevron={true}
+            topDivider={true}
+            containerStyle={{ backgroundColor: 'transparent' }}
+          />
+        </View >
+      </Swipeout>
     )
   }
 }

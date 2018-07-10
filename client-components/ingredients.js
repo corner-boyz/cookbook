@@ -87,7 +87,7 @@ class Ingredients extends React.Component {
   }
   //==================================================== NavBar component
   static navigationOptions = {
-    tabBarColor: 'deepskyblue',
+    tabBarColor: 'dodgerblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-basket' size={25} color='white' />;
     },
