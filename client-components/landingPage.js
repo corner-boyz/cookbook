@@ -4,7 +4,7 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, ImageBackground, Alert, Dimensions } from 'react-native';
+import { Text, View, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements'
 
 

@@ -3,7 +3,6 @@ import { Dimensions, Animated, View, Alert } from 'react-native';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
 import pluralize from '../../pluralize'
-import { styles } from '../../styles';
 import IP from '../../IP';
 
 

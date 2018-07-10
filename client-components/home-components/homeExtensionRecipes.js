@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Modal, Linking } from 'react-native';
+import { View, Linking } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Recipe from '../recipeList-components/recipe.js'
 
 class HomeExtensionRecipes extends React.Component {
   constructor(props) {
