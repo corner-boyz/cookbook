@@ -3,15 +3,24 @@
     "name": "Flex Chef",
     "icon": "./client-components/Food-Dome-512.png",
     "sdkVersion": "27.0.0",
-    "version": "1.0.0",
-    "description": "thesis",
+    "version": "1.0.1",
+    "description": "Find recipes based on what's in your pantry!",
+    "splash": {
+      "image": "./client-components/Food-Dome-512.png",
+      "backgroundColor": "#1e90ff",
+      },
+    "notification": {
+      "icon": "./client-components/Food-Dome-512.png",
+      "color": "#1e90ff"
+    },
     "ios": {
-      "bundleIdentifier": "org.cornerboyz.flexchef"
+      "bundleIdentifier": "org.chuiohrobinson.flexchef"
     },
     "android": {
-      "package": "org.cornerboyz.flexchef",
+      "package": "org.chuiohrobinson.flexchef",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=org.chuiohrobinson.flexchef",
       "permissions": [],
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Alert, TextInput, Picker, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, Dimensions, TextInput, Picker, ImageBackground, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 
 import IP from '../../IP.js';
@@ -73,25 +74,37 @@ class AddMissing extends React.Component {
         }
       ],
       quantity: this.props.missing.quantity,
-      ingredient: this.props.missing.ingredient
+      ingredient: this.props.missing.ingredient,
+      missingIngredients: this.props.missing
     };
   }
+  //====================================================
   addMissingToCart() {
     axios.post(`http://${IP}/api/groceryList`, {
       email: this.props.email,
       shouldReplace: false,
-      ingredients: this.props.missing
+      ingredients: this.state.missingIngredients
     })
       .then(() => {
         this.props.closeMissing();
         this.props.getUserGroceries();
-        alert('Ingredients added your Grocery List!')
+        Alert.alert('Success!', 'Ingredients added your Grocery List!');
       })
       .catch((err) => {
         console.log('ERROR converting units', err.response.request.response);
         Alert.alert('Invalid unit conversion', err.response.request.response);
       });
   }
+
+  removeIngredientFromArray(index) {
+    let filteredMissingIngredients = this.state.missingIngredients.filter((item, i) => {
+      return !(i === index);
+    });
+    this.setState({
+      missingIngredients: filteredMissingIngredients
+    });
+  }
+  //====================================================
   render() {
     return (
       <ImageBackground
@@ -116,53 +129,56 @@ class AddMissing extends React.Component {
             }}
           >You are missing the following from your pantry.
           </Text>
-          {this.props.missing.map((item, i) =>
-            <View
-              flexDirection='row'
-              key={i}
-            >
-              <TextInput
-                placeholder={item.quantity}
-                value={this.state.quantity}
-                width={Dimensions.get('window').width / 10}
-                onChangeText={(quantity) => {
-                  item.quantity = quantity
-                }}
-                paddingLeft={10}
-                placeholderTextColor='black'
-              />
-              <Picker
-                selectedValue={item.unit}
-                style={{
-                  height: 45,
-                  width: 100,
-                  backgroundColor: 'transparent',
-                }}
-                mode='dropdown'
-                onValueChange={(itemValue) => {
-                  item.unit = itemValue
-                  this.forceUpdate();
-                }}
+          {this.state.missingIngredients.map((item, i) =>
+            <Swipeout key={i+item.ingredient}
+              right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]} 
+              backgroundColor='transparent'>
+              <View
+                flexDirection='row'
               >
-                {this.state.units.map((item, index) =>
-                  <Picker.Item
-                    key={index}
-                    label={item.name}
-                    value={item.abrv}
-                  />
-                )}
-              </Picker>
-              <TextInput
-                width={Dimensions.get('window').width / 3}
-                placeholder={item.ingredient}
-                value={this.state.ingredient}
-                onChangeText={(ingredient) => {
-                  item.ingredient = ingredient
-                }}
-                paddingLeft={10}
-                placeholderTextColor='black'
-              />
-            </View>
+                <TextInput
+                  placeholder={item.quantity}
+                  value={this.state.quantity}
+                  width={Dimensions.get('window').width / 10}
+                  onChangeText={(quantity) => {
+                    item.quantity = quantity
+                  }}
+                  paddingLeft={10}
+                  placeholderTextColor='black'
+                />
+                <Picker
+                  selectedValue={item.unit}
+                  style={{
+                    height: 45,
+                    width: 100,
+                    backgroundColor: 'transparent',
+                  }}
+                  mode='dropdown'
+                  onValueChange={(itemValue) => {
+                    item.unit = itemValue
+                    this.forceUpdate();
+                  }}
+                >
+                  {this.state.units.map((item, index) =>
+                    <Picker.Item
+                      key={index}
+                      label={item.name}
+                      value={item.abrv}
+                    />
+                  )}
+                </Picker>
+                <TextInput
+                  width={Dimensions.get('window').width / 3}
+                  placeholder={item.ingredient}
+                  value={this.state.ingredient}
+                  onChangeText={(ingredient) => {
+                    item.ingredient = ingredient
+                  }}
+                  paddingLeft={10}
+                  placeholderTextColor='black'
+                />
+              </View>
+            </Swipeout>
           )}
           <View
             flexDirection='row'
