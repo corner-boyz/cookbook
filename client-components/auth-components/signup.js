@@ -5,9 +5,6 @@ import { Dimensions, Alert, KeyboardAvoidingView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
 import IP from '../../IP';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 //==================================================== 
 class Signup extends React.Component {
   constructor(props) {

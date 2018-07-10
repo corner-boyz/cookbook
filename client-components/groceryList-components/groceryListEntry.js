@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Modal, ImageBackground } from 'react-native';
-import { Button, CheckBox, ListItem } from 'react-native-elements';
+import { View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 //====================================================
 

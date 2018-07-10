@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Dimensions } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 
 import { styles } from '../styles'

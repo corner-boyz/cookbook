@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, Picker, TextInput, Dimensions } from 'react-native';
-import { Button, } from 'react-native-elements';
 //====================================================
 class GroceryEditor extends React.Component {
   constructor(props) {
@@ -12,7 +11,7 @@ class GroceryEditor extends React.Component {
   //====================================================
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ flex: 0.8, flexDirection: 'row' }}>
         <TextInput
           width={Dimensions.get('window').width / 10}
           placeholder={(this.props.item.quantity ? this.props.item.quantity.toString() : '0')}
@@ -23,6 +22,9 @@ class GroceryEditor extends React.Component {
           }}
           value={this.state.text}
           paddingLeft={10}
+          style={{
+            fontSize: 18
+          }}
           placeholderTextColor='black'
         />
         <Picker
@@ -47,7 +49,7 @@ class GroceryEditor extends React.Component {
         </Picker>
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 18,
             textAlignVertical: 'center',
           }}
         >{this.props.item.ingredient}

@@ -6,8 +6,8 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
@@ -79,6 +79,7 @@ class Ingredients extends React.Component {
         }
       ],
       editMode: false,
+      ingredientsCopy: [],
     }
 
     this.submitIngredient = this.submitIngredient.bind(this);
@@ -95,6 +96,9 @@ class Ingredients extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
+    // this.setState({
+    //   ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))
+    // })
   }
 
   submitIngredient(newIngredient) {
@@ -123,14 +127,14 @@ class Ingredients extends React.Component {
       })
   }
 
-  editIngredients() {
+  editIngredients(ingredients = this.props.screenProps.ingredients) {
     let editedIngredients = {
       email: this.props.screenProps.email,
       shouldReplace: true,
       ingredients: []
     }
 
-    this.props.screenProps.ingredients.forEach((item) => {
+    ingredients.forEach((item) => {
       editedIngredients.ingredients.push(
         {
           ingredient: item.ingredient,
@@ -179,8 +183,11 @@ class Ingredients extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Ingredients</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          <View flexDirection='row' justifyContent='space-between'>
+            <Text onLongPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Ingredients</Text>
+            <Icon name='ios-more' type='ionicon' onPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} />
+          </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
@@ -200,7 +207,8 @@ class Ingredients extends React.Component {
           visible={this.state.editMode}
           onRequestClose={() => {
             this.setState({
-              editMode: false
+              editMode: false,
+              ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))
             })
           }}>
           <ImageBackground
@@ -212,11 +220,10 @@ class Ingredients extends React.Component {
               this.forceUpdate();
             }}
           >
-            {/* <View style={[styles.container, { backgroundColor: 'white', }]}> */}
             <Text style={{ fontSize: 20 }}>Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-              data={this.props.screenProps.ingredients}
+              data={this.state.ingredientsCopy}
               extraData={this.state.index}
               renderItem={({ item }) => <IngredientsEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
@@ -226,12 +233,12 @@ class Ingredients extends React.Component {
               backgroundColor='limegreen'
               rounded={true}
               onPress={() => {
-                this.editIngredients();
+                this.editIngredients(this.state.ingredientsCopy);
                 this.setState({
                   editMode: false,
+                  ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))
                 })
               }} />
-            {/* </View> */}
           </ImageBackground>
         </Modal>
       </ImageBackground>

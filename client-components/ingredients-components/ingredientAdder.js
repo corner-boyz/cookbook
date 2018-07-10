@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Picker, TextInput, Dimensions } from 'react-native'
+import { View } from 'react-native'
 import { Input } from 'react-native-elements'
 //====================================================
 class IngredientAdder extends React.Component {
