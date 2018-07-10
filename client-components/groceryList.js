@@ -8,7 +8,6 @@ import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
-import Swipeout from 'react-native-swipeout';
 
 import { styles } from '../styles.js';
 
@@ -297,12 +296,7 @@ class GroceryList extends React.Component {
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.props.screenProps.userGroceries}
               extraData={this.state.index}
-              renderItem={({ item }) => (
-                <Swipeout key={item.ingredient}
-                  right={[{text: 'Delete', type: 'delete', onPress: () => {}}]}
-                  backgroundColor='transparent'>
-                    <GroceryEditor item={item} units={this.state.units} />
-                </Swipeout>)}
+              renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
