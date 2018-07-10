@@ -76,22 +76,14 @@ class Recipe extends React.Component {
       this.state.recipeDetails.extendedIngredients.map((item) => {
         console.log('Ingredient', item);
         item.checked = true;
-        // console.log('Firing');
         this.state.missing.forEach((item2) => {
           console.log('Missing', item2);
           if (pluralize.singular(item.name).includes(item2.ingredient)) {
             item.checked = false;
-            // this.forceUpdate();
-            // this.setState({
-            //   index: this.state.index + 1
-            // })
           }
         })
         this.forceUpdate();
       })
-      // this.state.missing.map((item2) => {
-      //   console.log('test2', item2.ingredient);
-      // })
     }).catch((err) => {
       console.log('ERROR comparing ingredients to recipe', err);
     });
@@ -99,7 +91,6 @@ class Recipe extends React.Component {
 
   parseIngredients() {
     axios.post(`http://${IP}/api/formatparse`, { ingredients: this.state.recipeDetails.extendedIngredients }).then((results) => {
-      // console.log('parsed', results.data);
       this.setState({
         recipeIngredients: results.data
       });
@@ -109,7 +100,6 @@ class Recipe extends React.Component {
   }
 
   saveRecipe() {
-    // console.log('id:', this.props.selectedRecipe.id, 'title', this.props.selectedRecipe.title, 'image', this.props.image)
     axios.post(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: { id: this.props.selectedRecipe.id, title: this.props.selectedRecipe.title, image: this.props.selectedRecipe.image, sourceUrl: this.state.recipeDetails.sourceUrl } }).then((results) => {
       this.setState({
         isSaved: true
@@ -139,7 +129,6 @@ class Recipe extends React.Component {
       this.setState({
         isSaved: results.data.length > 0
       });
-      // setTimeout(() => console.log(this.state.isSaved), 1000);
     }).catch((err) => {
       console.log('ERROR SELECTING RECIPE', err);
     });
