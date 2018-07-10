@@ -67,6 +67,8 @@ class Home extends React.Component {
               <RefreshControl
                 refreshing={this.state.refreshing}
                 onRefresh={() => this.onRefresh()}
+                colors={['orange']}
+                progressBackgroundColor='transparent'
               />
             }
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}

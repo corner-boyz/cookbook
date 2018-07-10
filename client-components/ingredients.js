@@ -104,7 +104,7 @@ class Ingredients extends React.Component {
     this.props.screenProps.getUserGroceries();
     this.setState({refreshing: false});
   }
-  
+
   submitIngredient(newIngredient) {
     const ingArr = [newIngredient]
     axios.post(`http://${IP}/api/parse`, { ingredients: ingArr })
@@ -198,6 +198,8 @@ class Ingredients extends React.Component {
               <RefreshControl
                 refreshing={this.state.refreshing}
                 onRefresh={() => this.onRefresh()}
+                colors={['orange']}
+                progressBackgroundColor='transparent'
               />
             }
           />
