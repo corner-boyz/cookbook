@@ -27,7 +27,7 @@ class GroceryEditor extends React.Component {
         <Picker
           selectedValue={this.props.item.unit}
           style={{
-            height: 35,
+            height: 45,
             width: 100,
             backgroundColor: 'transparent'
           }}

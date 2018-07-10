@@ -134,7 +134,7 @@ class Complete extends React.Component {
         >
           <Text
             style={{
-              fontSize: 17,
+              fontSize: 22,
               paddingBottom: 10
             }}
           >Delete following from your Pantry?

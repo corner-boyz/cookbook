@@ -3,7 +3,7 @@ import { Dimensions, Animated, View, Alert } from 'react-native';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import { Tile } from 'react-native-elements';
 import axios from 'axios';
-import pluralize from '../../pluralize'
+import pluralize from 'pluralize';
 import { styles } from '../../styles';
 import IP from '../../IP';
 
