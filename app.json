@@ -7,8 +7,8 @@
     "description": "Find recipes based on what's in your pantry!",
     "splash": {
       "image": "./client-components/Food-Dome-512.png",
-      "backgroundColor": "#1e90ff",
-      },
+      "backgroundColor": "#ffffff"
+    },
     "notification": {
       "icon": "./client-components/Food-Dome-512.png",
       "color": "#1e90ff"

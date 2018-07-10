@@ -85,6 +85,7 @@ class GroceryList extends React.Component {
       ],
       quantity: '',
       editMode: false,
+      groceryCopy: []
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -104,6 +105,9 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
+    // this.setState({
+    //   groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
+    // })
   }
 
   purchaseIngredients(ingredients = this.props.screenProps.userGroceries) {
@@ -130,11 +134,11 @@ class GroceryList extends React.Component {
       });
   }
 
-  editIngredients() {
+  editIngredients(ingredients = this.props.screenProps.userGroceries) {
     let edited = {
       email: this.props.screenProps.email,
       shouldReplace: true,
-      ingredients: this.props.screenProps.userGroceries,
+      ingredients: ingredients,
     }
     axios.post(`http://${IP}/api/grocerylist`, edited)
       .then((response) => {
@@ -279,7 +283,8 @@ class GroceryList extends React.Component {
           visible={this.state.editMode}
           onRequestClose={() => {
             this.setState({
-              editMode: false
+              editMode: false,
+              groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
             })
           }}>
           <ImageBackground
@@ -291,13 +296,16 @@ class GroceryList extends React.Component {
               this.forceUpdate();
             }}
           >
-            <Text style={{ 
+            <Text style={{
               fontSize: 22,
               paddingBottom: 10
-              }}>Grocery List Editing Mode</Text>
+            }}>Grocery List Editing Mode</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-              data={this.props.screenProps.userGroceries}
+              data={
+                // this.props.screenProps.userGroceries
+                this.state.groceryCopy
+              }
               extraData={this.state.index}
               renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
               keyExtractor={(item) => item.ingredient}
@@ -307,9 +315,10 @@ class GroceryList extends React.Component {
               backgroundColor='limegreen'
               rounded={true}
               onPress={() => {
-                this.editIngredients();
+                this.editIngredients(this.state.groceryCopy);
                 this.setState({
                   editMode: false,
+                  groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
                 })
               }} />
           </ImageBackground>
