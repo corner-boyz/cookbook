@@ -106,11 +106,11 @@ class GroceryList extends React.Component {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
   }
 
-  purchaseIngredients() {
+  purchaseIngredients(ingredients = this.props.screenProps.userGroceries) {
     let purchased = {
       email: this.props.screenProps.email,
       shouldReplace: true,
-      ingredients: this.props.screenProps.userGroceries
+      ingredients: ingredients
     };
     console.log(purchased);
     axios.post(`http://${IP}/api/grocerylistintopantry`, purchased)
