@@ -36,7 +36,7 @@ class Home extends React.Component {
       <HomeRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes={this.props.screenProps.searchRecipes} />
     );
     const savedExtensionRecipes = ({ item, index }) => (
-      <HomeExtensionRecipes item={item} index={index} email={this.props.screenProps.email} getUserRecipes={this.props.screenProps.getUserRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes={this.props.screenProps.searchRecipes} />
+      <HomeExtensionRecipes item={item} index={index} email={this.props.screenProps.email} getUserExtensionRecipes={this.props.screenProps.getUserExtensionRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes={this.props.screenProps.searchRecipes} />
     );
 
     return (

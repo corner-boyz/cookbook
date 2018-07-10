@@ -42,7 +42,6 @@ class GroceryListAdder extends React.Component {
           :
           <Button
             title='Delete Selected'
-            buttonStyle={{ backgroundColor: 'red' }}
             onPress={() => {
               this.props.deleteIngredients();
             }}
@@ -50,6 +49,7 @@ class GroceryListAdder extends React.Component {
               this.setState({ switcher: true })
             }}
             buttonStyle={{
+              backgroundColor: 'red',
               marginBottom: 10
             }}
           />

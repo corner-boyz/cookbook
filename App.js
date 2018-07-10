@@ -281,6 +281,7 @@ export default class App extends React.Component {
             userRecipes: this.state.userRecipes,
             userExtensionRecipes: this.state.userExtensionRecipes,
             getUserRecipes: this.getUserRecipes,
+            getUserExtensionRecipes: this.getUserExtensionRecipes,
             userGroceries: this.state.userGroceries,
             getUserGroceries: this.getUserGroceries,
             searchRecipes: this.searchRecipes,

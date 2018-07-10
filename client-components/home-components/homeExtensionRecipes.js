@@ -12,12 +12,12 @@ class HomeExtensionRecipes extends React.Component {
     super(props);
   }
   //====================================================
-  deleteRecipeFromHome() {
+  deleteExtensionRecipeFromHome() {
     axios.patch(`http://${IP}/api/saverecipe`, { email: this.props.email, recipe: {id: this.props.item.recipeid} }).then((results) => {
       this.setState({
         isSaved: false
       });
-      this.props.getUserRecipes();
+      this.props.getUserExtensionRecipes();
     }).catch((err) => {
       console.log('ERROR deleting recipe', err);
       if (err.request._hasError || err.response.request.status === 404) {
@@ -29,7 +29,7 @@ class HomeExtensionRecipes extends React.Component {
   render() {
     return (
       <Swipeout
-        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteRecipeFromHome()}}]} 
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteExtensionRecipeFromHome()}}]} 
         backgroundColor='transparent'>
         <View >
           <ListItem
