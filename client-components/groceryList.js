@@ -6,7 +6,7 @@ import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 
-import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground } from 'react-native';
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { styles } from '../styles.js';
@@ -85,6 +85,7 @@ class GroceryList extends React.Component {
       ],
       quantity: '',
       editMode: false,
+      refreshing: false,
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -104,6 +105,13 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
+  }
+  //====================================================
+  onRefresh() {
+    this.props.screenProps.getIngredients();
+    this.props.screenProps.getUserRecipes();
+    this.props.screenProps.getUserGroceries();
+    this.setState({refreshing: false});
   }
 
   purchaseIngredients(ingredients = this.props.screenProps.userGroceries) {
@@ -265,6 +273,14 @@ class GroceryList extends React.Component {
             data={this.props.screenProps.userGroceries}
             renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseIngredients={this.purchaseIngredients} />}
             keyExtractor={(item) => item.ingredient}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => this.onRefresh()}
+                colors={['orange']}
+                progressBackgroundColor='transparent'
+              />
+            }
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />

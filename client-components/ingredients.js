@@ -6,7 +6,7 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
 import { Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
@@ -79,6 +79,7 @@ class Ingredients extends React.Component {
         }
       ],
       editMode: false,
+      refreshing: false
     }
 
     this.submitIngredient = this.submitIngredient.bind(this);
@@ -95,6 +96,13 @@ class Ingredients extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
+  }
+  //====================================================
+  onRefresh() {
+    this.props.screenProps.getIngredients();
+    this.props.screenProps.getUserRecipes();
+    this.props.screenProps.getUserGroceries();
+    this.setState({refreshing: false});
   }
 
   submitIngredient(newIngredient) {
@@ -174,7 +182,6 @@ class Ingredients extends React.Component {
         source={require('../media/4.jpg')}
         blurRadius={0}
         onLayout={() => {
-          // console.log('Rotated');
           this.forceUpdate();
         }}
       >
@@ -187,6 +194,14 @@ class Ingredients extends React.Component {
             extraData={this.state.index}
             renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} editMode={this.editMode} />}
             keyExtractor={(item) => item.ingredient}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => this.onRefresh()}
+                colors={['orange']}
+                progressBackgroundColor='transparent'
+              />
+            }
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
             <IngredientAdder

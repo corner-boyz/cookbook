@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions, RefreshControl } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 
 import { styles } from '../styles'
@@ -17,7 +17,8 @@ class RecipeList extends React.Component {
       selectedRecipe: undefined,
       fadeAnim: new Animated.Value(0),
       showRecipe: false,
-      rows: Dimensions.get('window').width < Dimensions.get('window').height ? 2 : 4
+      rows: Dimensions.get('window').width < Dimensions.get('window').height ? 2 : 4,
+      refreshing: false
     };
     this.selectRecipe = this.selectRecipe.bind(this);
     this.recipeBack = this.recipeBack.bind(this);
@@ -41,10 +42,17 @@ class RecipeList extends React.Component {
     // Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000, }).start();
     // console.log('hey', this.props.screenProps.getUserRecipes);
   }
-
   //====================================================
+  onRefresh() {
+    this.props.screenProps.getIngredients().then(() => {
+      this.props.screenProps.searchRecipes();
+    });
+    this.props.screenProps.getUserRecipes();
+    this.props.screenProps.getUserGroceries();
+    this.setState({refreshing: false});
+  }
+
   selectRecipe(recipe) {
-    // console.log('TESTING: ', recipe.id);
     this.setState({
       selectedRecipe: recipe,
       showRecipe: true
@@ -95,6 +103,14 @@ class RecipeList extends React.Component {
             keyExtractor={(item) => item.id.toString()}
             numColumns={this.state.rows}
             initialNumToRender={12}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => this.onRefresh()}
+                colors={['orange']}
+                progressBackgroundColor='transparent'
+              />
+            }
           />
           <Modal
             animationType="slide"

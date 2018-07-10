@@ -198,6 +198,9 @@ export default class App extends React.Component {
         });
         AsyncStorage.setItem('cbUserRecipes', JSON.stringify(response.data));
       })
+      .then(() => {
+        this.getUserExtensionRecipes();
+      })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
       });
@@ -223,9 +226,6 @@ export default class App extends React.Component {
           userGroceries: response.data
         });
         AsyncStorage.setItem('cbUserGroceries', JSON.stringify(response.data));
-      })
-      .then(() => {
-        this.getUserExtensionRecipes();
       })
       .catch((err) => {
         console.log("ERROR getting user's recipes", err);
