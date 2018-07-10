@@ -7,7 +7,7 @@ import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 import { styles } from '../styles.js';
 
@@ -258,8 +258,11 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Grocery List</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          <View flexDirection='row' justifyContent='space-between'>
+            <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Grocery List</Text>
+            <Icon name='ios-more' type='ionicon' onPress={() => { this.editMode() }} />
+          </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}

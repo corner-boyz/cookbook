@@ -6,8 +6,8 @@ import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
@@ -179,8 +179,11 @@ class Ingredients extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name},</Text>
-          <Text onLongPress={() => { this.setState({ editMode: true }) }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Ingredients</Text>
+          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          <View flexDirection='row' justifyContent='space-between'>
+            <Text onLongPress={() => { this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Saved Ingredients</Text>
+            <Icon name='ios-more' type='ionicon' onPress={() => { this.editMode() }} />
+          </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.ingredients}
