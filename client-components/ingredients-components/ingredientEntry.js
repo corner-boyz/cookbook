@@ -7,20 +7,15 @@ class IngredientEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showOptions: false
     };
   }
   //====================================================
   deleteIngredient() {
     this.props.item.quantity = 0;
     this.props.editIngredients();
-    this.setState({
-      showOptions: false
-    })
   }
   //====================================================
   render() {
-    // console.log(`Render IngredientEntry `, this.props);
     return (
       <Swipeout
         right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteIngredient()}}]} 
