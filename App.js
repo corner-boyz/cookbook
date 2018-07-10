@@ -16,11 +16,11 @@ const Root = createMaterialBottomTabNavigator(
     "Home": {
       screen: Home,
     },
-    "Pantry": {
-      screen: Ingredients,
-    },
     "Grocery List": {
       screen: GroceryList,
+    },
+    "Pantry": {
+      screen: Ingredients,
     },
     "Recipes": {
       screen: RecipeList,

@@ -23,9 +23,8 @@ class IngredientEntry extends React.Component {
     // console.log(`Render IngredientEntry `, this.props);
     return (
       <Swipeout
-        left={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteIngredient()}}]} 
-        // right={[{text: 'button',}]} 
-      >
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteIngredient()}}]} 
+        backgroundColor='transparent'>
         <View >
           <ListItem
             key={this.props.item.index}

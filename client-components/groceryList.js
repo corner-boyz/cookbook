@@ -96,7 +96,7 @@ class GroceryList extends React.Component {
   }
   //====================================================
   static navigationOptions = {
-    tabBarColor: 'dodgerblue',
+    tabBarColor: 'deepskyblue',
     tabBarIcon: () => {
       return <Ionicons name='ios-cart' size={25} color='white' />;
     },
@@ -263,7 +263,7 @@ class GroceryList extends React.Component {
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} />}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseIngredients={this.purchaseIngredients} />}
             keyExtractor={(item) => item.ingredient}
           />
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
