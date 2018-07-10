@@ -60,8 +60,8 @@ class GroceryListAdder extends React.Component {
             placeholder='Ex. "2 pound salmon"'
             shake={true}
             inputContainerStyle={{
-              borderWidth: 2,  // size/width of the border
-              borderColor: 'orange',  // color of the border
+              borderWidth: 2,
+              borderColor: 'orange',
               borderRadius: 20,
               marginTop: 10,
               marginBottom: 10,
@@ -82,24 +82,6 @@ class GroceryListAdder extends React.Component {
               }
             }}
           />
-
-          {/* <TextInput
-            width={Dimensions.get('window').width / 2}
-            placeholder='Add to cart Ex. "2 pound salmon"'
-            onChangeText={(text) => this.setState({ text })}
-            value={this.state.text}
-            onSubmitEditing={() => {
-              if (this.state.text.length > 0) {
-                this.props.addToCart(this.state.text)
-                this.setState({
-                  text: ''
-                })
-              }
-              else {
-                alert('Enter a valid ingredient')
-              }
-            }}
-          /> */}
         </View>
       </View>
     )
