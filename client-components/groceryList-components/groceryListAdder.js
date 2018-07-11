@@ -18,9 +18,9 @@ class GroceryListAdder extends React.Component {
     return (
       <View style={{ alignItems: 'center' }}>
         {this.state.hide ?
-          <Icon name='ios-arrow-dropup' type='ionicon' color='orange' onPress={() => { this.setState({ hide: !this.state.hide }) }} />
+          <Icon name='ios-arrow-dropup' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />
           :
-          <Icon name='ios-arrow-dropdown' type='ionicon' color='orange' onPress={() => { this.setState({ hide: !this.state.hide }) }} />}
+          <Icon name='ios-arrow-dropdown' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />}
         <Collapsible collapsed={this.state.hide}>
           <Switch
             onValueChange={() => {
