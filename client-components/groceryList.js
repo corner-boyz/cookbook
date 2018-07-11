@@ -108,9 +108,6 @@ class GroceryList extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
-    // this.setState({
-    //   groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
-    // })
   }
   //====================================================
   onRefresh() {
@@ -280,7 +277,6 @@ class GroceryList extends React.Component {
         source={require('../media/4.jpg')}
         blurRadius={0}
         onLayout={() => {
-          // console.log('Rotated');
           this.forceUpdate();
         }}
       >
