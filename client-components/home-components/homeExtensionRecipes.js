@@ -10,9 +10,6 @@ import Recipe from '../recipeList-components/recipe.js'
 class HomeExtensionRecipes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      swipeoutButtonDisabled:false
-    }
   }
   //====================================================
   deleteExtensionRecipeFromHome() {
@@ -32,7 +29,7 @@ class HomeExtensionRecipes extends React.Component {
   render() {
     return (
       <Swipeout
-        right={[{text: 'Delete', type: 'delete', disabled: this.state.swipeoutButtonsDisabled, onPress: () => {this.deleteExtensionRecipeFromHome()}}]} 
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteExtensionRecipeFromHome()}}]} 
         backgroundColor='transparent'>
         <View >
           <ListItem

@@ -12,7 +12,6 @@ class HomeRecipes extends React.Component {
     super(props);
     this.state = {
       showRecipe: false,
-      swipeoutButtonsDisabled: false
     };
   }
   //====================================================
@@ -45,7 +44,7 @@ class HomeRecipes extends React.Component {
     }
     return (
       <Swipeout
-        right={[{text: 'Delete', type: 'delete', disabled: this.state.swipeoutButtonsDisabled, onPress: () => {this.deleteRecipeFromHome()}}]} 
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.deleteRecipeFromHome()}}]} 
         backgroundColor='transparent'>
         <View >
           <ListItem

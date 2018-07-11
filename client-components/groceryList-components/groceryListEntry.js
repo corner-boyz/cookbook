@@ -10,15 +10,15 @@ class GroceryListEntry extends React.Component {
     super(props);
     this.state = {
       checked: this.props.ispurchased,
-      swipeoutButtonsDisabled: false
+      toPantryButtonDisabled: false
     };
   }
   //====================================================
   render() {
     return (
       <Swipeout
-        left={[{text: 'To Pantry', backgroundColor: '#2089DC', disabled: this.state.swipeoutButtonsDisabled, onPress: () => {this.setState({swipeoutButtonsDisabled: true}); this.props.item.ispurchased = true; this.props.purchaseIngredients([this.props.item])}}]}
-        right={[{text: 'Delete', type: 'delete', disabled: this.state.swipeoutButtonsDisabled, onPress: () => {this.setState({swipeoutButtonsDisabled: true}); this.props.removeFromCart(this.props.item)}}]} 
+        left={[{text: 'To Pantry', backgroundColor: '#2089DC', disabled: this.state.toPantryButtonDisabled, onPress: () => {this.props.item.ispurchased = true; this.props.purchaseIngredients([this.props.item]); this.setState({toPantryButtonDisabled: true});}}]}
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.setState({toPantryButtonDisabled: true}); this.props.removeFromCart(this.props.item)}}]} 
         backgroundColor='transparent'>
         <View>
           <ListItem
