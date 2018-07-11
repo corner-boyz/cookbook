@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
 
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
 
-import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
 
 import { styles } from '../styles.js';
 
@@ -86,7 +87,8 @@ class GroceryList extends React.Component {
       quantity: '',
       editMode: false,
       refreshing: false,
-      groceryCopy: []
+      groceryCopy: [],
+      groceryCopyDeletedIngredients: []
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -116,6 +118,20 @@ class GroceryList extends React.Component {
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
     this.setState({refreshing: false});
+  }
+
+  removeIngredientFromArray(ingredient) {
+    let filteredGroceryCopy = this.state.groceryCopy.filter((item) => {
+      return !(item.ingredient === ingredient.ingredient);
+    });
+    ingredient.quantity = 0;
+    let temporary = this.state.groceryCopyDeletedIngredients;
+    temporary.push(ingredient);
+    this.setState({
+      groceryCopy: filteredGroceryCopy,
+      groceryCopyDeletedIngredients: temporary
+    });
+    setTimeout(() => console.log('deleted', this.state.groceryCopyDeletedIngredients), 1000)
   }
 
   purchaseIngredients(ingredients = this.props.screenProps.userGroceries) {
@@ -315,15 +331,22 @@ class GroceryList extends React.Component {
             <Text style={{
               fontSize: 22,
               paddingBottom: 10
-            }}>Grocery List Editing Mode</Text>
+            }}>Editing Grocery List</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={
-                // this.props.screenProps.userGroceries
                 this.state.groceryCopy
               }
               extraData={this.state.index}
-              renderItem={({ item }) => <GroceryEditor item={item} units={this.state.units} />}
+              renderItem={({ item }) => {
+                return (
+                  <Swipeout
+                    right={[{text: 'Delete', type: 'delete', onPress: () => {this.removeIngredientFromArray(item)}}]} 
+                    backgroundColor='transparent'>
+                    <GroceryEditor item={item} units={this.state.units} />
+                  </Swipeout>
+                );
+              }}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
@@ -331,11 +354,11 @@ class GroceryList extends React.Component {
               backgroundColor='limegreen'
               rounded={true}
               onPress={() => {
-                this.editIngredients(this.state.groceryCopy);
+                this.editIngredients(this.state.groceryCopy.concat(this.state.groceryCopyDeletedIngredients));
                 this.setState({
                   editMode: false,
                   groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries))
-                })
+                });
               }} />
           </ImageBackground>
         </Modal>

@@ -22,7 +22,7 @@ class IngredientsEditor extends React.Component {
           }}
           value={this.state.text}
           paddingLeft={10}
-          placeholderTextColor='black'
+          placeholderTextColor='#A9A9A9'
           style={{
             fontSize: 18
           }}

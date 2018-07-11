@@ -1,14 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import IP from '../IP.js';
 import IngredientEntry from './ingredients-components/ingredientEntry.js';
 import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -97,9 +98,6 @@ class Ingredients extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
-    // this.setState({
-    //   ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))
-    // })
   }
   //====================================================
   onRefresh() {
@@ -107,6 +105,15 @@ class Ingredients extends React.Component {
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
     this.setState({refreshing: false});
+  }
+
+  removeIngredientFromArray(ingredient) {
+    let filteredIngredientsCopy = this.state.ingredientsCopy.filter((item) => {
+      return !(item.ingredient === ingredient);
+    });
+    this.setState({
+      ingredientsCopy: filteredIngredientsCopy
+    });
   }
 
   submitIngredient(newIngredient) {
