@@ -8,6 +8,7 @@ import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 
 import { styles } from '../styles.js';
@@ -284,7 +285,18 @@ class GroceryList extends React.Component {
           <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <View flexDirection='row' justifyContent='space-between'>
             <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
-            <Icon name='ios-more' type='ionicon' onPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} />
+            <Menu>
+              <MenuTrigger>
+                <Icon name='ios-more' type='ionicon'
+                // onPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} 
+                />
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption text='Edit Mode' onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} />
+                <MenuOption text='Add selected to Pantry' onSelect={() => { this.purchaseIngredients() }} />
+                <MenuOption text='Remove selected' onSelect={() => { this.deleteIngredients() }} />
+              </MenuOptions>
+            </Menu>
           </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
