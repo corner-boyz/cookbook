@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Switch } from 'react-native'
-import { Button, Input } from 'react-native-elements'
+import { Button, Input, Icon } from 'react-native-elements'
+import Collapsible from '../../node_modules/react-native-collapsible';
+// import { MenuProvider, Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 //====================================================
 class GroceryListAdder extends React.Component {
   constructor(props) {
@@ -8,6 +10,7 @@ class GroceryListAdder extends React.Component {
     this.state = {
       text: '',
       switcher: true,
+      hide: true
     };
   }
 
@@ -15,45 +18,62 @@ class GroceryListAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-        <Switch
-          onValueChange={() => {
-            this.setState({
-              switcher: !this.state.switcher
-            })
-            // console.log(this.state.switcher);
-          }}
-          value={this.state.switcher}
-          tintColor='red'
-
-        />
-        {this.state.switcher === true ?
-          <Button
-            title='Selected => Pantry'
-            onPress={() => {
-              this.props.purchaseIngredients();
-            }}
-            onLongPress={() => {
-              this.setState({ switcher: false })
-            }}
-            buttonStyle={{
-              marginBottom: 10
-            }}
-          />
+        {this.state.hide ?
+          <Icon name='ios-arrow-dropup' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />
           :
-          <Button
-            title='Delete Selected'
-            onPress={() => {
-              this.props.deleteIngredients();
+          <Icon name='ios-arrow-dropdown' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />}
+        <Collapsible collapsed={this.state.hide}>
+          <Switch
+            onValueChange={() => {
+              this.setState({
+                switcher: !this.state.switcher
+              })
             }}
-            onLongPress={() => {
-              this.setState({ switcher: true })
+            value={this.state.switcher}
+            tintColor='red'
+            style={{
+              alignSelf: 'center'
             }}
-            buttonStyle={{
-              backgroundColor: 'red',
-              marginBottom: 10
-            }}
+
           />
-        }
+          {this.state.switcher === true ?
+            <Button
+              title='Selected => Pantry'
+              onPress={() => {
+                this.props.purchaseIngredients();
+              }}
+              onLongPress={() => {
+                this.setState({ switcher: false })
+              }}
+              buttonStyle={{
+                marginBottom: 10
+              }}
+            />
+            :
+            <Button
+              title='Delete Selected'
+              onPress={() => {
+                this.props.deleteIngredients();
+              }}
+              onLongPress={() => {
+                this.setState({ switcher: true })
+              }}
+              buttonStyle={{
+                backgroundColor: 'red',
+                marginBottom: 10
+              }}
+            />
+          }
+        </Collapsible>
+        {/* <MenuProvider>
+          <Menu>
+            <MenuTrigger text='testing' />
+            <MenuOptions>
+              <MenuOption text='1' />
+              <MenuOption text='2' />
+            </MenuOptions>
+          </Menu>
+        </MenuProvider> */}
         <View style={{ flexDirection: 'row' }}>
           <Input
             label='Add to Grocery List'

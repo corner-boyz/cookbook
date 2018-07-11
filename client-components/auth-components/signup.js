@@ -50,7 +50,7 @@ class Signup extends React.Component {
   //====================================================
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
         <Card
           containerStyle={{
             width: Dimensions.get('window').width / 1.5,
