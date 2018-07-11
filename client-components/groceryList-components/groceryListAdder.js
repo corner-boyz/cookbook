@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Switch } from 'react-native'
 import { Button, Input, Icon } from 'react-native-elements'
 import Collapsible from '../../node_modules/react-native-collapsible';
+// import { MenuProvider, Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 //====================================================
 class GroceryListAdder extends React.Component {
   constructor(props) {
@@ -64,6 +65,15 @@ class GroceryListAdder extends React.Component {
             />
           }
         </Collapsible>
+        {/* <MenuProvider>
+          <Menu>
+            <MenuTrigger text='testing' />
+            <MenuOptions>
+              <MenuOption text='1' />
+              <MenuOption text='2' />
+            </MenuOptions>
+          </Menu>
+        </MenuProvider> */}
         <View style={{ flexDirection: 'row' }}>
           <Input
             label='Add to Grocery List'
