@@ -29,7 +29,7 @@ class RecipeListEntry extends React.Component {
   }
   //====================================================
   categorizeIngredients = () => {
-    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves'];
+    const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves', 'nonfat'];
 
     let recipeObj = [];
     let pantryObj = {};
@@ -92,6 +92,10 @@ class RecipeListEntry extends React.Component {
   //====================================================
   render() {
     let { fadeAnim } = this.state
+    let title = this.props.recipe.title;
+    if (title.length > 20) {
+      title = title.slice(0, 20) + '...';
+    }
     return (
       <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
         <View
@@ -102,14 +106,15 @@ class RecipeListEntry extends React.Component {
           <Tile
             imageSrc={{ uri: this.props.recipe.image }}
             imageContainerStyle={{ paddingVertical: 5, borderWidth: 5, borderColor: 'lightgray', borderRadius: 5 }}
-            title={this.props.recipe.title}
+            title={title}
             titleStyle={{
-              fontSize: 18
+              fontSize: 16,
+              fontWeight: 'bold'
             }}
             featured={true}
             caption={`${this.state.ownedIngredients.length ? '\nHave:' + this.state.ownedIngredients.map((ingredient) => (' ' + ingredient)) : ''}${this.state.missedIngredients.length ? '\nNeed:' + this.state.missedIngredients.map((ingredient) => (' ' + ingredient)) : ''}`}
             captionStyle={{
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: 'bold',
               color: 'white',
               justifyContent: 'flex-start'

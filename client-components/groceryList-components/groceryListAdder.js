@@ -19,6 +19,7 @@ class GroceryListAdder extends React.Component {
       <View style={{ alignItems: 'center' }}>
         <View style={{ flexDirection: 'row' }}>
           <Input
+            blurOnSubmit={false}
             label='Add to Grocery List'
             placeholder='Ex. "2 pound salmon"'
             shake={true}

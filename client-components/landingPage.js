@@ -4,7 +4,7 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, ImageBackground, Alert } from 'react-native';
+import { Text, View, ImageBackground, Alert, Image } from 'react-native';
 import { Button } from 'react-native-elements'
 
 
@@ -55,7 +55,6 @@ class LandingPage extends React.Component {
   }
   //====================================================
   render() {
-
     return (
       <ImageBackground
         style={{
@@ -71,13 +70,10 @@ class LandingPage extends React.Component {
           this.forceUpdate();
         }}
       >
-
-        <Text style={{
-          fontSize: 30,
-          backgroundColor: 'transparent',
-          fontWeight: 'bold'
-        }}>Flex Chef
-        </Text>
+        <Image
+          source={require('../media/FlexChef_logo-01.png')}
+          style={{width: 180, height: 180}}
+        />
         <View flexDirection='row' elevation={0}>
           <Button
             title='Login'
