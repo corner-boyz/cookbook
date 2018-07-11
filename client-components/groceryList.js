@@ -114,7 +114,7 @@ class GroceryList extends React.Component {
     this.props.screenProps.getIngredients();
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   removeIngredientFromArray(ingredient) {
@@ -336,7 +336,7 @@ class GroceryList extends React.Component {
               renderItem={({ item }) => {
                 return (
                   <Swipeout
-                    right={[{text: 'Delete', type: 'delete', onPress: () => {this.removeIngredientFromArray(item)}}]} 
+                    right={[{ text: 'Delete', type: 'delete', onPress: () => { this.removeIngredientFromArray(item) } }]}
                     backgroundColor='transparent'>
                     <GroceryEditor item={item} units={this.state.units} />
                   </Swipeout>

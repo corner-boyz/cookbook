@@ -248,7 +248,7 @@ class Ingredients extends React.Component {
               this.forceUpdate();
             }}
           >
-            <Text style={{ fontSize: 20 }}>Editing Mode</Text>
+            <Text style={{ fontSize: 20 }}>Editing Pantry</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.state.ingredientsCopy}
