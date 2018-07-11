@@ -23,6 +23,9 @@ class GroceryEditor extends React.Component {
           }}
           value={this.state.text}
           paddingLeft={10}
+          style={{
+            fontSize: 18
+          }}
           placeholderTextColor='#A9A9A9'
         />
         <Picker

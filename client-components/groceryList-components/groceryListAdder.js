@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Switch } from 'react-native'
-import { Button, Input, Icon } from 'react-native-elements'
-import Collapsible from '../../node_modules/react-native-collapsible';
-// import { MenuProvider, Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { View } from 'react-native'
+import { Input } from 'react-native-elements'
+
 //====================================================
 class GroceryListAdder extends React.Component {
   constructor(props) {
@@ -18,62 +17,6 @@ class GroceryListAdder extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center' }}>
-        {this.state.hide ?
-          <Icon name='ios-arrow-dropup' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />
-          :
-          <Icon name='ios-arrow-dropdown' type='ionicon' color='darkgray' onPress={() => { this.setState({ hide: !this.state.hide }) }} />}
-        <Collapsible collapsed={this.state.hide}>
-          <Switch
-            onValueChange={() => {
-              this.setState({
-                switcher: !this.state.switcher
-              })
-            }}
-            value={this.state.switcher}
-            tintColor='red'
-            style={{
-              alignSelf: 'center'
-            }}
-
-          />
-          {this.state.switcher === true ?
-            <Button
-              title='Selected => Pantry'
-              onPress={() => {
-                this.props.purchaseIngredients();
-              }}
-              onLongPress={() => {
-                this.setState({ switcher: false })
-              }}
-              buttonStyle={{
-                marginBottom: 10
-              }}
-            />
-            :
-            <Button
-              title='Delete Selected'
-              onPress={() => {
-                this.props.deleteIngredients();
-              }}
-              onLongPress={() => {
-                this.setState({ switcher: true })
-              }}
-              buttonStyle={{
-                backgroundColor: 'red',
-                marginBottom: 10
-              }}
-            />
-          }
-        </Collapsible>
-        {/* <MenuProvider>
-          <Menu>
-            <MenuTrigger text='testing' />
-            <MenuOptions>
-              <MenuOption text='1' />
-              <MenuOption text='2' />
-            </MenuOptions>
-          </Menu>
-        </MenuProvider> */}
         <View style={{ flexDirection: 'row' }}>
           <Input
             label='Add to Grocery List'

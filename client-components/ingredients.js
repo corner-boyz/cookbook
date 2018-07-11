@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, Divider } from 'react-native-elements';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Swipeout from 'react-native-swipeout';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -106,7 +107,7 @@ class Ingredients extends React.Component {
     this.props.screenProps.getIngredients();
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   removeIngredientFromArray(ingredient) {
@@ -188,6 +189,14 @@ class Ingredients extends React.Component {
     })
   }
 
+  deleteAll() {
+    this.props.screenProps.ingredients.map((item) => {
+      item.quantity = 0;
+      console.log(`Testing ${JSON.stringify(item)}`)
+    })
+    this.editIngredients();
+  }
+
   //====================================================
   render() {
     return (
@@ -206,7 +215,24 @@ class Ingredients extends React.Component {
           <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <View flexDirection='row' justifyContent='space-between'>
             <Text onLongPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Pantry</Text>
-            <Icon name='ios-more' type='ionicon' onPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} />
+            <Menu>
+              <MenuTrigger>
+                <Icon name='ios-more' type='ionicon' />
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption
+                  onSelect={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }}>
+                  <Text style={{ fontSize: 18 }}>Edit Mode</Text>
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => {
+                    Alert.alert('Pantry', 'Delete all Ingredients?', [{ text: 'Yes', onPress: () => this.deleteAll() }, { text: 'No', style: 'cancel' }])
+                  }}>
+                  <Divider />
+                  <Text style={{ color: 'red', fontSize: 18 }}>Delete All</Text>
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
           </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
@@ -248,7 +274,7 @@ class Ingredients extends React.Component {
               this.forceUpdate();
             }}
           >
-            <Text style={{ fontSize: 20 }}>Editing Mode</Text>
+            <Text style={{ fontSize: 20 }}>Editing Pantry</Text>
             <FlatList
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.state.ingredientsCopy}
@@ -256,7 +282,7 @@ class Ingredients extends React.Component {
               renderItem={({ item }) => {
                 return (
                   <Swipeout
-                    right={[{text: 'Delete', type: 'delete', onPress: () => {this.removeIngredientFromArray(item)}}]} 
+                    right={[{ text: 'Delete', type: 'delete', onPress: () => { this.removeIngredientFromArray(item) } }]}
                     backgroundColor='transparent'>
                     <IngredientsEditor item={item} units={this.state.units} />
                   </Swipeout>
