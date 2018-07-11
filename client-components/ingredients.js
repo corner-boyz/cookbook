@@ -1,14 +1,16 @@
 import React from 'react';
 import axios from 'axios';
+import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import IP from '../IP.js';
 import IngredientEntry from './ingredients-components/ingredientEntry.js';
 import IngredientsEditor from './ingredients-components/ingredientsEditor.js';
 import IngredientAdder from './ingredients-components/ingredientAdder.js';
 import { styles } from '../styles';
 
-import { Text, View, FlatList, Modal, KeyboardAvoidingView, Animated, Alert, Dimensions, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 //==================================================== 'index' state is required for refreshing the ingredient's list; <FlatList /> is a pure component so it will not auto refresh normally
 class Ingredients extends React.Component {
   constructor(props) {
@@ -81,6 +83,7 @@ class Ingredients extends React.Component {
       editMode: false,
       refreshing: false,
       ingredientsCopy: [],
+      ingredientsCopyDeletedIngredients: []
     }
 
     this.submitIngredient = this.submitIngredient.bind(this);
@@ -97,9 +100,6 @@ class Ingredients extends React.Component {
   //====================================================
   componentDidMount() {
     Animated.timing(this.state.fadeAnim, { toValue: 1, duration: 1000 }).start();
-    // this.setState({
-    //   ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))
-    // })
   }
   //====================================================
   onRefresh() {
@@ -107,6 +107,19 @@ class Ingredients extends React.Component {
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
     this.setState({refreshing: false});
+  }
+
+  removeIngredientFromArray(ingredient) {
+    let filteredIngredientsCopy = this.state.ingredientsCopy.filter((item) => {
+      return !(item.ingredient === ingredient.ingredient);
+    });
+    ingredient.quantity = 0;
+    let temporary = this.state.ingredientsCopyDeletedIngredients;
+    temporary.push(ingredient);
+    this.setState({
+      ingredientsCopy: filteredIngredientsCopy,
+      ingredientsCopyDeletedIngredients: temporary
+    });
   }
 
   submitIngredient(newIngredient) {
@@ -192,7 +205,7 @@ class Ingredients extends React.Component {
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <View flexDirection='row' justifyContent='space-between'>
-            <Text onLongPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Ingredients</Text>
+            <Text onLongPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Pantry</Text>
             <Icon name='ios-more' type='ionicon' onPress={() => { this.setState({ ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients)) }); this.editMode() }} />
           </View>
           <FlatList
@@ -240,7 +253,16 @@ class Ingredients extends React.Component {
               style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
               data={this.state.ingredientsCopy}
               extraData={this.state.index}
-              renderItem={({ item }) => <IngredientsEditor item={item} units={this.state.units} />}
+              renderItem={({ item }) => {
+                return (
+                  <Swipeout
+                    right={[{text: 'Delete', type: 'delete', onPress: () => {this.removeIngredientFromArray(item)}}]} 
+                    backgroundColor='transparent'>
+                    <IngredientsEditor item={item} units={this.state.units} />
+                  </Swipeout>
+                );
+              }}
+              keyExtractor={(item) => item.ingredient}
               keyExtractor={(item) => item.ingredient}
             />
             <Button
@@ -248,7 +270,7 @@ class Ingredients extends React.Component {
               backgroundColor='limegreen'
               rounded={true}
               onPress={() => {
-                this.editIngredients(this.state.ingredientsCopy);
+                this.editIngredients(this.state.ingredientsCopy.concat(this.state.ingredientsCopyDeletedIngredients));
                 this.setState({
                   editMode: false,
                   ingredientsCopy: JSON.parse(JSON.stringify(this.props.screenProps.ingredients))

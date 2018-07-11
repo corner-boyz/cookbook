@@ -112,10 +112,9 @@ class Complete extends React.Component {
     this.setState({
       recipeIngredients: filteredRecipeIngredients
     });
-    console.log('state', this.state.recipeIngredients);
   }
   //====================================================
-  render() { //recipeIngredients
+  render() {
     return (
       <ImageBackground
         style={[styles.container, {
@@ -154,7 +153,7 @@ class Complete extends React.Component {
                     item.quantity = quantity
                   }}
                   paddingLeft={10}
-                  placeholderTextColor='black'
+                  placeholderTextColor='#A9A9A9'
                 />
                 <Picker
                   selectedValue={item.unit}
@@ -185,7 +184,7 @@ class Complete extends React.Component {
                     item.ingredient = ingredient
                   }}
                   paddingLeft={10}
-                  placeholderTextColor='black'
+                  placeholderTextColor='#A9A9A9'
                 />
               </View>
             </Swipeout>
