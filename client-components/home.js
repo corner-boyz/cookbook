@@ -46,7 +46,6 @@ class Home extends React.Component {
     const savedExtensionRecipes = ({ item, index }) => (
       <HomeExtensionRecipes item={item} index={index} email={this.props.screenProps.email} getUserExtensionRecipes={this.props.screenProps.getUserExtensionRecipes} ingredients={this.props.screenProps.ingredients} getUserGroceries={this.props.screenProps.getUserGroceries} getIngredients={this.props.screenProps.getIngredients} searchRecipes={this.props.screenProps.searchRecipes} />
     );
-
     return (
       <ImageBackground
         style={[styles.container, {
@@ -59,7 +58,6 @@ class Home extends React.Component {
           this.forceUpdate();
         }}
       >
-
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
           <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <SectionList

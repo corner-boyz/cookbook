@@ -1,13 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, Divider } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 
 import IP from '../IP.js';
 import GroceryListEntry from './groceryList-components/groceryListEntry.js'
 import GroceryEditor from './groceryList-components/groceryEditor.js'
 import GroceryListAdder from './groceryList-components/groceryListAdder.js'
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 
 import { styles } from '../styles.js';
@@ -114,7 +115,7 @@ class GroceryList extends React.Component {
     this.props.screenProps.getIngredients();
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   removeIngredientFromArray(ingredient) {
@@ -284,7 +285,29 @@ class GroceryList extends React.Component {
           <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
           <View flexDirection='row' justifyContent='space-between'>
             <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
-            <Icon name='ios-more' type='ionicon' onPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} />
+            <Menu>
+              <MenuTrigger>
+                <Icon name='ios-more' type='ionicon' />
+              </MenuTrigger>
+              <MenuOptions>
+                <MenuOption
+                  onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }}>
+                  <Text style={{ fontSize: 18 }}>Edit Mode</Text>
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => { this.purchaseIngredients() }}>
+                  <Divider />
+                  <Text style={{ fontSize: 18 }}>Move Selected to Pantry</Text>
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => {
+                    Alert.alert('Grocery List', 'Delete all Selected?', [{ text: 'Yes', onPress: () => this.deleteIngredients() }, { text: 'No', style: 'cancel' }])
+                  }}>
+                  <Divider />
+                  <Text style={{ color: 'red', fontSize: 18 }}>Delete Selected</Text>
+                </MenuOption>
+              </MenuOptions>
+            </Menu>
           </View>
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
@@ -336,7 +359,7 @@ class GroceryList extends React.Component {
               renderItem={({ item }) => {
                 return (
                   <Swipeout
-                    right={[{text: 'Delete', type: 'delete', onPress: () => {this.removeIngredientFromArray(item)}}]} 
+                    right={[{ text: 'Delete', type: 'delete', onPress: () => { this.removeIngredientFromArray(item) } }]}
                     backgroundColor='transparent'>
                     <GroceryEditor item={item} units={this.state.units} />
                   </Swipeout>

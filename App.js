@@ -10,6 +10,8 @@ import GroceryList from './client-components/groceryList';
 import LandingPage from './client-components/landingPage.js';
 
 import IP from './IP.js';
+
+import { MenuProvider } from 'react-native-popup-menu'
 //==================================================== this is the navigation bar at the bottom of the screen
 const Root = createMaterialBottomTabNavigator(
   {
@@ -271,24 +273,26 @@ export default class App extends React.Component {
         return <LandingPage logIn={this.logIn} />
       }
       if (this.state.isLoggedIn === true) {
-        return <Root
-          screenProps={{
-            logOut: this.logOut,
-            recipeListIndex: this.state.recipeListIndex,
-            ingredients: this.state.ingredients,
-            getIngredients: this.getIngredients,
-            recipes: this.state.recipes,
-            userRecipes: this.state.userRecipes,
-            userExtensionRecipes: this.state.userExtensionRecipes,
-            getUserRecipes: this.getUserRecipes,
-            getUserExtensionRecipes: this.getUserExtensionRecipes,
-            userGroceries: this.state.userGroceries,
-            getUserGroceries: this.getUserGroceries,
-            searchRecipes: this.searchRecipes,
-            text: '',
-            email: this.state.email,
-            name: this.state.name
-          }} />
+        return <MenuProvider>
+          <Root
+            screenProps={{
+              logOut: this.logOut,
+              recipeListIndex: this.state.recipeListIndex,
+              ingredients: this.state.ingredients,
+              getIngredients: this.getIngredients,
+              recipes: this.state.recipes,
+              userRecipes: this.state.userRecipes,
+              userExtensionRecipes: this.state.userExtensionRecipes,
+              getUserRecipes: this.getUserRecipes,
+              getUserExtensionRecipes: this.getUserExtensionRecipes,
+              userGroceries: this.state.userGroceries,
+              getUserGroceries: this.getUserGroceries,
+              searchRecipes: this.searchRecipes,
+              text: '',
+              email: this.state.email,
+              name: this.state.name
+            }} />
+        </MenuProvider>
       }
     }
   }
