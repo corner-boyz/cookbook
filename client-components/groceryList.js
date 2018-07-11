@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Text, View, Animated, FlatList, Modal, Dimensions, KeyboardAvoidingView, Alert, ImageBackground, RefreshControl } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, Divider } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 
 import IP from '../IP.js';
@@ -287,19 +287,24 @@ class GroceryList extends React.Component {
             <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
             <Menu>
               <MenuTrigger>
-                <Icon name='ios-more' type='ionicon'
-                // onPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} 
-                />
+                <Icon name='ios-more' type='ionicon' />
               </MenuTrigger>
               <MenuOptions>
-                <MenuOption onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }}>
-                  <Text>Edit Mode</Text>
+                <MenuOption
+                  onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }}>
+                  <Text style={{ fontSize: 18 }}>Edit Mode</Text>
                 </MenuOption>
-                <MenuOption onSelect={() => { this.purchaseIngredients() }}>
-                  <Text>Move Selected to Pantry</Text>
+                <MenuOption
+                  onSelect={() => { this.purchaseIngredients() }}>
+                  <Divider />
+                  <Text style={{ fontSize: 18 }}>Move Selected to Pantry</Text>
                 </MenuOption>
-                <MenuOption onSelect={() => { this.deleteIngredients() }}>
-                  <Text>Delete Selected</Text>
+                <MenuOption
+                  onSelect={() => {
+                    Alert.alert('Grocery List', 'Delete all Selected?', [{ text: 'Yes', onPress: () => this.deleteIngredients() }, { text: 'No', style: 'cancel' }])
+                  }}>
+                  <Divider />
+                  <Text style={{ color: 'red', fontSize: 18 }}>Delete Selected</Text>
                 </MenuOption>
               </MenuOptions>
             </Menu>
