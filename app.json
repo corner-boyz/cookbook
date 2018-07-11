@@ -1,16 +1,16 @@
 {
   "expo": {
     "name": "Flex Chef",
-    "icon": "./media/FlexChef_logo_hires-01.png",
+    "icon": "./media/FlexChef_logo-01.png",
     "sdkVersion": "27.0.0",
     "version": "1.0.2",
     "description": "Find recipes based on what's in your pantry!",
     "splash": {
-      "image": "./media/FlexChef_logo_hires-01.png",
+      "image": "./media/FlexChef_logo-01.png",
       "backgroundColor": "#ffffff"
     },
     "notification": {
-      "icon": "./media/FlexChef_logo_hires-01.png",
+      "icon": "./media/FlexChef_logo-01.png",
       "color": "#1e90ff"
     },
     "ios": {
