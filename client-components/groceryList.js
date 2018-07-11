@@ -89,7 +89,7 @@ class GroceryList extends React.Component {
       editMode: false,
       refreshing: false,
       groceryCopy: [],
-      groceryCopyDeletedIngredients: []
+      groceryCopyDeletedIngredients: [],
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -97,7 +97,7 @@ class GroceryList extends React.Component {
     this.deleteIngredients = this.deleteIngredients.bind(this);
     this.saveCheckboxes = this.saveCheckboxes.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
-    this.editMode = this.editMode.bind(this)
+    this.editMode = this.editMode.bind(this);
   }
   //====================================================
   static navigationOptions = {

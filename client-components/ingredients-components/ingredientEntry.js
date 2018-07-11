@@ -6,6 +6,9 @@ import Swipeout from 'react-native-swipeout';
 class IngredientEntry extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      swipeoutButtonsDisabled: false
+    }
   }
   //====================================================
   deleteIngredient() {
@@ -16,7 +19,7 @@ class IngredientEntry extends React.Component {
   render() {
     return (
       <Swipeout
-        right={[{ text: 'Delete', type: 'delete', onPress: () => { this.deleteIngredient() } }]}
+        right={[{ text: 'Delete', type: 'delete', disabled: this.state.swipeoutButtonsDisabled, onPress: () => { this.deleteIngredient() } }]}
         backgroundColor='transparent'>
         <View >
           <ListItem
