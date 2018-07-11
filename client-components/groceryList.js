@@ -292,9 +292,15 @@ class GroceryList extends React.Component {
                 />
               </MenuTrigger>
               <MenuOptions>
-                <MenuOption text='Edit Mode' onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} />
-                <MenuOption text='Add selected to Pantry' onSelect={() => { this.purchaseIngredients() }} />
-                <MenuOption text='Remove selected' onSelect={() => { this.deleteIngredients() }} />
+                <MenuOption onSelect={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }}>
+                  <Text>Edit Mode</Text>
+                </MenuOption>
+                <MenuOption onSelect={() => { this.purchaseIngredients() }}>
+                  <Text>Move Selected to Pantry</Text>
+                </MenuOption>
+                <MenuOption onSelect={() => { this.deleteIngredients() }}>
+                  <Text>Delete Selected</Text>
+                </MenuOption>
               </MenuOptions>
             </Menu>
           </View>
