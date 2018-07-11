@@ -131,7 +131,6 @@ class GroceryList extends React.Component {
       groceryCopy: filteredGroceryCopy,
       groceryCopyDeletedIngredients: temporary
     });
-    setTimeout(() => console.log('deleted', this.state.groceryCopyDeletedIngredients), 1000)
   }
 
   purchaseIngredients(ingredients = this.props.screenProps.userGroceries) {

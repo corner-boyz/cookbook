@@ -131,7 +131,7 @@ class AddMissing extends React.Component {
           </Text>
           {this.state.missingIngredients.map((item, i) =>
             <Swipeout key={i+item.ingredient}
-              right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]} 
+              right={[{text: 'Remove', type: 'delete', onPress: () => {this.removeIngredientFromArray(i)}}]}
               backgroundColor='transparent'>
               <View
                 flexDirection='row'
@@ -144,7 +144,7 @@ class AddMissing extends React.Component {
                     item.quantity = quantity
                   }}
                   paddingLeft={10}
-                  placeholderTextColor='black'
+                  placeholderTextColor='#A9A9A9'
                 />
                 <Picker
                   selectedValue={item.unit}
@@ -175,7 +175,7 @@ class AddMissing extends React.Component {
                     item.ingredient = ingredient
                   }}
                   paddingLeft={10}
-                  placeholderTextColor='black'
+                  placeholderTextColor='#A9A9A9'
                 />
               </View>
             </Swipeout>
