@@ -5,7 +5,6 @@ import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 
 import IP from '../../IP';
-import Recipe from '../recipeList-components/recipe.js'
 
 class HomeExtensionRecipes extends React.Component {
   constructor(props) {
