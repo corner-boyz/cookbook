@@ -18,6 +18,7 @@ class IngredientAdder extends React.Component {
       <View style={{ alignItems: 'center' }}>
         <View style={{ flexDirection: 'row' }}>
           <Input
+            blurOnSubmit={false}
             label='Add to Pantry'
             placeholder='Ex. "2 pound salmon"'
             shake={true}

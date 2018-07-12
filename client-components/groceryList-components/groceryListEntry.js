@@ -10,19 +10,20 @@ class GroceryListEntry extends React.Component {
     super(props);
     this.state = {
       checked: this.props.ispurchased,
+      toPantryButtonDisabled: false
     };
   }
   //====================================================
   render() {
     return (
       <Swipeout
-        left={[{text: 'To Pantry', backgroundColor: '#2089DC', onPress: () => {this.props.item.ispurchased = true; this.props.purchaseIngredients([this.props.item])}}]}
-        right={[{text: 'Delete', type: 'delete', onPress: () => {this.props.removeFromCart(this.props.item)}}]} 
+        left={[{text: 'To Pantry', backgroundColor: '#2089DC', disabled: this.state.toPantryButtonDisabled, onPress: () => {this.props.item.ispurchased = true; this.props.purchaseIngredients([this.props.item]); this.setState({toPantryButtonDisabled: true});}}]}
+        right={[{text: 'Delete', type: 'delete', onPress: () => {this.setState({toPantryButtonDisabled: true}); this.props.removeFromCart(this.props.item)}}]} 
         backgroundColor='transparent'>
         <View>
           <ListItem
             title={this.props.item.ingredient}
-            subtitle={(this.props.item.quantity ? this.props.item.quantity.toString() : '∞') + (this.props.item.unit || '')}
+            subtitle={(this.props.item.quantity ? this.props.item.quantity.toString() : '') + (this.props.item.unit || '')}
             leftAvatar={{ source: { uri: this.props.item.imageurl || 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Food-Dome-512.png' } }}
             roundAvatar={true}
             topDivider={true}

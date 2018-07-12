@@ -59,7 +59,7 @@ class Home extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          {/* <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text> */}
           <SectionList
             refreshControl={
               <RefreshControl

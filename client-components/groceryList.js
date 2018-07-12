@@ -89,7 +89,7 @@ class GroceryList extends React.Component {
       editMode: false,
       refreshing: false,
       groceryCopy: [],
-      groceryCopyDeletedIngredients: []
+      groceryCopyDeletedIngredients: [],
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
@@ -97,7 +97,7 @@ class GroceryList extends React.Component {
     this.deleteIngredients = this.deleteIngredients.bind(this);
     this.saveCheckboxes = this.saveCheckboxes.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
-    this.editMode = this.editMode.bind(this)
+    this.editMode = this.editMode.bind(this);
   }
   //====================================================
   static navigationOptions = {
@@ -282,7 +282,7 @@ class GroceryList extends React.Component {
         }}
       >
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
-          <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text>
+          {/* <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text> */}
           <View flexDirection='row' justifyContent='space-between'>
             <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
             <Menu>

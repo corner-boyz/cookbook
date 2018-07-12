@@ -11,7 +11,7 @@ class HomeRecipes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showRecipe: false
+      showRecipe: false,
     };
   }
   //====================================================

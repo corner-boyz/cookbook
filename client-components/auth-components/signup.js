@@ -82,6 +82,7 @@ class Signup extends React.Component {
               type: 'ionicon',
               color: 'lightgray'
             }}
+            autoFocus={true}
           />
           <Input
             placeholder='Email'
