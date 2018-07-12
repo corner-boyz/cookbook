@@ -26,7 +26,7 @@ class GroceryList extends React.Component {
       unit: '',
       units: [
         {
-          name: 'Count',
+          name: '(none)',
           abrv: null
         },
         {
@@ -93,6 +93,7 @@ class GroceryList extends React.Component {
     };
     this.addToCart = this.addToCart.bind(this);
     this.purchaseIngredients = this.purchaseIngredients.bind(this);
+    this.purchaseSpecificIngredient = this.purchaseSpecificIngredient.bind(this);
     this.editIngredients = this.editIngredients.bind(this);
     this.deleteIngredients = this.deleteIngredients.bind(this);
     this.saveCheckboxes = this.saveCheckboxes.bind(this);
@@ -139,6 +140,31 @@ class GroceryList extends React.Component {
     };
     console.log(purchased);
     axios.post(`http://${IP}/api/grocerylistintopantry`, purchased)
+      .then((response) => {
+        this.props.screenProps.getIngredients();
+        this.props.screenProps.getUserGroceries();
+      })
+      .catch((err) => {
+        if (err.request._hasError || err.response.request.status === 404) {
+          console.log('ERROR purchasing ingredients', err);
+          Alert.alert('Trouble connecting to server', 'Please try again later');
+        }
+        else if (err.response) {
+          console.log('ERROR converting units', err.response.request.response);
+          Alert.alert('Invalid unit conversion', err.response.request.response);
+        }
+      });
+  }
+
+  purchaseSpecificIngredient(ingredients = this.props.screenProps.userGroceries) {
+    console.log('purchase', ingredients);
+    let purchased = {
+      email: this.props.screenProps.email,
+      shouldReplace: true,
+      ingredients: ingredients
+    };
+    console.log('HEY object', purchased)
+    axios.post(`http://${IP}/api/groceryitemintopantry`, purchased)
       .then((response) => {
         this.props.screenProps.getIngredients();
         this.props.screenProps.getUserGroceries();
@@ -284,7 +310,7 @@ class GroceryList extends React.Component {
         <Animated.View style={{ ...this.props.style, opacity: this.state.fadeAnim }}>
           {/* <Text style={{ fontSize: 22, paddingBottom: 10 }}>Welcome {this.props.screenProps.name}!</Text> */}
           <View flexDirection='row' justifyContent='space-between'>
-            <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>Your Saved Grocery List</Text>
+            <Text onLongPress={() => { this.setState({ groceryCopy: JSON.parse(JSON.stringify(this.props.screenProps.userGroceries)) }); this.editMode() }} style={{ fontSize: 20, fontWeight: 'bold' }}>{this.props.screenProps.name}'s Grocery List</Text>
             <Menu>
               <MenuTrigger>
                 <Icon name='ios-more' type='ionicon' />
@@ -312,7 +338,7 @@ class GroceryList extends React.Component {
           <FlatList
             style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
             data={this.props.screenProps.userGroceries}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseIngredients={this.purchaseIngredients} />}
+            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseSpecificIngredient={this.purchaseSpecificIngredient} />}
             keyExtractor={(item) => item.ingredient}
             refreshControl={
               <RefreshControl

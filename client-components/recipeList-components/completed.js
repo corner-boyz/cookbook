@@ -14,7 +14,7 @@ class Complete extends React.Component {
     this.state = {
       units: [
         {
-          name: 'Count',
+          name: '(none)',
           abrv: null
         },
         {
