@@ -73,13 +73,13 @@ class Recipe extends React.Component {
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       this.setState({
         missing: results.data
-      })
+      });
       this.state.recipeDetails.extendedIngredients.map((item) => {
         console.log('Ingredient', item);
         item.checked = true;
         this.state.missing.forEach((item2) => {
           console.log('Missing', item2);
-          if (pluralize.singular(item.name).includes(item2.ingredient)) {
+          if (pluralize.singular(item.name).includes(item2.ingredient) || item2.ingredient.includes(pluralize.singular(item.name))) {
             item.checked = false;
           }
         })
