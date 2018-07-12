@@ -22,7 +22,7 @@ class Ingredients extends React.Component {
       index: 0,
       units: [
         {
-          name: 'Count',
+          name: '(none)',
           abrv: null
         },
         {

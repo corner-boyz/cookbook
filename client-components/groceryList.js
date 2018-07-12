@@ -26,7 +26,7 @@ class GroceryList extends React.Component {
       unit: '',
       units: [
         {
-          name: 'Count',
+          name: '(none)',
           abrv: null
         },
         {
