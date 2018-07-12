@@ -234,21 +234,25 @@ class Ingredients extends React.Component {
               </MenuOptions>
             </Menu>
           </View>
-          <FlatList
-            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-            data={this.props.screenProps.ingredients}
-            extraData={this.state.index}
-            renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} editMode={this.editMode} />}
-            keyExtractor={(item) => item.ingredient}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={() => this.onRefresh()}
-                colors={['orange']}
-                progressBackgroundColor='transparent'
-              />
-            }
-          />
+          {this.props.screenProps.ingredients.length ?
+            <FlatList
+              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
+              data={this.props.screenProps.ingredients}
+              extraData={this.state.index}
+              renderItem={({ item, index }) => <IngredientEntry item={item} index={index} editIngredients={this.editIngredients} editMode={this.editMode} />}
+              keyExtractor={(item) => item.ingredient}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this.onRefresh()}
+                  colors={['orange']}
+                  progressBackgroundColor='transparent'
+                />
+              }
+            />
+            :
+            <Text style={[styles.list, { flex: 1, alignSelf: 'center', width: Dimensions.get('window').width * 0.85, fontSize: 17, marginTop: 10 }]}>No ingredients saved, add some below or transfer from Grocery List.</Text>
+          }
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
             <IngredientAdder
               editMode={this.editMode}

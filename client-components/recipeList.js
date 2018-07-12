@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Image, Dimensions, RefreshControl } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, Animated, Modal, ImageBackground, Dimensions, RefreshControl } from 'react-native';
 import { SearchBar } from 'react-native-elements'
 
 import { styles } from '../styles'
@@ -48,7 +48,7 @@ class RecipeList extends React.Component {
     });
     this.props.screenProps.getUserRecipes();
     this.props.screenProps.getUserGroceries();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   selectRecipe(recipe) {
@@ -128,7 +128,7 @@ class RecipeList extends React.Component {
         <ImageBackground
           style={[styles.container, {
             backgroundColor: 'white',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }]}
           source={require('../media/4.jpg')}
           blurRadius={0}
@@ -144,9 +144,11 @@ class RecipeList extends React.Component {
             style={{
               paddingTop: 15,
               flex: 1,
-              justifyContent: 'center'
+              // justifyContent: 'center',
+              fontSize: 17,
+              width: Dimensions.get('window').width * 0.85
             }}
-          >Add ingredients to pantry or search to generate recipes</Text>
+          >Search for recipes or add ingredients to pantry to automatically generate recipes.</Text>
         </ImageBackground>
       );
     } else {
