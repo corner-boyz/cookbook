@@ -4,7 +4,7 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { View, ImageBackground, Alert, Image, Linking } from 'react-native';
+import { View, ImageBackground, Alert, Image, Linking, Dimensions } from 'react-native';
 import { Button, Icon } from 'react-native-elements'
 
 
@@ -101,7 +101,7 @@ class LandingPage extends React.Component {
         <Icon
           name="ios-information-circle-outline"
           type="ionicon"
-          containerStyle={{ paddingTop: 100 }}
+          containerStyle={{ paddingTop: Dimensions.get('window').height / 4 }}
           onPress={() => {
             Alert.alert(
               'Flex Chef',
