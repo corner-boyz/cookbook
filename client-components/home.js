@@ -74,8 +74,8 @@ class Home extends React.Component {
               <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{title}</Text>
             )}
             sections={[
-              { title: 'Your Saved Recipes', data: this.props.screenProps.userRecipes, renderItem: savedRecipes },
-              { title: 'Your Bookmarked Recipes', data: this.props.screenProps.userExtensionRecipes, renderItem: savedExtensionRecipes }
+              { title: `${this.props.screenProps.name}'s Saved Recipes`, data: this.props.screenProps.userRecipes, renderItem: savedRecipes },
+              { title: `${this.props.screenProps.name}'s Bookmarked Recipes`, data: this.props.screenProps.userExtensionRecipes, renderItem: savedExtensionRecipes }
             ]}
             keyExtractor={(item) => item.title}
           />
