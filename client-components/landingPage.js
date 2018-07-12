@@ -4,8 +4,8 @@ import IP from '../IP';
 import Login from './auth-components/login.js';
 import Signup from './auth-components/signup.js';
 
-import { Text, View, ImageBackground, Alert, Image } from 'react-native';
-import { Button } from 'react-native-elements'
+import { View, ImageBackground, Alert, Image, Linking } from 'react-native';
+import { Button, Icon } from 'react-native-elements'
 
 
 
@@ -19,6 +19,7 @@ class LandingPage extends React.Component {
       wrongEmailOrPass: false,
       loading: false,
       loginCard: true,
+      infoCard: false,
     }
     this.submitLogin = this.submitLogin.bind(this);
     this.toggleLoading = this.toggleLoading.bind(this);
@@ -72,7 +73,7 @@ class LandingPage extends React.Component {
       >
         <Image
           source={require('../media/FlexChef_logo-01.png')}
-          style={{width: 180, height: 180}}
+          style={{ width: 180, height: 180 }}
         />
         <View flexDirection='row' elevation={0}>
           <Button
@@ -97,6 +98,21 @@ class LandingPage extends React.Component {
           :
           <Signup logIn={this.props.logIn} loading={this.state.loading} toggleLoading={this.toggleLoading} />
         }
+        <Icon
+          name="ios-information-circle-outline"
+          type="ionicon"
+          containerStyle={{ paddingTop: 100 }}
+          onPress={() => {
+            Alert.alert(
+              'Flex Chef',
+              'Check out the Flex Chef extension on the Google Chrome store!',
+              [
+                { text: "Take me there!", onPress: () => Linking.openURL('https://chrome.google.com/webstore/detail/flex-chef/nlahbbjoagmbbiklbdgpijaobbifkkig?authuser=1') },
+                { text: 'Close', style: 'cancel' }
+              ]
+            )
+          }}
+        />
       </ImageBackground>
     )
   }

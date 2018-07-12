@@ -309,20 +309,24 @@ class GroceryList extends React.Component {
               </MenuOptions>
             </Menu>
           </View>
-          <FlatList
-            style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
-            data={this.props.screenProps.userGroceries}
-            renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseIngredients={this.purchaseIngredients} />}
-            keyExtractor={(item) => item.ingredient}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={() => this.onRefresh()}
-                colors={['orange']}
-                progressBackgroundColor='transparent'
-              />
-            }
-          />
+          {this.props.screenProps.userGroceries.length ?
+            <FlatList
+              style={[styles.list, { width: Dimensions.get('window').width / 1.1 }]}
+              data={this.props.screenProps.userGroceries}
+              renderItem={({ item, index }) => <GroceryListEntry item={item} index={index} editIngredients={this.editIngredients} removeFromCart={this.removeFromCart} closeAdd={this.closeAdd} saveCheckboxes={this.saveCheckboxes} editMode={this.editMode} purchaseIngredients={this.purchaseIngredients} />}
+              keyExtractor={(item) => item.ingredient}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this.onRefresh()}
+                  colors={['orange']}
+                  progressBackgroundColor='transparent'
+                />
+              }
+            />
+            :
+            <Text style={[styles.list, { flex: 1, alignSelf: 'center', width: Dimensions.get('window').width * 0.85, fontSize: 17, marginTop: 10 }]}>No ingredients saved, add some below.</Text>
+          }
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={30} enabled>
             <GroceryListAdder addToCart={this.addToCart} purchaseIngredients={this.purchaseIngredients} deleteIngredients={this.deleteIngredients} />
           </KeyboardAvoidingView>
