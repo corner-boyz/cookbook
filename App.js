@@ -273,7 +273,7 @@ export default class App extends React.Component {
         return <LandingPage logIn={this.logIn} />
       }
       if (this.state.isLoggedIn === true) {
-        return <MenuProvider>
+        return <MenuProvider backHandler={true}>
           <Root
             screenProps={{
               logOut: this.logOut,
