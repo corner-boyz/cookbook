@@ -159,9 +159,11 @@ class Recipe extends React.Component {
       const wantedNutrients = ['Calories', 'Fat', 'Saturated Fat', 'Carbohydrates', 'Sugar', 'Cholesterol', 'Sodium', 'Protein', 'Fiber'];
       let equipment = [];
       if (this.state.recipeDetails.analyzedInstructions.length && this.state.recipeDetails.analyzedInstructions[0].steps.length) {
-        this.state.recipeDetails.analyzedInstructions[0].steps.forEach((step) => {
+        this.state.recipeDetails.analyzedInstructions[0].steps.forEach((step, i) => {
           step.equipment.forEach((item) => {
-            equipment.push(item.name);
+            if (!equipment.includes(item.name)) {
+              equipment.push(item.name);
+            }
           });
         });
       }
