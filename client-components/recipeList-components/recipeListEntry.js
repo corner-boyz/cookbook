@@ -30,7 +30,7 @@ class RecipeListEntry extends React.Component {
   //====================================================
   categorizeIngredients = () => {
     const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves', 'nonfat', 'coarse'];
-    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen'];
+    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen', 'dos equis'];
 
     let recipeObj = [];
     let pantryObj = {};
