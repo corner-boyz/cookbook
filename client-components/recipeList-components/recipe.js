@@ -70,7 +70,7 @@ class Recipe extends React.Component {
   }
   // this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map
   compareIngredients() {
-    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen'];
+    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen', 'dos equis'];
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
       
       this.setState({

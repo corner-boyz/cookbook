@@ -30,7 +30,7 @@ class RecipeListEntry extends React.Component {
   //====================================================
   categorizeIngredients = () => {
     const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves', 'nonfat', 'coarse'];
-    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen'];
+    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen', 'dos equis'];
 
     let recipeObj = [];
     let pantryObj = {};
@@ -116,7 +116,7 @@ class RecipeListEntry extends React.Component {
               fontWeight: 'bold'
             }}
             featured={true}
-            caption={`${this.state.ownedIngredients.length ? '\nHave:' + this.state.ownedIngredients.map((ingredient) => (' ' + ingredient)) : ''}${this.state.missedIngredients.length ? '\nNeed:' + this.state.missedIngredients.map((ingredient) => (' ' + ingredient)) : ''}`}
+            caption={`${this.state.ownedIngredients.length ? '\nHave:' + this.state.ownedIngredients.map((ingredient, i) => (i <= 2 ? ' ' + ingredient : i === 3 ? ' ...' : '')) : ''}${this.state.missedIngredients.length ? '\nNeed:' + this.state.missedIngredients.map((ingredient, i) => (i <= 2 ? ' ' + ingredient : i === 3 ? ' ...' : '')) : ''}`}
             captionStyle={{
               fontSize: 12,
               fontWeight: 'bold',
