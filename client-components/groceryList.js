@@ -293,6 +293,13 @@ class GroceryList extends React.Component {
       editMode: true
     })
   }
+
+  deleteAll() {
+    this.props.screenProps.userGroceries.map((item) => {
+      item.quantity = 0;
+    })
+    this.editIngredients();
+  }
   //====================================================
   render() {
     return (
@@ -327,10 +334,17 @@ class GroceryList extends React.Component {
                 </MenuOption>
                 <MenuOption
                   onSelect={() => {
-                    Alert.alert('Grocery List', 'Delete all Selected?', [{ text: 'Yes', onPress: () => this.deleteIngredients() }, { text: 'No', style: 'cancel' }])
+                    Alert.alert('Grocery List', 'Delete all Selected ingredients?', [{ text: 'Yes', onPress: () => this.deleteIngredients() }, { text: 'No', style: 'cancel' }])
                   }}>
                   <Divider />
                   <Text style={{ color: 'red', fontSize: 18 }}>Delete Selected</Text>
+                </MenuOption>
+                <MenuOption
+                  onSelect={() => {
+                    Alert.alert('Grocery List', 'Delete all ingredients?', [{ text: 'Yes', onPress: () => this.deleteAll() }, { text: 'No', style: 'cancel' }])
+                  }}>
+                  <Divider />
+                  <Text style={{ color: 'red', fontSize: 18 }}>Delete All</Text>
                 </MenuOption>
               </MenuOptions>
             </Menu>
