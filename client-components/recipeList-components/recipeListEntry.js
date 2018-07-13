@@ -30,6 +30,7 @@ class RecipeListEntry extends React.Component {
   //====================================================
   categorizeIngredients = () => {
     const filteredOutWords = ['serving', 'servings', 'handful', 'handfuls', 'fresh', 'freshly', 'strip', 'strips', 'light', 'salted', 'unsalted', 'of', 'granulated', 'granulate', 'vine', 'ripe', 'ripened', 'whole', 'active', 'canned', 'loaf', 'loaves', 'nonfat', 'coarse'];
+    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen'];
 
     let recipeObj = [];
     let pantryObj = {};
@@ -37,7 +38,10 @@ class RecipeListEntry extends React.Component {
     let missedIngredients = [];
 
     this.props.recipe.usedIngredients.forEach((ingredient) => {
-      let string = pluralize.singular(ingredient.name.toLowerCase());
+      let string = ingredient.name.toLowerCase();
+      if (!filteredOutSingulars.includes(string)) {
+        string = pluralize.singular(string);
+      }
       if (string.length > 1) {
         string = string.split(' ').filter((word) => {
           return !filteredOutWords.includes(word);
