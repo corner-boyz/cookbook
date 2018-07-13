@@ -70,13 +70,21 @@ class Recipe extends React.Component {
   }
   // this.state.recipeDetails.analyzedInstructions.length ? this.state.recipeDetails.analyzedInstructions[0].steps.map
   compareIngredients() {
+    const filteredOutSingulars = ['cow peas', 'peas', 'black eyed peas', 'ramen'];
     axios.post(`http://${IP}/api/comparetorecipe`, { recipe: this.state.recipeDetails.extendedIngredients, ingredients: this.props.ingredients }).then((results) => {
+      
       this.setState({
         missing: results.data
       });
       this.state.recipeDetails.extendedIngredients.map((item) => {
+        if (!filteredOutSingulars.includes(item.name)) {
+          item.name = pluralize.singular(item.name);
+        }
         item.checked = true;
         this.state.missing.forEach((item2) => {
+          if (!filteredOutSingulars.includes(item2.ingredient)) {
+            item2.ingredient = pluralize.singular(item2.ingredient);
+          }
           if (pluralize.singular(item.name).includes(item2.ingredient) || item2.ingredient.includes(pluralize.singular(item.name))) {
             item.checked = false;
           }
